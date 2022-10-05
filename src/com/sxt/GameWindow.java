@@ -6,20 +6,19 @@ import java.awt.*;
 public class GameWindow extends JFrame {
     private Dimension dimension;
     public static final int INIT_WIDTH = 960;
-    public static final int INIT_HEIGHT = 540;
-    private Image background;
+    public static final int INIT_HEIGHT = 540 + 140 + 30;
     private Image icon;
-
-
+    private Background background;
 
     public GameWindow() {
         dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
-        background = Toolkit.getDefaultToolkit().getImage("resources/level-background-0.png");
         icon = Toolkit.getDefaultToolkit().getImage("resources/miner-dig-0.png");
+        background = new Background();
     }
 
+    @Override
     public void paint(Graphics graphics) {
-        graphics.drawImage(background, 0, 0, null);
+        background.paintBackground(graphics);
     }
 
     public void launch() {
@@ -29,10 +28,6 @@ public class GameWindow extends JFrame {
         this.setTitle("GoldMiner");
         this.setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
-    public static void main(String[] args) {
-        GameWindow gameWindow = new GameWindow();
-        gameWindow.launch();
     }
 
     public Dimension getDimension() {
