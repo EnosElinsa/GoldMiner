@@ -37,24 +37,17 @@ public class Animation {
 	}
 
 	/**
-	 * 双缓冲绘制下一帧
-	 * @param g 当前面板的上下文设备
+	 * @param graphics 当前面板的上下文设备
 	 * @param x 动画绘制的x坐标（图片的左上角点）
 	 * @param y 动画绘制的y坐标
-	 * @param panel 需要绘制的面板
 	 */
-	public void drawNextFrame(Graphics g, int x, int y, JFrame panel) {
+	public void drawNextFrame(Graphics graphics, int x, int y) {
 		//得到需要绘制的图片
 		Image image = this.getNextFrame();
 		
-		//得到面板和画图设备
-		buffer = panel.createImage(panel.getWidth(), panel.getHeight());
-		og = (Graphics2D) buffer.getGraphics();
-
-		//双缓冲绘制图片
+		// 绘制图片
 		if(image != null) {
-			og.drawImage(image, x, y, panel);
-			g.drawImage(buffer, 0, 0, null);
+			graphics.drawImage(image, 0, 0, null);
 		}
 	}
 		
