@@ -9,6 +9,7 @@ public class GameWindow extends JFrame {
     public static final int INIT_HEIGHT = 540 + 124 + 30; // 默认窗口高度540px(关卡背景高度)+124px(陆地背景高度)+30px(填充)
     private Image icon = Toolkit.getDefaultToolkit().getImage("resources/miner-dig-0.png"); // 窗口图标
     private Background background;
+    private Image offScreenImage; 
 
     public GameWindow() {
         dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
@@ -17,7 +18,10 @@ public class GameWindow extends JFrame {
 
     @Override
     public void paint(Graphics graphics) {
-        background.paintBackground(graphics);
+        offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT);
+        Graphics graphics2 = offScreenImage.getGraphics();
+        background.drawSelf(graphics2);
+        graphics.drawImage(offScreenImage, 0, 0, null);
     }
 
     public void launch() {
