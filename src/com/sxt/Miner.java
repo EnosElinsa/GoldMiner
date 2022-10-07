@@ -1,9 +1,8 @@
 package com.sxt;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class Miner extends JFrame {
+public class Miner {
     public Miner() {
         animationIdle = new Animation("miner-dig-", 0);
         animationDig = new Animation("miner-dig-", 4);
@@ -11,7 +10,6 @@ public class Miner extends JFrame {
         animationStrong = new Animation("miner-strong-", 2);
         animationThrow = new Animation("miner-throw-", 5);
         currentState = CharacterState.IDLE;
-        this.setVisible(true);
     }
     // 矿工的四种状态
     public static enum CharacterState {
@@ -29,18 +27,18 @@ public class Miner extends JFrame {
     private Animation animationStrong;
     private Animation animationThrow;
 
-    public void drawSelf(Graphics graphics, int x, int y, JFrame jPanel) {
+    public void drawSelf(Graphics graphics, int x, int y) {
         switch (currentState) {
         case IDLE:
-            animationIdle.drawNextFrame(graphics, x, y, jPanel); break;
+            animationIdle.drawNextFrame(graphics, x, y); break;
         case DIG:
-            animationDig.drawNextFrame(graphics, x, y, jPanel); break;
+            animationDig.drawNextFrame(graphics, x, y); break;
         case PULL:
-            animationPull.drawNextFrame(graphics, x, y, jPanel); break;
+            animationPull.drawNextFrame(graphics, x, y); break;
         case STRONG:
-            animationStrong.drawNextFrame(graphics, x, y, jPanel); break;
+            animationStrong.drawNextFrame(graphics, x, y); break;
         case THROW:
-            animationThrow.drawNextFrame(graphics, x, y, jPanel); break;
+            animationThrow.drawNextFrame(graphics, x, y); break;
         }
     }
 
