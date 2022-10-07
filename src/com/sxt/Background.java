@@ -12,7 +12,7 @@ public class Background {
     }
 
     public void paintBackground(Graphics graphics) {
-        graphics.drawImage(levelBackground0, 0, 140 + 30, null);
         graphics.drawImage(land, 0, 30, null);
+        graphics.drawImage(levelBackground0, 0, 140 + 30, null);
     }
 }
