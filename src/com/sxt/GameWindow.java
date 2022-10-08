@@ -7,13 +7,16 @@ public class GameWindow extends JFrame {
     private Dimension dimension;
     public static final int INIT_WIDTH = 960; // 默认窗口宽度960px
     public static final int INIT_HEIGHT = 540 + 124 + 30; // 默认窗口高度540px(关卡背景高度)+124px(陆地背景高度)+30px(填充)
-    private Image icon = Toolkit.getDefaultToolkit().getImage("resources/miner-dig-0.png"); // 窗口图标
+    private Image icon = new ImageIcon("resources/miner-dig-0.png").getImage(); // 窗口图标
     private Background background;
-    private Image offScreenImage; 
+    private Image offScreenImage;
+    private Miner miner;
 
     public GameWindow() {
         dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
         background = new Background();
+        miner = new Miner();
+        
     }
 
     @Override
@@ -21,6 +24,8 @@ public class GameWindow extends JFrame {
         offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT);
         Graphics graphics2 = offScreenImage.getGraphics();
         background.drawSelf(graphics2);
+        miner.setCurrentState(MinerState.PULL);
+        miner.drawSelf(graphics2, background.getLand().getWidth(null) / 2, background.getLand().getHeight(null));
         graphics.drawImage(offScreenImage, 0, 0, null);
     }
 

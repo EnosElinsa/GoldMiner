@@ -47,7 +47,7 @@ public class Animation {
 		
 		// 绘制图片
 		if(image != null) {
-			graphics.drawImage(image, 0, 0, null);
+			graphics.drawImage(image, x, y, null);
 		}
 	}
 		

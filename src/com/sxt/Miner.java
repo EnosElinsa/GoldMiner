@@ -9,18 +9,10 @@ public class Miner {
         animationPull = new Animation("miner-pull-", 16);
         animationStrong = new Animation("miner-strong-", 2);
         animationThrow = new Animation("miner-throw-", 5);
-        currentState = CharacterState.IDLE;
+        currentState = MinerState.IDLE;
     }
-    // 矿工的四种状态
-    public static enum CharacterState {
-        IDLE,   // 静置
-        DIG,    // 挖（钩子往下）
-        PULL,   // 拉（钩子往上）
-        STRONG, // 获得力量
-        THROW   // 扔炸弹
-    }
-
-    private CharacterState currentState;
+    
+    private MinerState currentState;
     private Animation animationIdle;
     private Animation animationDig;
     private Animation animationPull;
@@ -42,11 +34,11 @@ public class Miner {
         }
     }
 
-    public CharacterState getCurrentState() {
+    public MinerState getCurrentState() {
         return currentState;
     }
 
-    public void setCurrentState(CharacterState currentState) {
+    public void setCurrentState(MinerState currentState) {
         this.currentState = currentState;
     }
 } 
