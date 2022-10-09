@@ -16,7 +16,7 @@ public class GameWindow extends JFrame {
         dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
         background = new Background();
         miner = new Miner();
-        
+        miner.setCurrentState(MinerState.PULL);
     }
 
     @Override
@@ -24,8 +24,8 @@ public class GameWindow extends JFrame {
         offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT);
         Graphics graphics2 = offScreenImage.getGraphics();
         background.drawSelf(graphics2);
-        miner.setCurrentState(MinerState.PULL);
-        miner.drawSelf(graphics2, background.getLand().getWidth(null) / 2, background.getLand().getHeight(null));
+        miner.setGraphics(graphics2);
+        new Thread(miner).start();
         graphics.drawImage(offScreenImage, 0, 0, null);
     }
 
