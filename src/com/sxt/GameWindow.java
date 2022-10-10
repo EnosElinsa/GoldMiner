@@ -24,8 +24,6 @@ public class GameWindow extends JFrame {
         offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT);
         Graphics graphics2 = offScreenImage.getGraphics();
         background.drawSelf(graphics2);
-        miner.setGraphics(graphics2);
-        new Thread(miner).start();
         graphics.drawImage(offScreenImage, 0, 0, null);
     }
 

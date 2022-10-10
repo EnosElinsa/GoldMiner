@@ -2,13 +2,7 @@ package com.sxt;
 
 import java.awt.*;
 
-public class Miner implements Runnable {
-    private Graphics graphics;
-    private int x = 50;
-    private int y = 50;
-    public void setGraphics(Graphics graphics) {
-        this.graphics = graphics;
-    }
+public class Miner {
     public Miner() {
         animationIdle = new Animation("miner-dig-", 0);
         animationDig = new Animation("miner-dig-", 4);
@@ -25,7 +19,7 @@ public class Miner implements Runnable {
     private Animation animationStrong;
     private Animation animationThrow;
 
-    public void drawSelf() {
+    public void drawSelf(Graphics graphics, int x, int y) {
         switch (currentState) {
         case IDLE:
             animationIdle.drawNextFrame(graphics, x, y); break;
@@ -46,10 +40,5 @@ public class Miner implements Runnable {
 
     public void setCurrentState(MinerState currentState) {
         this.currentState = currentState;
-    }
-
-    @Override
-    public void run() {
-        drawSelf();
     }
 } 
