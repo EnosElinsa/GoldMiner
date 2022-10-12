@@ -19,7 +19,7 @@ public class Miner implements Runnable {
         animationPull = new Animation("resources/miner-pull", 16);
         animationStrong = new Animation("resources/miner-strong", 2);
         animationThrow = new Animation("resources/miner-throw", 5);
-        currentState = MinerState.THROW;
+        currentState = MinerState.IDLE;
         minerThread = new Thread(this);
         minerThread.start();
     }
