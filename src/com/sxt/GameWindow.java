@@ -3,7 +3,7 @@ package com.sxt;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameWindow extends JFrame {
+public class GameWindow extends JFrame implements Runnable {
     private Dimension dimension;
     public static final int INIT_WIDTH = 960; // 默认窗口宽度960px
     public static final int INIT_HEIGHT = 540 + 124 + 30; // 默认窗口高度540px(关卡背景高度)+124px(陆地背景高度)+30px(填充)
@@ -11,12 +11,14 @@ public class GameWindow extends JFrame {
     private Background background;
     private Image offScreenImage;
     private Miner miner;
+    private Thread gameWindowThread = new Thread(this);
 
     public GameWindow() {
         dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
         background = new Background();
         miner = new Miner();
-        miner.setCurrentState(MinerState.PULL);
+        this.repaint();
+        gameWindowThread.start();
     }
 
     @Override
@@ -24,6 +26,7 @@ public class GameWindow extends JFrame {
         offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT);
         Graphics graphics2 = offScreenImage.getGraphics();
         background.drawSelf(graphics2);
+        miner.drawSelf(graphics2);
         graphics.drawImage(offScreenImage, 0, 0, null);
     }
 
@@ -44,5 +47,17 @@ public class GameWindow extends JFrame {
     public void setDimension(int height, int width) {
         dimension.height = height;
         dimension.width = width;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            repaint();
+            try {
+                Thread.sleep(70);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
