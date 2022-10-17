@@ -4,6 +4,10 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
+/**
+ * <p> 背景类 </p>
+ * 绘制游戏场景
+ */
 public class Background {
     private Image land;
     private Image levelBackground0;

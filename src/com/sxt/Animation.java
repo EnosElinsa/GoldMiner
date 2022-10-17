@@ -20,7 +20,7 @@ import java.awt.*;
 
 public class Animation {
     //动画图片集合
-	public Vector<Image> images;
+	private Vector<Image> images;
 
 	//当前帧索引
 	private int currentFrameIndex;
@@ -58,5 +58,7 @@ public class Animation {
 		this.currentFrameIndex = currentFrameIndex;
 	}
 
-	
+	public Vector<Image> getImages() {
+		return images;
+	}
 }
