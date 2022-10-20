@@ -1,4 +1,4 @@
-package com.sxt;
+package gamebody.main;
 
 import java.awt.*;
 
@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
  * 绘制游戏场景
  */
 public class Background {
+    
     private Image land;
     private Image levelBackground0;
     private Image floor;

@@ -1,8 +1,11 @@
-package com.sxt;
+package gamebody.main;
 
 import java.awt.*;
 
+import gamebody.engine.Animation;
+
 public class Miner implements Runnable {
+    
     private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
     private Animation animationIdle;    // 静置时矿工的动画 
     private Animation animationDig;     // 挖矿时矿工的动画 

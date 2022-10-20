@@ -1,4 +1,4 @@
-package com.sxt;
+package gamebody.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameWindow extends JFrame implements Runnable, KeyListener {
+    
     public static final int INIT_WIDTH = 960; // 默认窗口宽度960px
     public static final int INIT_HEIGHT = 540 + 124 + 30; // 默认窗口高度540px(关卡背景高度)+124px(陆地背景高度)+30px(填充)
     public static final int TIME_PER_FRAME = 80; // 更新一帧所需的时间，单位是微秒
@@ -15,7 +16,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Image offScreenImage; // 用于双缓存的辅助画板
     private Thread gameWindowThread = new Thread(this); // 窗口线程
     private Miner miner = new Miner(); // 矿工
-    private Rope rope = new Rope(); // 绳索
+    private Rope rope = new Rope(this); // 绳索
 
     public GameWindow() {
         this.repaint();

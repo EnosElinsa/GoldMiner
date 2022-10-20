@@ -1,4 +1,4 @@
-package com.sxt;
+package gamebody.main;
 
 // 矿工的四种状态
 public enum MinerState {

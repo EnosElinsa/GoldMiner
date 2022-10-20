@@ -1,4 +1,4 @@
-package com.sxt;
+package gamebody.main;
 
 /**
  * 启动游戏入口

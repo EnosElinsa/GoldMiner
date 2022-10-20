@@ -1,4 +1,4 @@
-package com.sxt;
+package gamebody.main;
 
 /**
  * 绳索的3种状态 
