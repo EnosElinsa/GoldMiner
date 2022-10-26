@@ -6,13 +6,14 @@ import javax.swing.ImageIcon;
 
 public abstract class GameObject {
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
+    protected int mass;
 
-    private Image texture;
-    private Rigidbody rigidbody;
+    protected Image texture;
+    protected Rigidbody rigidbody;
 
     public GameObject() {}
     
@@ -30,8 +31,14 @@ public abstract class GameObject {
         rigidbody = new Rigidbody(x, y, width, height);
     }
 
-    public void drawSelf(Graphics graphics) {
+    public void render(Graphics graphics) {
         graphics.drawImage(texture, x, y, null);
+    }
+
+    public void vanish() {
+        x = 2000;
+        y = 2000;
+        rigidbody = new Rigidbody(x, y, width, height);
     }
 
     public int getX() {
@@ -65,4 +72,10 @@ public abstract class GameObject {
     public Rigidbody getRigidbody() {
         return rigidbody;
     }
+
+    public int getMass() {
+        return mass;
+    }
+
+    
 }

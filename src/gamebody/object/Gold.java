@@ -7,6 +7,7 @@ public class Gold extends GameObject {
     
     private Animation goldSparkAnimation = new Animation("resources/gold-spark", 8);
     private Animation sparkAnimation = new Animation("resources/spark", 12);
+    public static final int MASS = 10;
 
     public Gold() {}
 
@@ -16,6 +17,7 @@ public class Gold extends GameObject {
 
     public Gold(int x, int y, String textureDirectory) {
         super(x, y, textureDirectory);
+        mass = MASS;
     }
 
     public Animation getGoldSparkAnimation() {

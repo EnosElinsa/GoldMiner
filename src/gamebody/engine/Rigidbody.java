@@ -6,6 +6,7 @@ import java.awt.geom.*;
  * 刚体类：用于碰撞检测
  */
 public class Rigidbody {
+    
     private Ellipse2D rigidbody;
 
     public Rigidbody() {}

@@ -1,9 +1,14 @@
 package gamebody.main;
 
 import javax.swing.*;
+
+import gamebody.engine.GameObject;
+import gamebody.object.Gold;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class GameWindow extends JFrame implements Runnable, KeyListener {
     
@@ -17,33 +22,51 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Thread gameWindowThread = new Thread(this); // 窗口线程
     private Miner miner = new Miner(); // 矿工
     private Rope rope = new Rope(this); // 绳索
+    private ArrayList<GameObject> gameobjects = new ArrayList<>();
 
-    public GameWindow() {
-        this.repaint();
+    public GameWindow() {}
+
+    public void launch() {
+        setVisible(true);
+        setSize(getDimension());
+        setResizable(false);
+        setLocationRelativeTo(null);   
+        setTitle("GoldMiner");
+        setIconImage(icon);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        addKeyListener(this); // 给窗口注册键盘事件监听器
+        loadGameObjects();
+        repaint();
         gameWindowThread.start(); // 开启窗口线程
     }
 
-    public void launch() {
-        this.setVisible(true);
-        this.setSize(getDimension());
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);   
-        this.setTitle("GoldMiner");
-        this.setIconImage(icon);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        addKeyListener(this); // 给窗口注册键盘事件监听器
+    private void loadGameObjects() {
+        gameobjects.add(new Gold(500, 500, "resources/gold.png"));
+    }
+
+    private void update() {
+        if (rope.getCurrentState() == RopeState.RETRIEVE 
+                && miner.getCurrentState() != MinerState.PULL) {  // 当绳索状态处于“收取”时
+                miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
+        }
+        else if (rope.getCurrentState() == RopeState.SWING) { // 当绳索状态处于“摇摆”时
+            miner.setCurrentState(MinerState.IDLE);           // 将矿工的状态设置为“静置”
+        }
     }
 
     @Override
     public void paint(Graphics graphics) {
-        offScreenImage = this.createImage(INIT_WIDTH, INIT_HEIGHT); // 每次进行绘制的时候，都重新创建一个辅助画板
+        offScreenImage = createImage(INIT_WIDTH, INIT_HEIGHT); // 每次进行绘制的时候，都重新创建一个辅助画板
 
         // 将游戏元素都绘制在辅助画板上
         Graphics graphics2 = offScreenImage.getGraphics();
-        background.drawSelf(graphics2);
-        miner.drawSelf(graphics2);
-        rope.drawSelf(graphics2);
-
+        background.render(graphics2);
+        miner.render(graphics2);
+        rope.render(graphics2);
+        for (GameObject object : gameobjects) {
+            object.render(graphics2);
+        }
         // 将辅助画板绘制在原本的画板上
         graphics.drawImage(offScreenImage, 0, 0, null);
     }
@@ -52,15 +75,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void run() {
         while (true) {
             repaint(); // 重新绘制画板
-
-            if (rope.getCurrentState() == RopeState.RETRIEVE 
-                && miner.getCurrentState() != MinerState.PULL) {  // 当绳索状态处于“收取”时
-                miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
-            }
-            else if (rope.getCurrentState() == RopeState.SWING) { // 当绳索状态处于“摇摆”时
-                miner.setCurrentState(MinerState.IDLE);           // 将矿工的状态设置为“静置”
-            }
-
+            update(); 
             try {
                 Thread.sleep(TIME_PER_FRAME);
             } catch (InterruptedException e) {
@@ -92,5 +107,9 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void setDimension(int height, int width) {
         dimension.height = height;
         dimension.width = width;
+    }
+
+    public ArrayList<GameObject> getGameobjects() {
+        return gameobjects;
     }
 }

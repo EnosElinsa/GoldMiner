@@ -3,8 +3,9 @@ package gamebody.main;
 import java.awt.*;
 
 import gamebody.engine.Animation;
+import gamebody.engine.GameObject;
 
-public class Miner implements Runnable {
+public class Miner extends GameObject implements Runnable {
     
     private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
     private Animation animationIdle;    // 静置时矿工的动画 
@@ -28,7 +29,8 @@ public class Miner implements Runnable {
         minerThread.start();
     }
 
-    public void drawSelf(Graphics graphics) {
+    @Override
+    public void render(Graphics graphics) {
         graphics.drawImage(currentFrame, GameWindow.INIT_WIDTH / 2 - 30, 57, null);
     }
 
@@ -86,7 +88,6 @@ public class Miner implements Runnable {
     public void run() {
         while (true) {
             updateCurrentFrame();
-            
             try {
                 Thread.sleep(GameWindow.TIME_PER_FRAME);
             } catch(InterruptedException e) {

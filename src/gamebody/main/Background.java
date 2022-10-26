@@ -1,14 +1,15 @@
 package gamebody.main;
 
 import java.awt.*;
-
 import javax.swing.ImageIcon;
+
+import gamebody.engine.GameObject;
 
 /**
  * <p> 背景类 </p>
  * 绘制游戏场景
  */
-public class Background {
+public class Background extends GameObject {
     
     private Image land;
     private Image levelBackground0;
@@ -20,7 +21,8 @@ public class Background {
         floor = new ImageIcon("resources/floor_resize.png").getImage();
     }
 
-    public void drawSelf(Graphics graphics) {
+    @Override
+    public void render(Graphics graphics) {
         graphics.drawImage(land, 0, 30, null);
         graphics.drawImage(levelBackground0, 0, land.getHeight(null) + 30, null);
         graphics.drawImage(floor, land.getWidth(null) / 2 - 40, land.getHeight(null) + 8, null);
