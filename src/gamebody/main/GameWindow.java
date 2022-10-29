@@ -1,12 +1,11 @@
 package gamebody.main;
 
-import javax.swing.*;
-
 import gamebody.engine.GameObject;
 import gamebody.object.Gold;
 import gamebody.object.Stone;
 import gamebody.object.TreasureBag;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,6 +24,15 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Miner miner = new Miner(); // 矿工
     private Rope rope = new Rope(this); // 绳索
     private ArrayList<GameObject> gameobjects = new ArrayList<>();
+    private static int level=1;//关卡数
+
+    private long startTime;
+    private long endTime;
+
+    private static int target=105+545*level+135*(level-1)*(level-2);
+
+    private Time time=new Time();
+
 
     public GameWindow() {}
 
@@ -40,15 +48,17 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         addKeyListener(this); // 给窗口注册键盘事件监听器
         loadGameObjects();
         repaint();
+
         gameWindowThread.start(); // 开启窗口线程
     }
 
     private void loadGameObjects() {
         gameobjects.add(new Gold(600, 500));
-        gameobjects.add(new Stone(500, 500,"resources/stone-0.png" ));
-        gameobjects.add(new Stone(200, 400, "resources/stone-1.png"));
+        gameobjects.add(new Stone(500, 500,"resources/stone-0.png" ,0));//value=11,0号石头
+        gameobjects.add(new Stone(200, 400, "resources/stone-1.png",1));//value=20，1号石头
         gameobjects.add(new TreasureBag(250, 444));
         gameobjects.add(new Gold(300, 222, 0.5));
+        gameobjects.add(new Gold(400, 400, 0.3));
     }
 
     private void update() {
@@ -61,27 +71,89 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         }
     }
 
+    public static void drawWord(Graphics graphics,int size,Color color,String str,int x,int y)
+    {
+        graphics.setColor(color);
+        graphics.setFont(new Font("宋体",Font.BOLD,size));
+        graphics.drawString(str,x,y);
+    }
+
     @Override
     public void paint(Graphics graphics) {
         offScreenImage = createImage(INIT_WIDTH, INIT_HEIGHT); // 每次进行绘制的时候，都重新创建一个辅助画板
 
         // 将游戏元素都绘制在辅助画板上
         Graphics graphics2 = offScreenImage.getGraphics();
+        //画背景
         background.render(graphics2);
+        //画矿工
         miner.render(graphics2);
+        //画绳索
         rope.render(graphics2);
+        //画物体（金块、石头、钱袋、钻石）
         for (GameObject object : gameobjects) {
             object.render(graphics2);
         }
+        //画文字（金钱、目标、时间、关卡）
+        String words1="金钱";
+        drawWord(graphics2,30,Color.WHITE,words1,50,75);
+
+        String words2="目标";
+        drawWord(graphics2,32,Color.WHITE,words2,48,125);
+
+        //已得金钱值
+        int curValue=rope.getOverallValue();
+        String words3="$"+Integer.toString(curValue);
+        drawWord(graphics2,32,Color.GREEN,words3,180,75);
+
+        //目标金钱值
+        String words4=Integer.toString(target);
+        drawWord(graphics2,32,Color.RED,words4,180,125);
+
+        String words5="时间";
+        drawWord(graphics2,32,Color.WHITE,words5,650,75);
+
+        String words6="关卡";
+        drawWord(graphics2,32,Color.WHITE,words6,650,128);
+
+        drawWord(graphics2,32,Color.RED,Integer.toString(level),750,128);
+
+
         // 将辅助画板绘制在原本的画板上
         graphics.drawImage(offScreenImage, 0, 0, null);
+    }
+
+    public void nextLevel ()
+    {
+        //达到下一关的条件
+        if (rope.getOverallValue()>=target)
+        {
+            System.out.println("已经达到过关条件");
+            level++;
+            dispose();
+            this.launch();
+        }
+    }
+
+    public void countDown(Graphics graphics)
+    {
+        //倒计时
+        while (time.getTime()>=0)
+        {
+            String words7=Integer.toString(time.getTime());
+            Font f7=new Font("宋体",Font.BOLD,32);
+            graphics.setFont(f7);
+            graphics.setColor(Color.RED);
+            graphics.drawString(words7,750,75);
+        }
     }
 
     @Override
     public void run() {
         while (true) {
             repaint(); // 重新绘制画板
-            update(); 
+            //nextLevel();
+            update();
             try {
                 Thread.sleep(TIME_PER_FRAME);
             } catch (InterruptedException e) {

@@ -1,6 +1,6 @@
 package gamebody.engine;
 
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * 刚体类：用于碰撞检测

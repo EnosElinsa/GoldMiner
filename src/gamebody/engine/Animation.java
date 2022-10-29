@@ -1,10 +1,8 @@
 package gamebody.engine;
 
-import java.util.Vector;
-
-import javax.swing.ImageIcon;
-
+import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 /**
  * <p> 动画类 </p>

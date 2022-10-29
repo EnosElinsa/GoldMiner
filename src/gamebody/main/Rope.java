@@ -1,8 +1,9 @@
 package gamebody.main;
 
-import java.awt.*;
+import gamebody.engine.GameObject;
+import gamebody.engine.Rigidbody;
 
-import gamebody.engine.*;
+import java.awt.*;
 
 public class Rope extends GameObject {
     
@@ -34,7 +35,7 @@ public class Rope extends GameObject {
 
         BasicStroke stokeLine = new BasicStroke(1.6f);
         graphics2d.setStroke(stokeLine); // 设置线的粗细
-        Color colorOfRope = new Color(49, 52, 64);
+        Color colorOfRope = new Color(49, 51, 64);
         
         graphics2d.setColor(colorOfRope);
         graphics2d.drawLine(startX, startY, endX, endY);
@@ -48,6 +49,7 @@ public class Rope extends GameObject {
             // System.out.println(Math.toDegrees(angle));
             timer += (double)GameWindow.TIME_PER_FRAME / 600;
             retrieveRate = INIT_RETRIEVE_RATE;
+
             break;
         case GRAB:
             if (length <= MAX_LENGTH) {
@@ -71,16 +73,19 @@ public class Rope extends GameObject {
         endX = (int)(startX + length * Math.sin(angle));
         endY = (int)(startY + length * Math.cos(angle));
         rigidbody = new Rigidbody(endX, endY, 5, 5);
-        
+
+        //碰撞失败，即未抓取到物体
         if (isColliding == false && (collidingObject = detectCollision()) != null) {
             isColliding = true;
             currentState = RopeState.RETRIEVE;
             retrieveRate /= collidingObject.getMass();
         }
+        //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
             collidingObject.setAngle(-1 * angle);
+            //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
                 isColliding = false;
                 retrieveRate = INIT_RETRIEVE_RATE;
@@ -90,7 +95,11 @@ public class Rope extends GameObject {
                     e.printStackTrace();
                 }
                 collidingObject.vanish();
+                System.out.println(overallValue);
+
                 overallValue += collidingObject.getValue();
+                System.out.println(collidingObject.getValue());
+
             }
         }
     }

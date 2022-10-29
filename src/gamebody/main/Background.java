@@ -1,9 +1,9 @@
 package gamebody.main;
 
-import java.awt.*;
-import javax.swing.ImageIcon;
-
 import gamebody.engine.GameObject;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * <p> 背景类 </p>

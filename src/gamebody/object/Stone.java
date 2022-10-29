@@ -14,9 +14,19 @@ public class Stone extends GameObject {
         mass = STONE_MASS;
     }
 
-    public Stone(int x, int y, String textureDirectory) {
+    public Stone(int x, int y, String textureDirectory,int type) {
         super(x, y, textureDirectory);
         mass = STONE_MASS;
+        //0号石头value=11
+        if (type==0)
+        {
+            value=11;
+        }
+        //1号石头value=20
+        if(type==1)
+        {
+            value=20;
+        }
     }
     
 

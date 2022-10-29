@@ -1,9 +1,9 @@
 package gamebody.main;
 
-import java.awt.*;
-
 import gamebody.engine.Animation;
 import gamebody.engine.GameObject;
+
+import java.awt.*;
 
 public class Miner extends GameObject {
     

@@ -1,10 +1,10 @@
 package gamebody.engine;
 
+import gamebody.main.GameWindow;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import javax.swing.ImageIcon;
-
-import gamebody.main.GameWindow;
 
 public abstract class GameObject implements Runnable {
 
