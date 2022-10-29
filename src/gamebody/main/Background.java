@@ -39,4 +39,7 @@ public class Background extends GameObject {
     public Image getFloor() {
         return floor;
     }
+
+    @Override
+    protected void update() {}
 }

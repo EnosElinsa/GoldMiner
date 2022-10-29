@@ -5,7 +5,7 @@ import java.awt.*;
 import gamebody.engine.Animation;
 import gamebody.engine.GameObject;
 
-public class Miner extends GameObject implements Runnable {
+public class Miner extends GameObject {
     
     private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
     private Animation animationIdle;    // 静置时矿工的动画 
@@ -75,6 +75,11 @@ public class Miner extends GameObject implements Runnable {
         }
     }
 
+    @Override
+    protected void update() {
+        updateCurrentFrame();
+    }
+
     public MinerState getCurrentState() {
         return currentState;
     }
@@ -82,17 +87,5 @@ public class Miner extends GameObject implements Runnable {
     public void setCurrentState(MinerState currentState) {
         restoreFrameIndex(); // 要更新状态之前，要先把当前状态对应的动画的帧索引都置为0
         this.currentState = currentState;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            updateCurrentFrame();
-            try {
-                Thread.sleep(GameWindow.TIME_PER_FRAME);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 } 

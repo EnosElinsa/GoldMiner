@@ -2,24 +2,21 @@ package gamebody.main;
 
 import java.awt.*;
 
-import gamebody.engine.GameObject;
-import gamebody.engine.Rigidbody;
+import gamebody.engine.*;
 
-public class Rope extends GameObject implements Runnable {
+public class Rope extends GameObject {
     
     private int startX = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
     private int startY = 121;                           // 绳索的起点坐标纵坐标
     private int endX;                                   // 绳索的终点坐标横坐标                   
     private int endY;                                   // 绳索的终点坐标纵坐标  
     private int length = MIN_LENGTH;
-    private double angle;
-    private double timer = 0;
+    private double timer;
+    private int retrieveRate = INIT_RETRIEVE_RATE;
+    private int overallValue;
     private Thread ropeThread = new Thread(this);
     private RopeState currentState = RopeState.SWING;
-    private int retrieveRate = INIT_RETRIEVE_RATE;
     private GameWindow gameWindow;
-    private GameObject collidingObject = null;
-    public boolean isColliding = false;
 
     public static final int MAX_LENGTH = 500;
     public static final int MIN_LENGTH = 16;
@@ -43,10 +40,12 @@ public class Rope extends GameObject implements Runnable {
         graphics2d.drawLine(startX, startY, endX, endY);
     }
 
-    private void update() {
+    @Override
+    public void update() {
         switch (currentState) {
         case SWING:
             angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
+            // System.out.println(Math.toDegrees(angle));
             timer += (double)GameWindow.TIME_PER_FRAME / 600;
             retrieveRate = INIT_RETRIEVE_RATE;
             break;
@@ -71,8 +70,8 @@ public class Rope extends GameObject implements Runnable {
 
         endX = (int)(startX + length * Math.sin(angle));
         endY = (int)(startY + length * Math.cos(angle));
-
         rigidbody = new Rigidbody(endX, endY, 5, 5);
+        
         if (isColliding == false && (collidingObject = detectCollision()) != null) {
             isColliding = true;
             currentState = RopeState.RETRIEVE;
@@ -80,15 +79,18 @@ public class Rope extends GameObject implements Runnable {
         }
         if (isColliding && collidingObject != null) {
             collidingObject.setX(endX);
-            collidingObject.setY(endY);
+            collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
+            collidingObject.setAngle(-1 * angle);
             if (currentState == RopeState.SWING) {
                 isColliding = false;
+                retrieveRate = INIT_RETRIEVE_RATE;
                 try {
                     Thread.sleep(GameWindow.TIME_PER_FRAME * 9);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 collidingObject.vanish();
+                overallValue += collidingObject.getValue();
             }
         }
     }
@@ -100,18 +102,6 @@ public class Rope extends GameObject implements Runnable {
             }
         }
         return null;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            update();
-            try {
-                Thread.sleep(GameWindow.TIME_PER_FRAME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public int getStartX() {
@@ -172,5 +162,9 @@ public class Rope extends GameObject implements Runnable {
 
     public Rigidbody getRigidbody() {
         return rigidbody;
+    }
+
+    public int getOverallValue() {
+        return overallValue;
     }
 }

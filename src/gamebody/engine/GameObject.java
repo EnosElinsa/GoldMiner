@@ -1,19 +1,27 @@
 package gamebody.engine;
 
 import java.awt.*;
-
+import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 
-public abstract class GameObject {
+import gamebody.main.GameWindow;
 
-    protected int x;
-    protected int y;
+public abstract class GameObject implements Runnable {
+
+    protected int x;                     // 物体中心横坐标
+    protected int y;                     // 物体中心纵坐标
     protected int width;
     protected int height;
-    protected int mass;
+    protected double mass = 1;              // 物体质量
+    protected double angle = 0;          // 物体转动的角度
+    protected double scaleRatio = 1.0;   // 物体的缩放比例，默认为1.0
+    protected int value;                 // 物体的价值
 
     protected Image texture;
     protected Rigidbody rigidbody;
+    protected AffineTransform affineTransform;
+    protected GameObject collidingObject = null;
+    protected boolean isColliding = false;
 
     public GameObject() {}
     
@@ -31,14 +39,32 @@ public abstract class GameObject {
         rigidbody = new Rigidbody(x, y, width, height);
     }
 
+    protected abstract void update();
+
     public void render(Graphics graphics) {
-        graphics.drawImage(texture, x, y, null);
+        Graphics2D graphics2d = (Graphics2D) graphics;
+        affineTransform = AffineTransform.getTranslateInstance(x - width / 2, y - height / 2);
+        affineTransform.rotate(angle, width / 2, height / 2);
+        affineTransform.scale(scaleRatio, scaleRatio);
+        graphics2d.drawImage(texture, affineTransform, null);
     }
 
     public void vanish() {
         x = 2000;
         y = 2000;
         rigidbody = new Rigidbody(x, y, width, height);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            update();
+            try {
+                Thread.sleep(GameWindow.TIME_PER_FRAME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int getX() {
@@ -73,9 +99,47 @@ public abstract class GameObject {
         return rigidbody;
     }
 
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
 
-    
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public AffineTransform getAffineTransform() {
+        return affineTransform;
+    }
+
+    public GameObject getCollidingObject() {
+        return collidingObject;
+    }
+
+    public boolean isColliding() {
+        return isColliding;
+    }
+
+    public void setColliding(boolean isColliding) {
+        this.isColliding = isColliding;
+    }
+
+    public double getScaleRatio() {
+        return scaleRatio;
+    }
+
+    public void setScaleRatio(double scaleRatio) {
+        this.scaleRatio = scaleRatio;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }

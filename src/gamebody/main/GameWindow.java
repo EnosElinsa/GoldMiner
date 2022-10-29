@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import gamebody.engine.GameObject;
 import gamebody.object.Gold;
+import gamebody.object.Stone;
+import gamebody.object.TreasureBag;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -42,7 +44,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     }
 
     private void loadGameObjects() {
-        gameobjects.add(new Gold(500, 500, "resources/gold.png"));
+        gameobjects.add(new Gold(600, 500));
+        gameobjects.add(new Stone(500, 500,"resources/stone-0.png" ));
+        gameobjects.add(new Stone(200, 400, "resources/stone-1.png"));
+        gameobjects.add(new TreasureBag(250, 444));
+        gameobjects.add(new Gold(300, 222, 0.5));
     }
 
     private void update() {
