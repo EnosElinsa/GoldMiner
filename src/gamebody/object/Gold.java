@@ -13,7 +13,7 @@ public class Gold extends GameObject {
     public static final double GOLD_MASS = 15;
     private static final String textureDirectory = "resources/gold.png";
 
-    public static final int GOLD_VALUE=500;//大金块默认的金钱
+    public static final int GOLD_VALUE = 500;//大金块默认的金钱
 
     public Gold() {}
 
@@ -30,14 +30,14 @@ public class Gold extends GameObject {
         mass = GOLD_MASS * scaleRatio;
         this.scaleRatio = scaleRatio;
         //缩放比例为0.5，即中金块
-        if (scaleRatio==0.5)
+        if (scaleRatio == 0.5)
         {
-            value=100;
+            value = 100;
         }
         //缩放比例为0.3，即小金块
-        if (scaleRatio==0.3)
+        if (scaleRatio == 0.3)
         {
-            value=50;
+            value = 50;
         }
     }
 
