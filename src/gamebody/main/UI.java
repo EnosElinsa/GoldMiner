@@ -45,13 +45,17 @@ public class UI extends GameObject {
         drawWords(graphics,32, Color.WHITE, words6,650,128);
         drawWords(graphics,32, Color.RED, Integer.toString(gameWindow.getLevel()),750,128);
 
+<<<<<<< HEAD
         //倒计时效果
+=======
+>>>>>>> main
         long curTime = gameWindow.getTime().countDown();
         if (curTime >= 0)
         {
             String words7 = "" + curTime;
             drawWords(graphics,32,Color.RED,words7,750,75);
         }
+<<<<<<< HEAD
 
         //抓取成功后的加分效果
         if(gameWindow.getRope().getIsRetrieve()==1)
@@ -61,5 +65,7 @@ public class UI extends GameObject {
             String words8="+"+Integer.toString(addValue);
             drawWords(graphics,30,Color.GREEN,words8,300,75);
         }
+=======
+>>>>>>> main
     }
 }
