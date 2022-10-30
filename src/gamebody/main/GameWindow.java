@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class GameWindow extends JFrame implements Runnable, KeyListener {
-    
+
     public static final int INIT_WIDTH = 960; // 默认窗口宽度960px
     public static final int INIT_HEIGHT = 540 + 124 + 30; // 默认窗口高度540px(关卡背景高度)+124px(陆地背景高度)+30px(填充)
     public static final int TIME_PER_FRAME = 80; // 更新一帧所需的时间，单位是微秒
@@ -26,8 +26,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private ArrayList<GameObject> gameobjects = new ArrayList<>();
     private static int level=1;//关卡数
 
-    private long startTime;
-    private long endTime;
+
 
     private static int target=105+545*level+135*(level-1)*(level-2);
 
@@ -40,7 +39,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         setVisible(true);
         setSize(getDimension());
         setResizable(false);
-        setLocationRelativeTo(null);   
+        setLocationRelativeTo(null);
         setTitle("GoldMiner");
         setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -52,6 +51,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         gameWindowThread.start(); // 开启窗口线程
     }
 
+    //添加物体
     private void loadGameObjects() {
         gameobjects.add(new Gold(600, 500));
         gameobjects.add(new Stone(500, 500,"resources/stone-0.png" ,0));//value=11,0号石头
@@ -62,15 +62,16 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     }
 
     private void update() {
-        if (rope.getCurrentState() == RopeState.RETRIEVE 
+        if (rope.getCurrentState() == RopeState.RETRIEVE
                 && miner.getCurrentState() != MinerState.PULL) {  // 当绳索状态处于“收取”时
-                miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
+            miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
         }
         else if (rope.getCurrentState() == RopeState.SWING) { // 当绳索状态处于“摇摆”时
             miner.setCurrentState(MinerState.IDLE);           // 将矿工的状态设置为“静置”
         }
     }
 
+    //打印字体方法
     public static void drawWord(Graphics graphics,int size,Color color,String str,int x,int y)
     {
         graphics.setColor(color);
@@ -118,6 +119,19 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
         drawWord(graphics2,32,Color.RED,Integer.toString(level),750,128);
 
+        long curTime=time.countDown();
+        //时间还没到，游戏进行时
+        if (curTime>=0)
+        {
+            String words7=""+curTime;
+            drawWord(graphics2,32,Color.RED,words7,750,75);
+        }
+        //时间到了，判断游戏过关还是失败
+        else
+        {
+
+        }
+
 
         // 将辅助画板绘制在原本的画板上
         graphics.drawImage(offScreenImage, 0, 0, null);
@@ -135,18 +149,6 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         }
     }
 
-    public void countDown(Graphics graphics)
-    {
-        //倒计时
-        while (time.getTime()>=0)
-        {
-            String words7=Integer.toString(time.getTime());
-            Font f7=new Font("宋体",Font.BOLD,32);
-            graphics.setFont(f7);
-            graphics.setColor(Color.RED);
-            graphics.drawString(words7,750,75);
-        }
-    }
 
     @Override
     public void run() {

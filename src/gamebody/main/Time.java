@@ -1,21 +1,18 @@
 package gamebody.main;
 
 public class Time {
-    private static int time=60;
+    private long startTime;
+    private long endTime;
 
-    public Time(){}
-
-    public void countDown()
+    public Time()
     {
-        while (time>=0)
-        {
-            time--;
-        }
-        time=60;
+        startTime=System.currentTimeMillis();
     }
 
-    public int getTime()
+    public long countDown()
     {
+        endTime=System.currentTimeMillis();
+        long time=60-(endTime-startTime)/1000;
         return time;
     }
 }
