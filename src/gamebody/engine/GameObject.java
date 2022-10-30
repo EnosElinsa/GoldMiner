@@ -12,7 +12,7 @@ public abstract class GameObject implements Runnable {
     protected int y;                     // 物体中心纵坐标
     protected int width;
     protected int height;
-    protected double mass = 1;              // 物体质量
+    protected double mass = 1;           // 物体质量
     protected double angle = 0;          // 物体转动的角度
     protected double scaleRatio = 1.0;   // 物体的缩放比例，默认为1.0
     protected int value;                 // 物体的价值

@@ -6,7 +6,7 @@ import gamebody.engine.Rigidbody;
 import java.awt.*;
 
 public class Rope extends GameObject {
-    
+
     private int startX = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
     private int startY = 121;                           // 绳索的起点坐标纵坐标
     private int endX;                                   // 绳索的终点坐标横坐标                   
@@ -23,7 +23,12 @@ public class Rope extends GameObject {
     public static final int MIN_LENGTH = 16;
     public static final int GRAB_RATE = 23;
     public static final int INIT_RETRIEVE_RATE = 35;
-    
+
+    //判断物体是否收回成功，0为未成功，1为成功
+    private int isRetrieve=0;
+
+    private int grabValue;
+
     public Rope(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         ropeThread.start();
@@ -36,7 +41,7 @@ public class Rope extends GameObject {
         BasicStroke stokeLine = new BasicStroke(1.6f);
         graphics2d.setStroke(stokeLine); // 设置线的粗细
         Color colorOfRope = new Color(49, 51, 64);
-        
+
         graphics2d.setColor(colorOfRope);
         graphics2d.drawLine(startX, startY, endX, endY);
     }
@@ -44,30 +49,30 @@ public class Rope extends GameObject {
     @Override
     public void update() {
         switch (currentState) {
-        case SWING:
-            angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
-            // System.out.println(Math.toDegrees(angle));
-            timer += (double)GameWindow.TIME_PER_FRAME / 600;
-            retrieveRate = INIT_RETRIEVE_RATE;
+            case SWING:
+                angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
+                // System.out.println(Math.toDegrees(angle));
+                timer += (double)GameWindow.TIME_PER_FRAME / 600;
+                retrieveRate = INIT_RETRIEVE_RATE;
 
-            break;
-        case GRAB:
-            if (length <= MAX_LENGTH) {
-                length += GRAB_RATE;
-            }
-            else {
-                currentState = RopeState.RETRIEVE;
-            }
-            break;
-        case RETRIEVE:
-            if (length >= MIN_LENGTH) {
-                length -= retrieveRate;
-            }
-            else {
-                length = MIN_LENGTH;
-                currentState = RopeState.SWING;
-            }
-            break;
+                break;
+            case GRAB:
+                if (length <= MAX_LENGTH) {
+                    length += GRAB_RATE;
+                }
+                else {
+                    currentState = RopeState.RETRIEVE;
+                }
+                break;
+            case RETRIEVE:
+                if (length >= MIN_LENGTH) {
+                    length -= retrieveRate;
+                }
+                else {
+                    length = MIN_LENGTH;
+                    currentState = RopeState.SWING;
+                }
+                break;
         }
 
         endX = (int)(startX + length * Math.sin(angle));
@@ -82,11 +87,13 @@ public class Rope extends GameObject {
         }
         //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
+            grabValue=collidingObject.getValue();
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
             collidingObject.setAngle(-1 * angle);
             //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
+                grabValue=collidingObject.getValue();
                 isColliding = false;
                 retrieveRate = INIT_RETRIEVE_RATE;
                 try {
@@ -94,16 +101,18 @@ public class Rope extends GameObject {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                //抓取成功，物体消失
                 collidingObject.vanish();
-                System.out.println(overallValue);
-
+                //收回成功
+                isRetrieve=1;
                 overallValue += collidingObject.getValue();
-                System.out.println(collidingObject.getValue());
+
 
             }
         }
     }
 
+    //返回碰撞检测成功的那个物体
     public GameObject detectCollision() {
         for (GameObject object : gameWindow.getGameobjects()) {
             if (rigidbody.hasCollisionWith(object.getRigidbody())) {
@@ -176,4 +185,10 @@ public class Rope extends GameObject {
     public int getOverallValue() {
         return overallValue;
     }
+
+    public int getIsRetrieve(){return isRetrieve;}
+
+    public void setIsRetrieve(int isRetrieve1){isRetrieve=isRetrieve1;}
+
+    public int getGrabValue(){return grabValue;}
 }
