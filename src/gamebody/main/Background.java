@@ -1,7 +1,6 @@
 package gamebody.main;
 
 import gamebody.engine.GameObject;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Vector;
@@ -12,22 +11,28 @@ import java.util.Vector;
  */
 public class Background extends GameObject {
     
-    private static Vector<Image> levelbackgrounds = new Vector<>();
-    static {
-        levelbackgrounds.add(new ImageIcon("resources/level-background-0.png").getImage());
-        levelbackgrounds.add(new ImageIcon("resources/level-background-1.png").getImage());
-        levelbackgrounds.add(new ImageIcon("resources/level-background-2.png").getImage());
-        levelbackgrounds.add(new ImageIcon("resources/level-background-3.png").getImage());
-        levelbackgrounds.add(new ImageIcon("resources/level-background-4.png").getImage());
-    }
+    private Vector<Image> levelBackgrounds = new Vector<>();
     private Image land;
     private Image levelBackground;
     private Image floor;
 
-    public Background(int level) {
+    public Background() {
+        intialize();
+    }
+
+    private void intialize() {
         land = new ImageIcon("resources/land.png").getImage();
-        levelBackground = levelbackgrounds.get(level);
         floor = new ImageIcon("resources/floor_resize.png").getImage();
+        levelBackgrounds.add(new ImageIcon("resources/level-background-0.png").getImage());
+        levelBackgrounds.add(new ImageIcon("resources/level-background-1.png").getImage());
+        levelBackgrounds.add(new ImageIcon("resources/level-background-2.png").getImage());
+        levelBackgrounds.add(new ImageIcon("resources/level-background-3.png").getImage());
+        levelBackgrounds.add(new ImageIcon("resources/level-background-4.png").getImage());
+        levelBackground = levelBackgrounds.get(0);
+    }
+
+    public void setLevelBackground(int level) {
+        levelBackground = levelBackgrounds.get(level);
     }
 
     @Override

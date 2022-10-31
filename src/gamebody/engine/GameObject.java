@@ -16,12 +16,14 @@ public abstract class GameObject implements Runnable {
     protected double angle = 0;          // 物体转动的角度
     protected double scaleRatio = 1.0;   // 物体的缩放比例，默认为1.0
     protected int value;                 // 物体的价值
-
+    
     protected Image texture;
     protected Rigidbody rigidbody;
     protected AffineTransform affineTransform;
     protected GameObject collidingObject = null;
     protected boolean isColliding = false;
+    protected Thread thread;
+    protected boolean isAnimated;
 
     public GameObject() {}
     
@@ -37,6 +39,13 @@ public abstract class GameObject implements Runnable {
         width = texture.getWidth(null);
         height = texture.getHeight(null);
         rigidbody = new Rigidbody(x, y, width, height);
+    }
+
+    public GameObject(int x, int y, String textureDirectory, boolean isAnimated) {
+        this(x, y, textureDirectory);
+        this.isAnimated = isAnimated;
+        thread = new Thread(this);
+        thread.run();
     }
 
     protected abstract void update();

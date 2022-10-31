@@ -1,6 +1,7 @@
 package gamebody.main;
 
 public class Time {
+    
     private long startTime;
     private long endTime;
 

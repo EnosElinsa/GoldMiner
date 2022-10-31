@@ -15,7 +15,7 @@ public class Rigidbody {
     }
 
     public boolean hasCollisionWith(Rigidbody other) {
-        if (rigidbody.intersects(other.rigidbody.getBounds2D())) {
+        if (other != null && rigidbody.intersects(other.rigidbody.getBounds2D())) {
             return true;
         }
         return false;

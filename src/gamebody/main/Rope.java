@@ -24,8 +24,8 @@ public class Rope extends GameObject {
     public static final int GRAB_RATE = 23;
     public static final int INIT_RETRIEVE_RATE = 35;
 
-    //判断物体是否收回成功，0为未成功，1为成功
-    private int isRetrieve=0;
+    //判断物体是否收回成功
+    private boolean isRetrieved = false;
 
     private int grabValue;
 
@@ -54,7 +54,6 @@ public class Rope extends GameObject {
                 // System.out.println(Math.toDegrees(angle));
                 timer += (double)GameWindow.TIME_PER_FRAME / 600;
                 retrieveRate = INIT_RETRIEVE_RATE;
-
                 break;
             case GRAB:
                 if (length <= MAX_LENGTH) {
@@ -87,13 +86,13 @@ public class Rope extends GameObject {
         }
         //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
-            grabValue=collidingObject.getValue();
+            grabValue = collidingObject.getValue();
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
             collidingObject.setAngle(-1 * angle);
             //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
-                grabValue=collidingObject.getValue();
+                grabValue  = collidingObject.getValue();
                 isColliding = false;
                 retrieveRate = INIT_RETRIEVE_RATE;
                 try {
@@ -104,10 +103,8 @@ public class Rope extends GameObject {
                 //抓取成功，物体消失
                 collidingObject.vanish();
                 //收回成功
-                isRetrieve=1;
+                isRetrieved = true;
                 overallValue += collidingObject.getValue();
-
-
             }
         }
     }
@@ -185,10 +182,16 @@ public class Rope extends GameObject {
     public int getOverallValue() {
         return overallValue;
     }
+    
+    public boolean isRetrieved() {
+        return isRetrieved;
+    }
 
-    public int getIsRetrieve(){return isRetrieve;}
+    public void setRetrieved(boolean isRetrieved) {
+        this.isRetrieved = isRetrieved;
+    }
 
-    public void setIsRetrieve(int isRetrieve1){isRetrieve=isRetrieve1;}
-
-    public int getGrabValue(){return grabValue;}
+    public int getGrabValue() {
+        return grabValue;
+    }
 }

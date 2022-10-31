@@ -13,7 +13,5 @@ public class Explosive extends GameObject {
     }
 
     @Override
-    protected void update() {
-        
-    }
+    protected void update() {}
 }
