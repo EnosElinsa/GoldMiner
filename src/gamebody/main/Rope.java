@@ -19,7 +19,7 @@ public class Rope extends GameObject {
     private RopeState currentState = RopeState.SWING;
     private GameWindow gameWindow;
 
-    public static final int MAX_LENGTH = 600;
+    public static final int MAX_LENGTH = 650;
     public static final int MIN_LENGTH = 16;
     public static final int GRAB_RATE = 23;
     public static final int INIT_RETRIEVE_RATE = 35;
