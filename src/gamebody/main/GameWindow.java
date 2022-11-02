@@ -26,10 +26,12 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private UI ui = new UI(this);
     private Thread gameWindowThread = new Thread(this); // 窗口线程
 
-    private static int level = 1; //关卡数
+    private static int level = 2; //关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
     
-    public GameWindow() {}
+    public GameWindow() {
+        gameWindowThread.start(); // 开启窗口线程
+    }
 
     public void launch() {
         setVisible(true);
@@ -43,8 +45,6 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         addKeyListener(this); // 给窗口注册键盘事件监听器
         loadGameObjects(); // 加载游戏场景的物体
         repaint();
-
-        gameWindowThread.start(); // 开启窗口线程
     }
 
     /**
@@ -64,7 +64,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         }
 
         if (time.countDown() < 0) {
-            // nextLevel();
+            nextLevel();
         }
     }
     
@@ -72,8 +72,12 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         //达到下一关的条件
         if (rope.getOverallValue() >= target) {
             System.out.println("已经达到过关条件");
-            level++;
             dispose();
+            level++;
+            time = new Time();
+            miner.setCurrentState(MinerState.IDLE);
+            rope.setCurrentState(RopeState.SWING);
+            rope.setLength(Rope.MIN_LENGTH);
             launch();
         }
     }

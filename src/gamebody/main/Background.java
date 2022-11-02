@@ -32,7 +32,7 @@ public class Background extends GameObject {
     }
 
     public void setLevelBackground(int level) {
-        levelBackground = levelBackgrounds.get(level);
+        levelBackground = levelBackgrounds.get(level % 4);
     }
 
     @Override
