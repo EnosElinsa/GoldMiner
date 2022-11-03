@@ -1,6 +1,7 @@
 package gamebody.engine;
 
 import gamebody.main.GameWindow;
+import gamebody.object.ObjectValueLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,8 @@ public abstract class GameObject implements Runnable {
     protected boolean isColliding = false;
     protected Thread thread;
     protected boolean isAnimated;
+
+    protected ObjectValueLevel objectValueLevel;//物体的价值等级
 
     public GameObject() {}
     
@@ -150,5 +153,15 @@ public abstract class GameObject implements Runnable {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public ObjectValueLevel getObjectValueLevel()
+    {
+        return objectValueLevel;
+    }
+
+    public void setObjectValueLevel(ObjectValueLevel objectValueLevel1)
+    {
+        objectValueLevel=objectValueLevel1;
     }
 }

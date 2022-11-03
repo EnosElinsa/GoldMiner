@@ -7,11 +7,13 @@ public class Stone extends GameObject {
     public static final int STONE_MASS = 8;
     private static final String[] TEXTURE_DIRECTORIES = {"resources/stone-0.png", "resources/stone-1.png"};
 
+
     public Stone() {}
 
     public Stone(int x, int y, int type) {
         super(x, y, TEXTURE_DIRECTORIES[type]);
         mass = STONE_MASS;
+        objectValueLevel=ObjectValueLevel.LOW;
         // 0号石头value=11
         if (type == 0) {
             value = 11;
@@ -25,4 +27,5 @@ public class Stone extends GameObject {
     
     @Override
     protected void update() {}
+
 }

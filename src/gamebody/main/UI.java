@@ -1,13 +1,14 @@
 package gamebody.main;
 
-import java.awt.*;
-
 import gamebody.engine.GameObject;
+
+import java.awt.*;
 
 public class UI extends GameObject {
 
     private GameWindow gameWindow;
 
+    private Sound addValueSound=new Sound("sound/sound_wav/score1.wav");
     public UI(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
@@ -50,6 +51,16 @@ public class UI extends GameObject {
         if (curTime >= 0) {
             String words7 = "" + curTime;
             drawWords(graphics,32,Color.RED,words7,750,75);
+        }
+
+        //抓取成功后的加分效果
+        if(gameWindow.getRope().isRetrieved()==true)
+        {
+            gameWindow.getRope().setRetrieved(false);
+            int addValue=gameWindow.getRope().getGrabValue();
+            addValueSound.musicMain(1);
+            String words8="+"+Integer.toString(addValue);
+            drawWords(graphics,30,Color.GREEN,words8,300,75);
         }
     }
 }

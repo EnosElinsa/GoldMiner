@@ -1,6 +1,7 @@
 package gamebody.main;
 
-import gamebody.engine.*;
+import gamebody.engine.Animation;
+import gamebody.engine.GameObject;
 
 import java.awt.*;
 

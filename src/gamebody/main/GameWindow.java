@@ -1,6 +1,7 @@
 package gamebody.main;
 
 import gamebody.engine.GameObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -33,7 +34,14 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         gameWindowThread.start(); // 开启窗口线程
     }
 
+    private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav");//背景音效
+
+    private Sound digSound=new Sound("sound/sound_wav/dig.wav");//矿工挖音效
+
+    private Sound pullSound=new Sound("sound/sound_wav/pull.wav");//矿工拉音效
+
     public void launch() {
+        //bgSound.musicMain(3);
         setVisible(true);
         setSize(getDimension());
         setResizable(false);
@@ -57,9 +65,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private void update() {
         if (rope.getCurrentState() == RopeState.RETRIEVE
         && miner.getCurrentState() != MinerState.PULL) {      // 当绳索状态处于“收取”时
+            pullSound.musicMain(3);
             miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
         }
         else if (rope.getCurrentState() == RopeState.SWING) { // 当绳索状态处于“摇摆”时
+            pullSound.musicMain(2);
             miner.setCurrentState(MinerState.IDLE);           // 将矿工的状态设置为“静置”
         }
 
@@ -122,6 +132,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {            // 当按下“↓”键时
             if (rope.getCurrentState() == RopeState.SWING) { // 当绳索处于摆动状态的时候
+                digSound.musicMain(1);
                 rope.setCurrentState(RopeState.GRAB);        // 将绳索的状态设为“抓取”
                 miner.setCurrentState(MinerState.DIG);       // 将矿工的状态设为“挖”
             }

@@ -2,6 +2,7 @@ package gamebody.main;
 
 import gamebody.engine.GameObject;
 import gamebody.engine.Rigidbody;
+import gamebody.object.ObjectValueLevel;
 
 import java.awt.*;
 
@@ -28,6 +29,13 @@ public class Rope extends GameObject {
     private boolean isRetrieved = false;
 
     private int grabValue;
+
+    private Sound highSound=new Sound("sound/sound_wav/high-value.wav");//抓取到高价值物体的音效
+    private Sound normalSound=new Sound("sound/sound_wav/normal-value.wav");//抓取到普通价值物体的音效
+    private Sound lowSound=new Sound("sound/sound_wav/low-value.wav");//抓取到低价值物体的音效
+
+    private boolean isSuccessed=true;//标记是否抓取物体成功
+
 
     public Rope(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -87,6 +95,25 @@ public class Rope extends GameObject {
         //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
             grabValue = collidingObject.getValue();
+            if (isSuccessed==true)
+            {
+                isSuccessed=false;
+                //抓取到高价值的物体
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.HIGH)
+                {
+                    highSound.musicMain(1);
+                }
+                //抓取到普通价值的物体
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.NORMAL)
+                {
+                    normalSound.musicMain(1);
+                }
+                //抓取到低价值的物体
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.LOW)
+                {
+                    lowSound.musicMain(1);
+                }
+            }
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
             collidingObject.setAngle(-1 * angle);
@@ -104,6 +131,7 @@ public class Rope extends GameObject {
                 collidingObject.vanish();
                 //收回成功
                 isRetrieved = true;
+                isSuccessed=true;
                 overallValue += collidingObject.getValue();
             }
         }

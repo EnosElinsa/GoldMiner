@@ -1,8 +1,9 @@
 package gamebody.main;
 
-import java.util.Vector;
-import gamebody.engine.*;
+import gamebody.engine.GameObject;
 import gamebody.object.*;
+
+import java.util.Vector;
 
 public class Scene {
 
