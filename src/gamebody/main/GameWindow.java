@@ -84,6 +84,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
             System.out.println("已经达到过关条件");
             dispose();
             level++;
+            target = 105 + 545 * level + 135 * (level - 1) * (level - 2);
             time = new Time();
             miner.setCurrentState(MinerState.IDLE);
             rope.setCurrentState(RopeState.SWING);
