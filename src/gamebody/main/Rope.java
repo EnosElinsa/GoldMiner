@@ -22,8 +22,8 @@ public class Rope extends GameObject {
 
     public static final int MAX_LENGTH = 650;
     public static final int MIN_LENGTH = 16;
-    public static final int GRAB_RATE = 23;
-    public static final int INIT_RETRIEVE_RATE = 35;
+    public static final int GRAB_RATE = 28;
+    public static final int INIT_RETRIEVE_RATE = 40;
 
     //判断物体是否收回成功
     private boolean isRetrieved = false;

@@ -18,27 +18,25 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Image icon = new ImageIcon("resources/miner-dig-0.png").getImage(); // 窗口图标
 
     private Image offScreenImage; // 用于双缓存的辅助画板
-    private Scene scene = new Scene();
-    private Miner miner = new Miner(); // 矿工
+    private Scene scene = new Scene();  // 场景
+    private Miner miner = new Miner();  // 矿工
     private Rope rope = new Rope(this); // 绳索
     private Vector<GameObject> gameobjects = scene.getGameObjects(0);
 
     private Time time = new Time();
     private UI ui = new UI(this);
-    private Thread gameWindowThread = new Thread(this); // 窗口线程
-
-    private static int level = 8; //关卡数
+    private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav"); // 背景音效
+    private Sound digSound=new Sound("sound/sound_wav/dig.wav");      // 矿工挖音效
+    private Sound pullSound=new Sound("sound/sound_wav/pull.wav");    // 矿工拉音效
+    private Thread gameWindowThread = new Thread(this);                   // 窗口线程
+    
+    private static int level = 1; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程
     }
 
-    private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav");//背景音效
-
-    private Sound digSound=new Sound("sound/sound_wav/dig.wav");//矿工挖音效
-
-    private Sound pullSound=new Sound("sound/sound_wav/pull.wav");//矿工拉音效
 
     public void launch() {
         //bgSound.musicMain(3);
@@ -82,7 +80,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         //达到下一关的条件
         if (rope.getOverallValue() >= target) {
             System.out.println("已经达到过关条件");
-            dispose();
+            // dispose();
             level++;
             target = 105 + 545 * level + 135 * (level - 1) * (level - 2);
             time = new Time();
