@@ -37,10 +37,10 @@ public class Background extends GameObject {
     }
 
     @Override
-    public void render(Graphics graphics) {
-        graphics.drawImage(land, 0, 30, null);
-        graphics.drawImage(levelBackground, 0, land.getHeight(null) + 30, null);
-        graphics.drawImage(floor, land.getWidth(null) / 2 - 40, land.getHeight(null) + 8, null);
+    public void render(Graphics graphics, JPanel panel) {
+        graphics.drawImage(land, 0, 30, panel);
+        graphics.drawImage(levelBackground, 0, land.getHeight(null) + 30, panel);
+        graphics.drawImage(floor, land.getWidth(null) / 2 - 40, land.getHeight(null) + 8, panel);
     }
 
     @Override

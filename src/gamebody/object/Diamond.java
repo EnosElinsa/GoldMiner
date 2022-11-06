@@ -14,7 +14,7 @@ public class Diamond extends GameObject {
         super(x, y, TEXTURE_DIRECTORY);
         mass = DIAMOND_MASS;
         value = DIAMOND_VALUE;
-        objectValueLevel=ObjectValueLevel.HIGH;
+        objectValueLevel = ObjectValueLevel.HIGH;
     }
 
     @Override

@@ -5,6 +5,8 @@ import gamebody.engine.GameObject;
 
 import java.awt.*;
 
+import javax.swing.JPanel;
+
 public class Miner extends GameObject {
     
     private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
@@ -30,8 +32,8 @@ public class Miner extends GameObject {
     }
 
     @Override
-    public void render(Graphics graphics) {
-        graphics.drawImage(currentFrame, GameWindow.INIT_WIDTH / 2 - 30, 57, null);
+    public void render(Graphics graphics, JPanel panel) {
+        graphics.drawImage(currentFrame, GameWindow.INIT_WIDTH / 2 - 30, 57, panel);
     }
 
     /**

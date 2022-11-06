@@ -6,6 +6,8 @@ import gamebody.object.ObjectValueLevel;
 
 import java.awt.*;
 
+import javax.swing.JPanel;
+
 public class Rope extends GameObject {
 
     private int startX = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
@@ -16,6 +18,8 @@ public class Rope extends GameObject {
     private double timer;
     private int retrieveRate = INIT_RETRIEVE_RATE;
     private int overallValue;
+
+    private Hook hook = new Hook(this);
     private Thread ropeThread = new Thread(this);
     private RopeState currentState = RopeState.SWING;
     private GameWindow gameWindow;
@@ -25,17 +29,15 @@ public class Rope extends GameObject {
     public static final int GRAB_RATE = 28;
     public static final int INIT_RETRIEVE_RATE = 40;
 
-    //判断物体是否收回成功
-    private boolean isRetrieved = false;
+                                         
+    private boolean isRetrieved = false; //判断物体是否收回成功
+    private boolean isSuccessed=true;    //标记是否抓取物体成功
 
     private int grabValue;
 
-    private Sound highSound=new Sound("sound/sound_wav/high-value.wav");//抓取到高价值物体的音效
-    private Sound normalSound=new Sound("sound/sound_wav/normal-value.wav");//抓取到普通价值物体的音效
-    private Sound lowSound=new Sound("sound/sound_wav/low-value.wav");//抓取到低价值物体的音效
-
-    private boolean isSuccessed=true;//标记是否抓取物体成功
-
+    private Sound highSound = new Sound("sound/sound_wav/high-value.wav");//抓取到高价值物体的音效
+    private Sound normalSound = new Sound("sound/sound_wav/normal-value.wav");//抓取到普通价值物体的音效
+    private Sound lowSound = new Sound("sound/sound_wav/low-value.wav");//抓取到低价值物体的音效
 
     public Rope(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -43,7 +45,7 @@ public class Rope extends GameObject {
     }
 
     @Override
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics, JPanel panel) {
         Graphics2D graphics2d = (Graphics2D) graphics;
 
         BasicStroke stokeLine = new BasicStroke(1.6f);
@@ -52,6 +54,7 @@ public class Rope extends GameObject {
 
         graphics2d.setColor(colorOfRope);
         graphics2d.drawLine(startX, startY, endX, endY);
+        hook.render(graphics2d, panel);
     }
 
     @Override
@@ -84,10 +87,13 @@ public class Rope extends GameObject {
 
         endX = (int)(startX + length * Math.sin(angle));
         endY = (int)(startY + length * Math.cos(angle));
+        hook.setX(endX);
+        hook.setY(endY);
+        hook.setAngle(-1 * angle);
         rigidbody = new Rigidbody(endX, endY, 5, 5);
 
         //碰撞失败，即未抓取到物体
-        if (isColliding == false && (collidingObject = detectCollision()) != null) {
+        if (isColliding == false && currentState == RopeState.GRAB && (collidingObject = detectCollision()) != null) {
             isColliding = true;
             currentState = RopeState.RETRIEVE;
             retrieveRate /= collidingObject.getMass();
@@ -95,31 +101,28 @@ public class Rope extends GameObject {
         //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
             grabValue = collidingObject.getValue();
-            if (isSuccessed==true)
-            {
-                isSuccessed=false;
+            if (isSuccessed == true) {
+                isSuccessed = false;
                 //抓取到高价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.HIGH)
-                {
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.HIGH) {
                     highSound.musicMain(1);
                 }
                 //抓取到普通价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.NORMAL)
-                {
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.NORMAL) {
                     normalSound.musicMain(1);
                 }
                 //抓取到低价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.LOW)
-                {
+                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.LOW) {
                     lowSound.musicMain(1);
                 }
             }
+
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3);
             collidingObject.setAngle(-1 * angle);
             //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
-                grabValue  = collidingObject.getValue();
+                grabValue = collidingObject.getValue();
                 isColliding = false;
                 retrieveRate = INIT_RETRIEVE_RATE;
                 try {
@@ -131,7 +134,7 @@ public class Rope extends GameObject {
                 collidingObject.vanish();
                 //收回成功
                 isRetrieved = true;
-                isSuccessed=true;
+                isSuccessed = true;
                 overallValue += collidingObject.getValue();
             }
         }

@@ -4,6 +4,8 @@ import gamebody.engine.GameObject;
 
 import java.awt.*;
 
+import javax.swing.JPanel;
+
 public class UI extends GameObject {
 
     private GameWindow gameWindow;
@@ -23,7 +25,7 @@ public class UI extends GameObject {
     protected void update() {}
 
     @Override
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics, JPanel panel) {
         // 画文字（金钱、目标、时间、关卡）
         String words1 = "金钱";
         drawWords(graphics,30, Color.WHITE, words1,50,75);

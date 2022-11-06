@@ -21,8 +21,8 @@ public abstract class GameObject implements Runnable {
     protected Image texture;
     protected Rigidbody rigidbody;
     protected AffineTransform affineTransform;
-    protected GameObject collidingObject = null;
-    protected boolean isColliding = false;
+    protected GameObject collidingObject;
+    protected boolean isColliding;
     protected Thread thread;
     protected boolean isAnimated;
 
@@ -47,18 +47,20 @@ public abstract class GameObject implements Runnable {
     public GameObject(int x, int y, String textureDirectory, boolean isAnimated) {
         this(x, y, textureDirectory);
         this.isAnimated = isAnimated;
-        thread = new Thread(this);
-        thread.run();
+        if (isAnimated) {
+            thread = new Thread(this);
+            thread.run();
+        }
     }
 
     protected abstract void update();
 
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics, JPanel panel) {
         Graphics2D graphics2d = (Graphics2D) graphics;
         affineTransform = AffineTransform.getTranslateInstance(x - width / 2, y - height / 2);
         affineTransform.rotate(angle, width / 2, height / 2);
         affineTransform.scale(scaleRatio, scaleRatio);
-        graphics2d.drawImage(texture, affineTransform, null);
+        graphics2d.drawImage(texture, affineTransform, panel);
     }
 
     public void vanish() {
@@ -155,13 +157,11 @@ public abstract class GameObject implements Runnable {
         this.value = value;
     }
 
-    public ObjectValueLevel getObjectValueLevel()
-    {
+    public ObjectValueLevel getObjectValueLevel() {
         return objectValueLevel;
     }
 
-    public void setObjectValueLevel(ObjectValueLevel objectValueLevel1)
-    {
+    public void setObjectValueLevel(ObjectValueLevel objectValueLevel1) {
         objectValueLevel=objectValueLevel1;
     }
 }

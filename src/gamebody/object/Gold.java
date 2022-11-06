@@ -1,8 +1,6 @@
 package gamebody.object;
 
-import gamebody.engine.Animation;
-import gamebody.engine.GameObject;
-import gamebody.engine.Rigidbody;
+import gamebody.engine.*;
 
 public class Gold extends GameObject {
     
@@ -22,7 +20,7 @@ public class Gold extends GameObject {
         super(x, y, TEXTURE_DIRECTORY);
         mass = GOLD_MASS;
         value = GOLD_VALUE;
-        objectValueLevel=ObjectValueLevel.HIGH;
+        objectValueLevel = ObjectValueLevel.HIGH;
     }
 
     // 带缩放比例的构造方法
@@ -33,7 +31,7 @@ public class Gold extends GameObject {
         width = (int)(scaleRatio * width);
         height = (int)(scaleRatio * height);
         rigidbody = new Rigidbody(x, y, width, height);
-        objectValueLevel=ObjectValueLevel.NORMAL;
+        objectValueLevel = ObjectValueLevel.NORMAL;
         // 缩放比例为0.5，即中金块
         if (scaleRatio == MIDDLE_GOLD_SCALE_RATIO) {
             value = 100;

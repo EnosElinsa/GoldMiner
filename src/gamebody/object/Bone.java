@@ -3,6 +3,7 @@ package gamebody.object;
 import gamebody.engine.GameObject;
 
 public class Bone extends GameObject {
+    
     private static final String TEXTURE_DIRECTORY = "resources/bone.png";
     public static final int BONE_MASS = 4;
     public static final int BONE_VALUE = 7;

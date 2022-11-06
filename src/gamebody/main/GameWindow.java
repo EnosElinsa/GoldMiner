@@ -1,6 +1,7 @@
 package gamebody.main;
 
 import gamebody.engine.GameObject;
+import shop.Shop;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public static final int LEVEL_NUMBER = 10; // 10种不同的关卡场景
     private Dimension dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
     private Image icon = new ImageIcon("resources/miner-dig-0.png").getImage(); // 窗口图标
+    private JPanel windowPanel = new JPanel();
+    private JPanel gameScenePanel = new JPanel();
+    private Shop shop = new Shop(this);
+    private CardLayout cardLayout = new CardLayout();
+    private boolean isInShop = false;
 
     private Image offScreenImage; // 用于双缓存的辅助画板
     private Scene scene = new Scene();  // 场景
@@ -25,7 +31,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     private Time time = new Time();
     private UI ui = new UI(this);
-    private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav"); // 背景音效
+    // private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav");    // 背景音效
     private Sound digSound=new Sound("sound/sound_wav/dig.wav");      // 矿工挖音效
     private Sound pullSound=new Sound("sound/sound_wav/pull.wav");    // 矿工拉音效
     private Thread gameWindowThread = new Thread(this);                   // 窗口线程
@@ -41,6 +47,10 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void launch() {
         //bgSound.musicMain(3);
         setVisible(true);
+        windowPanel.setLayout(cardLayout);
+        windowPanel.add(gameScenePanel);
+        windowPanel.add(shop);
+        add(windowPanel);
         setSize(getDimension());
         setResizable(false);
         setLocationRelativeTo(null);
@@ -80,14 +90,16 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         //达到下一关的条件
         if (rope.getOverallValue() >= target) {
             System.out.println("已经达到过关条件");
-            // dispose();
+            shop.launchShop();
+            isInShop = true;
+            cardLayout.next(windowPanel);
+
             level++;
             target = 105 + 545 * level + 135 * (level - 1) * (level - 2);
-            time = new Time();
             miner.setCurrentState(MinerState.IDLE);
             rope.setCurrentState(RopeState.SWING);
             rope.setLength(Rope.MIN_LENGTH);
-            launch();
+            loadGameObjects();
         }
     }
     
@@ -99,17 +111,17 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         Graphics graphics2 = offScreenImage.getGraphics();
         // 绘制场景
         for (GameObject object : gameobjects) {
-            object.render(graphics2);
+            object.render(graphics2, gameScenePanel);
         }
         // 绘制矿工
-        miner.render(graphics2);
+        miner.render(graphics2, gameScenePanel);
         // 绘制绳索
-        rope.render(graphics2);
+        rope.render(graphics2, gameScenePanel);
         // 绘制UI
-        ui.render(graphics2);
+        ui.render(graphics2, gameScenePanel);
         
         // 将辅助画板绘制在原本的画板上
-        graphics.drawImage(offScreenImage, 0, 0, null);
+        graphics.drawImage(offScreenImage, 0, 0, gameScenePanel);
     }
 
 
@@ -117,8 +129,10 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     @Override
     public void run() {
         while (true) {
-            repaint(); // 重新绘制画板
-            update();
+            if (isInShop == false) {
+                repaint(); // 重新绘制画板
+                update();
+            }
             try {
                 Thread.sleep(TIME_PER_FRAME);
             } catch (InterruptedException e) {
@@ -153,6 +167,15 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         dimension.width = width;
     }
 
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public JPanel getWindowPanel() {
+        return windowPanel;
+    }
+
+
     public Vector<GameObject> getGameobjects() {
         return gameobjects;
     }
@@ -169,12 +192,24 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         return time;
     }
 
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
     public int getLevel() {
         return level;
     }
 
     public int getTarget() {
         return target;
+    }
+
+    public boolean isInShop() {
+        return isInShop;
+    }
+
+    public void setInShop(boolean isInShop) {
+        this.isInShop = isInShop;
     }
 }
 
