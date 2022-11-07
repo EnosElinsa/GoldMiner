@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class Cutscene extends JPanel {
 
+    private JLabel jLabelGoalScore = new JLabel();
+
     //构造方法（传入状态码Status，0表示失败，1表示过关，其他数字表示下一关的目标分数）
     public Cutscene(int status)  {
         setLayout(null);
@@ -64,16 +66,15 @@ public class Cutscene extends JPanel {
             jLabel.setForeground(Color.white);
             jLabel.setBounds(340, 250, 1000, 50);
             add(jLabel);
+            //绘制目标分数
+            jLabelGoalScore.setFont(font);
+            jLabelGoalScore.setForeground(Color.green);
+            add(jLabelGoalScore); 
         }
     }
 
     public void setGoalScore(int goalScore) {
-        //绘制目标分数
-        JLabel jLabelGoalScores = new JLabel("" + goalScore);
-        Font font = new Font("宋体", Font.BOLD, 50);
-        jLabelGoalScores.setFont(font);
-        jLabelGoalScores.setForeground(Color.white);
-        jLabelGoalScores.setBounds(460 - 15 * (int) Math.log10(goalScore), 350, 200, 50);
-        add(jLabelGoalScores);
+        jLabelGoalScore.setText("" + goalScore);
+        jLabelGoalScore.setBounds(460 - 15 * (int) Math.log10(goalScore), 350, 200, 50);
     }
 }

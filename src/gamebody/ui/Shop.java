@@ -20,10 +20,10 @@ public class Shop extends JPanel {
     //构造方法
     public Shop(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+        setLayout(null);
     }
 
     public void launchShop() {
-        setLayout(null);
         score = gameWindow.getRope().getOverallValue();
         //初始化道具
         initializeProps();
@@ -34,11 +34,12 @@ public class Shop extends JPanel {
         //初始化静态背景
         initializeBackground();
     }
+    
     //初始化静态背景
     private void initializeBackground() {
         //绘制文本内容
         Font font = new Font("宋体", Font.BOLD, 20);
-        JLabel jLabelTest2 = new JLabel("双击想要购买的物品.");
+        JLabel jLabelTest2 = new JLabel("单击想要购买的物品.");
         jLabelTest2.setFont(font);
         jLabelTest2.setForeground(Color.black);
         jLabelTest2.setBounds(220, 135, 1000, 40);
@@ -400,6 +401,7 @@ public class Shop extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gameWindow.setNextLevelSignal(true);
+                removeAll();
                 //----------------------------------------------------------------------->鼠标点击“下一关卡”按钮，这里书写跳转事件
             }
 

@@ -50,7 +50,6 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     private Time time = new Time();
     private UI ui = new UI(this);
-    // private Sound bgSound=new Sound("sound/sound_wav/cut-scene.wav");    // 背景音效
     private Audio digSound = new Audio("sound/sound_wav/dig.wav");      // 矿工挖音效
     private Audio pullSound = new Audio("sound/sound_wav/pull.wav");    // 矿工拉音效
     private Audio cutSceneSound1 = new Audio("sound/sound_wav/cut-scene-1.wav");
@@ -65,7 +64,6 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     }
 
     public void launch() {
-        //bgSound.musicMain(3);
         setVisible(true);
         windowPanel.setLayout(cardLayout);
         windowPanel.add("gameScenePanel", gameScenePanel);
@@ -291,6 +289,5 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         this.nextLevelSignal = nextLevelSignal;
     }
 
-    
 }
 

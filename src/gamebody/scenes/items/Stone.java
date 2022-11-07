@@ -6,8 +6,7 @@ public class Stone extends GameObject {
 
     public static final int STONE_MASS = 6;
     private static final String[] TEXTURE_DIRECTORIES = {"resources/stone-0.png", "resources/stone-1.png"};
-
-
+    
     public Stone() {}
 
     public Stone(int x, int y, int type) {

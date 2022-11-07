@@ -31,9 +31,8 @@ public class Rope extends GameObject {
     public static final int GRAB_RATE = 28;
     public static final int INIT_RETRIEVE_RATE = 40;
 
-                                         
     private boolean isRetrieved = false; //判断物体是否收回成功
-    private boolean isSuccessed=true;    //标记是否抓取物体成功
+    private boolean isSuccessed = true;    //标记是否抓取物体成功
     private boolean stopSignal = false; // 是否进行更新的信号
 
     private int grabValue;
@@ -128,7 +127,7 @@ public class Rope extends GameObject {
             }
 
             collidingObject.setX(endX);
-            collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3 + 10);
+            collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3 + 6);
             collidingObject.setAngle(-1 * angle);
             //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
