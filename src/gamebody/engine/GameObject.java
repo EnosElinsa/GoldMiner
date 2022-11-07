@@ -1,7 +1,7 @@
 package gamebody.engine;
 
-import gamebody.main.GameWindow;
-import gamebody.object.ObjectValueLevel;
+import gamebody.scenes.GameWindow;
+import gamebody.scenes.items.ObjectValueLevel;
 
 import javax.swing.*;
 import java.awt.*;

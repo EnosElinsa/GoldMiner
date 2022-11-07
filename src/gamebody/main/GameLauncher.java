@@ -1,5 +1,7 @@
 package gamebody.main;
 
+import gamebody.scenes.GameWindow;
+
 /**
  * 启动游戏入口
  */
