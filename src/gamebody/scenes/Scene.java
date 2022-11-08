@@ -126,6 +126,9 @@ public class Scene {
             scene3.add(new Stone(x / 8 + 90, y / 2 + 260, 1));
             scene3.add(new Stone(x / 4 + 20, y / 3 + 80, 1));
             scene3.add(new Stone(x / 2 + 355, y / 2 + 5, 1));
+            scene3.add(new Pig(0, y / 2, x / 2 + 50));
+            scene3.add(new Pig(50, y / 2 + 140, x / 2 + 80));
+            scene3.add(new Pig(x - 100, y / 2 + 80, x - 10));
             break;
         case 5:
             scene4.add(new Gold(x / 8 - 70, y / 2 + 200));
@@ -147,6 +150,8 @@ public class Scene {
             scene4.add(new Stone(x / 8 + 105, y / 2 - 100, 1));
             scene4.add(new Stone(x / 8 + 200, y / 2 + 100, 1));
             scene4.add(new Stone(x - 175, y / 2 + 50, 1));
+            scene4.add(new Pig(0, y / 2 - 50, x / 2));
+            scene4.add(new Pig(x - 300, y / 2 + 140, x));
             break;
         case 6:
             scene5.add(new Gold(x - 50, y / 2 + 280));
@@ -167,6 +172,10 @@ public class Scene {
             scene5.add(new Stone(x / 8 + 35, y / 2 - 90, 1));
             scene5.add(new Stone(x / 8 + 230, y / 2 + 80, 1));
             scene5.add(new Stone(x / 2 + 100, y / 2 + 295, 1));
+            scene5.add(new GemPig(0, y / 2 - 40, x / 2 - 20));
+            scene5.add(new GemPig(x - 300, y / 2 + 30, x));
+            scene5.add(new GemPig(0, y / 2 + 150, x / 2));
+            scene5.add(new GemPig(x - 500, y / 2 + 150, x));
             break;
         case 7:
             scene6.add(new Gold(x / 8 + 35, y / 2 - 40));
@@ -183,6 +192,10 @@ public class Scene {
             scene6.add(new Bone(x / 8 + 600, y / 2 + 210));
             scene6.add(new Explosive(x / 8 + 300, y / 2 + 200));
             scene6.add(new Explosive(x / 8 + 460, y / 2 + 200));
+            scene6.add(new Pig(x / 8 + 100, y / 2 - 40, x / 2));
+            scene6.add(new Pig(0, y / 2 + 80, x / 2 - 50));
+            scene6.add(new Pig(20, y / 2 + 180, x / 2 - 160));
+            scene6.add(new Pig(x - 350, y / 2 + 100, x - 5));
             break;
         case 8:
             scene7.add(new Diamond(x / 8 + 30, y / 2 + 190));
@@ -200,6 +213,9 @@ public class Scene {
             scene7.add(new Explosive(x / 4 + 350, y / 3 + 265));
             scene7.add(new Explosive(x / 2 + 320, y / 2 - 20));
             scene7.add(new Explosive(x / 2 + 370, y / 2 + 285));
+            scene7.add(new GemPig(x / 8, y / 2 + 30, x / 2));
+            scene7.add(new GemPig(x / 8 + 200, y / 2 + 120, x / 2 + 20));
+            scene7.add(new GemPig(x - 350, y / 2 - 50, x));
             break;
         case 9:
             scene8.add(new Gold(x / 8 + 130, y / 2 + 240));
@@ -224,6 +240,10 @@ public class Scene {
             scene8.add(new Explosive(x / 8 - 30, y / 2 + 290));
             scene8.add(new Explosive(x - 60, y - 60));
             scene8.add(new Explosive(x - 220, 300));
+            scene8.add(new GemPig(60, y / 2, x / 2));
+            scene8.add(new GemPig(0, y / 2 + 110, x / 2 - 150));
+            scene8.add(new GemPig(x / 2 + 140, y / 2 + 110, x));
+            scene8.add(new GemPig(x / 2, y / 3 + 115, x));
             break;
         case 10:
             scene9.add(new Gold(205, y - 120));
@@ -248,6 +268,10 @@ public class Scene {
             scene9.add(new Explosive(x / 2 + 115, y / 2 + 215));
             scene9.add(new Explosive(x - 110, y - 80));
             scene9.add(new Explosive(x, y - 185));
+            scene9.add(new GemPig(0, y / 2, x / 2));
+            scene9.add(new GemPig(10, y / 2 + 60, x / 2));
+            scene9.add(new GemPig(x / 2, y / 2 + 30, x));
+            scene9.add(new GemPig(x / 2 - 20, y / 2 + 130, x));
             break;
         default:
             System.out.println("Invail index");

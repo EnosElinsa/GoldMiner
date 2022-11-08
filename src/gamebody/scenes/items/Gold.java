@@ -7,7 +7,7 @@ public class Gold extends GameObject {
     private Animation goldSparkAnimation = new Animation("resources/gold-spark", 8);
     private Animation sparkAnimation = new Animation("resources/spark", 12);
 
-    public static final double GOLD_MASS = 13;
+    public static final double GOLD_MASS = 17;
     public static final int GOLD_VALUE = 500; //大金块默认的金钱
     public static final double MIDDLE_GOLD_SCALE_RATIO = 0.5;
     public static final double TINY_GOLD_SCALE_RATIO = 0.25;
@@ -51,5 +51,7 @@ public class Gold extends GameObject {
     }
 
     @Override
-    protected void update() {}  
+    protected void update() {
+        
+    }  
 }

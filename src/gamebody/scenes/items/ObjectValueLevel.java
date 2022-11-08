@@ -6,5 +6,7 @@ public enum ObjectValueLevel {
  
     NORMAL,     // 中等价值
 
-    LOW         // 普通价值
+    LOW,        // 普通价值
+
+    SPECIAL     // 特殊
 }

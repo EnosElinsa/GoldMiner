@@ -5,7 +5,7 @@ import gamebody.engine.GameObject;
 public class Diamond extends GameObject {
 
     private static final String TEXTURE_DIRECTORY = "resources/diamond.png";
-    public static final int DIAMOND_MASS = 3;
+    public static final int DIAMOND_MASS = 2;
     public static final int DIAMOND_VALUE = 600;
 
     public Diamond() {}

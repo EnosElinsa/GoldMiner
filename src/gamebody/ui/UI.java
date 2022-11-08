@@ -2,6 +2,7 @@ package gamebody.ui;
 
 import gamebody.engine.GameObject;
 import gamebody.scenes.GameWindow;
+import gamebody.scenes.items.ObjectValueLevel;
 import gamebody.engine.Audio;
 
 import java.awt.*;
@@ -12,7 +13,8 @@ public class UI extends GameObject {
 
     private GameWindow gameWindow;
 
-    private Audio addValueSound=new Audio("sound/sound_wav/score1.wav");
+    private Audio addValueSound = new Audio("sound/sound_wav/score1.wav");
+    private Audio addValueSound2 = new Audio("sound/sound_wav/score2.wav");
     public UI(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
@@ -51,45 +53,33 @@ public class UI extends GameObject {
         drawWords(graphics,32, Color.WHITE, words6,650,128);
         drawWords(graphics,32, Color.RED, Integer.toString(gameWindow.getLevel()),750,128);
 
-//<<<<<<< Updated upstream
-//=======
-//<<<<<<< HEAD
-        //倒计时效果
-//=======
-//>>>>>>> main
-//>>>>>>> Stashed changes
         long curTime = gameWindow.getTime().countDown();
         if (curTime >= 0) {
             String words7 = "" + curTime;
             drawWords(graphics,32,Color.RED,words7,750,75);
         }
-//<<<<<<< Updated upstream
 
         //抓取成功后的加分效果
         if(gameWindow.getRope().isRetrieved()==true)
         {
             gameWindow.getRope().setRetrieved(false);
-            int addValue=gameWindow.getRope().getGrabValue();
-            addValueSound.musicMain(1);
-            String words8="+"+Integer.toString(addValue);
+            int addValue = gameWindow.getRope().getGrabValue();
+            if (gameWindow.getRope().getCollidingObject().getObjectValueLevel() == ObjectValueLevel.HIGH) {
+                addValueSound.musicMain(1);
+            } else {
+                addValueSound2.musicMain(1);
+            }
+            String words8 = "+" + Integer.toString(addValue);
             drawWords(graphics,30,Color.GREEN,words8,300,75);
         }
-//=======
-//<<<<<<< Updated upstream
-//=======
-//<<<<<<< HEAD
 
         //抓取成功后的加分效果
-        if(gameWindow.getRope().isRetrieved()==true)
+        if(gameWindow.getRope().isRetrieved() == true)
         {
             gameWindow.getRope().setRetrieved(false);
-            int addValue=gameWindow.getRope().getGrabValue();
-            String words8="+"+Integer.toString(addValue);
-            drawWords(graphics,30,Color.GREEN,words8,300,75);
+            int addValue = gameWindow.getRope().getGrabValue();
+            String words8 = "+" + Integer.toString(addValue);
+            drawWords(graphics,30, Color.GREEN, words8,300,75);
         }
-//=======
-//>>>>>>> main
-//>>>>>>> Stashed changes
-//>>>>>>> Stashed changes
     }
 }

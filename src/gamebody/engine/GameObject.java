@@ -23,10 +23,8 @@ public abstract class GameObject implements Runnable {
     protected AffineTransform affineTransform;
     protected GameObject collidingObject;
     protected boolean isColliding;
-    protected Thread thread;
-    protected boolean isAnimated;
 
-    protected ObjectValueLevel objectValueLevel;//物体的价值等级
+    protected ObjectValueLevel objectValueLevel; //物体的价值等级
 
     public GameObject() {}
     
@@ -42,15 +40,6 @@ public abstract class GameObject implements Runnable {
         width = texture.getWidth(null);
         height = texture.getHeight(null);
         rigidbody = new Rigidbody(x, y, width, height);
-    }
-
-    public GameObject(int x, int y, String textureDirectory, boolean isAnimated) {
-        this(x, y, textureDirectory);
-        this.isAnimated = isAnimated;
-        if (isAnimated) {
-            thread = new Thread(this);
-            thread.run();
-        }
     }
 
     protected abstract void update();

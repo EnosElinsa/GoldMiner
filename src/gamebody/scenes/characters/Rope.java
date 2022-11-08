@@ -29,7 +29,7 @@ public class Rope extends GameObject {
     public static final int MAX_LENGTH = 650;
     public static final int MIN_LENGTH = 16;
     public static final int GRAB_RATE = 28;
-    public static final int INIT_RETRIEVE_RATE = 40;
+    public static final int INIT_RETRIEVE_RATE = 50;
 
     private boolean isRetrieved = false; //判断物体是否收回成功
     private boolean isSuccessed = true;    //标记是否抓取物体成功
@@ -37,9 +37,10 @@ public class Rope extends GameObject {
 
     private int grabValue;
 
-    private Audio highSound = new Audio("sound/sound_wav/high-value.wav");//抓取到高价值物体的音效
-    private Audio normalSound = new Audio("sound/sound_wav/normal-value.wav");//抓取到普通价值物体的音效
-    private Audio lowSound = new Audio("sound/sound_wav/low-value.wav");//抓取到低价值物体的音效
+    private Audio highSound = new Audio("sound/sound_wav/high-value.wav"); // 抓取到高价值物体的音效
+    private Audio normalSound = new Audio("sound/sound_wav/normal-value.wav"); // 抓取到普通价值物体的音效
+    private Audio lowSound = new Audio("sound/sound_wav/low-value.wav"); // 抓取到低价值物体的音效
+    private Audio specialSound = new Audio("sound/sound_wav/score3.wav");
 
     public Rope(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -113,16 +114,20 @@ public class Rope extends GameObject {
             if (isSuccessed == true) {
                 isSuccessed = false;
                 //抓取到高价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.HIGH) {
+                if (collidingObject.getObjectValueLevel() == ObjectValueLevel.HIGH) {
                     highSound.musicMain(1);
                 }
                 //抓取到普通价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.NORMAL) {
+                if (collidingObject.getObjectValueLevel() == ObjectValueLevel.NORMAL) {
                     normalSound.musicMain(1);
                 }
                 //抓取到低价值的物体
-                if (collidingObject.getObjectValueLevel()== ObjectValueLevel.LOW) {
+                if (collidingObject.getObjectValueLevel() == ObjectValueLevel.LOW) {
                     lowSound.musicMain(1);
+                }
+                
+                if (collidingObject.getObjectValueLevel() == ObjectValueLevel.SPECIAL) {
+                    specialSound.musicMain(1);
                 }
             }
 
@@ -149,6 +154,7 @@ public class Rope extends GameObject {
     public GameObject detectCollision() {
         for (GameObject object : gameWindow.getGameobjects()) {
             if (rigidbody.hasCollisionWith(object.getRigidbody())) {
+                object.setColliding(true);
                 return object;
             }
         }
