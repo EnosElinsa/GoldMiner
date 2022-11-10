@@ -1,6 +1,8 @@
 package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
+import gamebody.scenes.ObjectValueLevel;
 
 public class Stone extends GameObject {
 
@@ -12,6 +14,7 @@ public class Stone extends GameObject {
     public Stone(int x, int y, int type) {
         super(x, y, TEXTURE_DIRECTORIES[type]);
         mass = STONE_MASS;
+        name = ItemName.STONE;
         objectValueLevel = ObjectValueLevel.LOW;
         // 0号石头value=11
         if (type == 0) {

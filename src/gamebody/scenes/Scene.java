@@ -9,6 +9,7 @@ public class Scene {
 
     private Vector<Vector<GameObject>> scenes = new Vector<Vector<GameObject>>();
     private Background background = new Background();
+    private GameWindow gameWindow;
     
     private Vector<GameObject> scene0;
     private Vector<GameObject> scene1;
@@ -21,7 +22,8 @@ public class Scene {
     private Vector<GameObject> scene8;
     private Vector<GameObject> scene9;
 
-    public Scene() {
+    public Scene(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
         intialize();
     }
 
@@ -190,8 +192,8 @@ public class Scene {
             scene6.add(new Skull(x - 270, y / 2 + 40));
             scene6.add(new Bone(x - 250, y / 2 + 20));
             scene6.add(new Bone(x / 8 + 600, y / 2 + 210));
-            scene6.add(new Explosive(x / 8 + 300, y / 2 + 200));
-            scene6.add(new Explosive(x / 8 + 460, y / 2 + 200));
+            scene6.add(new Explosive(x / 8 + 300, y / 2 + 200, gameWindow));
+            scene6.add(new Explosive(x / 8 + 460, y / 2 + 200, gameWindow));
             scene6.add(new Pig(x / 8 + 100, y / 2 - 40, x / 2));
             scene6.add(new Pig(0, y / 2 + 80, x / 2 - 50));
             scene6.add(new Pig(20, y / 2 + 180, x / 2 - 160));
@@ -208,11 +210,11 @@ public class Scene {
             scene7.add(new Diamond(x / 2 + 390, y / 2 - 100));
             scene7.add(new TreasureBag(x / 8 - 30, y / 2 + 250));
             scene7.add(new TreasureBag(x / 2 + 410, y / 2 + 210));
-            scene7.add(new Explosive(x / 8, y / 2 + 70));
-            scene7.add(new Explosive(x / 8 + 160, y / 2 + 150));
-            scene7.add(new Explosive(x / 4 + 350, y / 3 + 265));
-            scene7.add(new Explosive(x / 2 + 320, y / 2 - 20));
-            scene7.add(new Explosive(x / 2 + 370, y / 2 + 285));
+            scene7.add(new Explosive(x / 8, y / 2 + 70, gameWindow));
+            scene7.add(new Explosive(x / 8 + 160, y / 2 + 150, gameWindow));
+            scene7.add(new Explosive(x / 4 + 350, y / 3 + 265, gameWindow));
+            scene7.add(new Explosive(x / 2 + 320, y / 2 - 20, gameWindow));
+            scene7.add(new Explosive(x / 2 + 370, y / 2 + 285, gameWindow));
             scene7.add(new GemPig(x / 8, y / 2 + 30, x / 2));
             scene7.add(new GemPig(x / 8 + 200, y / 2 + 120, x / 2 + 20));
             scene7.add(new GemPig(x - 350, y / 2 - 50, x));
@@ -225,7 +227,6 @@ public class Scene {
             scene8.add(new Diamond(x / 2 + 55, y / 2 + 60));
             scene8.add(new Diamond(x / 2 - 60, y / 2 + 60));
             scene8.add(new Diamond(x - 65, y - 120));
-            scene8.add(new Diamond(x / 2, y / 2 + 300));
             scene8.add(new Diamond(x / 2 + 75, y / 2 + 310));
             scene8.add(new Diamond(x / 2 + 215, y / 2 - 25));
             scene8.add(new TreasureBag(x / 2, y / 2 + 300));
@@ -233,13 +234,13 @@ public class Scene {
             scene8.add(new TreasureBag(50, y / 2));
             scene8.add(new Skull(x / 2 + 50, y / 2 + 210));
             scene8.add(new Bone(x - 100, y - 100));
-            scene8.add(new Explosive(x / 2, y / 2 + 110));
-            scene8.add(new Explosive(x / 2 - 120, y / 2 + 110));
-            scene8.add(new Explosive(x / 2 + 120, y / 2 + 110));
-            scene8.add(new Explosive(x / 4 + 20, y / 3 + 75));
-            scene8.add(new Explosive(x / 8 - 30, y / 2 + 290));
-            scene8.add(new Explosive(x - 60, y - 60));
-            scene8.add(new Explosive(x - 220, 300));
+            scene8.add(new Explosive(x / 2, y / 2 + 110, gameWindow));
+            scene8.add(new Explosive(x / 2 - 120, y / 2 + 110, gameWindow));
+            scene8.add(new Explosive(x / 2 + 120, y / 2 + 110, gameWindow));
+            scene8.add(new Explosive(x / 4 + 20, y / 3 + 75, gameWindow));
+            scene8.add(new Explosive(x / 8 - 30, y / 2 + 290, gameWindow));
+            scene8.add(new Explosive(x - 60, y - 60, gameWindow));
+            scene8.add(new Explosive(x - 220, 300, gameWindow));
             scene8.add(new GemPig(60, y / 2, x / 2));
             scene8.add(new GemPig(0, y / 2 + 110, x / 2 - 150));
             scene8.add(new GemPig(x / 2 + 140, y / 2 + 110, x));
@@ -261,13 +262,13 @@ public class Scene {
             scene9.add(new TreasureBag(x - 105, y / 2 + 160));
             scene9.add(new Skull(x / 2, y / 2 + 180));
             scene9.add(new Bone(x - 155, y / 2 + 210));
-            scene9.add(new Explosive(100, y - 165));
-            scene9.add(new Explosive(295, y - 30));
-            scene9.add(new Explosive(x / 2 - 135, y / 2));
-            scene9.add(new Explosive(x / 2 - 5, y - 80));
-            scene9.add(new Explosive(x / 2 + 115, y / 2 + 215));
-            scene9.add(new Explosive(x - 110, y - 80));
-            scene9.add(new Explosive(x, y - 185));
+            scene9.add(new Explosive(100, y - 165, gameWindow));
+            scene9.add(new Explosive(295, y - 30, gameWindow));
+            scene9.add(new Explosive(x / 2 - 135, y / 2, gameWindow));
+            scene9.add(new Explosive(x / 2 - 5, y - 80, gameWindow));
+            scene9.add(new Explosive(x / 2 + 115, y / 2 + 215, gameWindow));
+            scene9.add(new Explosive(x - 110, y - 80, gameWindow));
+            scene9.add(new Explosive(x, y - 185, gameWindow));
             scene9.add(new GemPig(0, y / 2, x / 2));
             scene9.add(new GemPig(10, y / 2 + 60, x / 2));
             scene9.add(new GemPig(x / 2, y / 2 + 30, x));

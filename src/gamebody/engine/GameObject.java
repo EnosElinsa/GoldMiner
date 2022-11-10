@@ -1,7 +1,7 @@
 package gamebody.engine;
 
 import gamebody.scenes.GameWindow;
-import gamebody.scenes.items.ObjectValueLevel;
+import gamebody.scenes.ObjectValueLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +18,13 @@ public abstract class GameObject implements Runnable {
     protected double scaleRatio = 1.0;   // 物体的缩放比例，默认为1.0
     protected int value;                 // 物体的价值
     
+    protected ItemName name;
     protected Image texture;
     protected Rigidbody rigidbody;
     protected AffineTransform affineTransform;
     protected GameObject collidingObject;
     protected boolean isColliding;
+    protected boolean isVanished;
 
     protected ObjectValueLevel objectValueLevel; //物体的价值等级
 
@@ -56,6 +58,7 @@ public abstract class GameObject implements Runnable {
         x = 2000;
         y = 2000;
         rigidbody = new Rigidbody(x, y, width, height);
+        isVanished = true;
     }
 
     @Override
@@ -106,6 +109,14 @@ public abstract class GameObject implements Runnable {
         return mass;
     }
 
+    public ItemName getName() {
+        return name;
+    }
+
+    public void setName(ItemName name) {
+        this.name = name;
+    }
+
     public double getAngle() {
         return angle;
     }
@@ -153,4 +164,18 @@ public abstract class GameObject implements Runnable {
     public void setObjectValueLevel(ObjectValueLevel objectValueLevel1) {
         objectValueLevel=objectValueLevel1;
     }
+
+    public void setTexture(Image texture) {
+        this.texture = texture;
+    }
+
+    public boolean isVanished() {
+        return isVanished;
+    }
+
+    public void setVanished(boolean isVanished) {
+        this.isVanished = isVanished;
+    }
 }
+
+

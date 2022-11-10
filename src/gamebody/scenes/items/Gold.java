@@ -1,6 +1,7 @@
 package gamebody.scenes.items;
 
 import gamebody.engine.*;
+import gamebody.scenes.ObjectValueLevel;
 
 public class Gold extends GameObject {
     
@@ -20,6 +21,7 @@ public class Gold extends GameObject {
         super(x, y, TEXTURE_DIRECTORY);
         mass = GOLD_MASS;
         value = GOLD_VALUE;
+        name = ItemName.GOLD;
         objectValueLevel = ObjectValueLevel.HIGH;
     }
 

@@ -1,6 +1,7 @@
 package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
 
 public class Bone extends GameObject {
     
@@ -12,6 +13,7 @@ public class Bone extends GameObject {
         super(x, y, TEXTURE_DIRECTORY);
         mass = BONE_MASS;
         value = BONE_VALUE;
+        name = ItemName.BONE;
     }
 
     @Override

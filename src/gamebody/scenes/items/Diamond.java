@@ -1,6 +1,8 @@
 package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
+import gamebody.scenes.ObjectValueLevel;
 
 public class Diamond extends GameObject {
 
@@ -15,6 +17,7 @@ public class Diamond extends GameObject {
         mass = DIAMOND_MASS;
         value = DIAMOND_VALUE;
         objectValueLevel = ObjectValueLevel.HIGH;
+        name = ItemName.DIAMOND;
     }
 
     @Override

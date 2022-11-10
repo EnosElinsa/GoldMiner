@@ -2,7 +2,9 @@ package gamebody.scenes.items;
 
 import gamebody.engine.Animation;
 import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
+import gamebody.scenes.ObjectValueLevel;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -33,6 +35,7 @@ public class Pig extends GameObject {
         this.endX = endX;
         mass = PIG_MASS;
         value = PIG_VALUE;
+        name = ItemName.PIG;
         objectValueLevel = ObjectValueLevel.SPECIAL;
         pigThread.start();
     }

@@ -43,7 +43,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private boolean nextLevelSignal = false;
 
     private Image offScreenImage; // 用于双缓存的辅助画板
-    private Scene scene = new Scene();  // 场景
+    private Scene scene = new Scene(this);  // 场景
     private Miner miner = new Miner();  // 矿工
     private Rope rope = new Rope(this); // 绳索
     private Vector<GameObject> gameobjects = scene.getGameObjects(0);
@@ -56,7 +56,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Audio cutSceneSound2 = new Audio("sound/sound_wav/cut-scene-2.wav");
     private Thread gameWindowThread = new Thread(this);                   // 窗口线程
     
-    private static int level = 1; // 关卡数
+    private static int level = 9; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
     
     public GameWindow() {

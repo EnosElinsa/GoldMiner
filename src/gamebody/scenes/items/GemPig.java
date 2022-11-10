@@ -3,7 +3,9 @@ package gamebody.scenes.items;
 import javax.swing.ImageIcon;
 
 import gamebody.engine.Animation;
+import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
+import gamebody.scenes.ObjectValueLevel;
 
 public class GemPig extends Pig {
 
@@ -20,6 +22,7 @@ public class GemPig extends Pig {
         rigidbody = new Rigidbody(x, y, width, height);
         mass = PIG_MASS + Diamond.DIAMOND_MASS;
         value = PIG_VALUE + Diamond.DIAMOND_VALUE;
+        name = ItemName.GEMPIG;
         objectValueLevel = ObjectValueLevel.SPECIAL;
         pigThread.start();
     }

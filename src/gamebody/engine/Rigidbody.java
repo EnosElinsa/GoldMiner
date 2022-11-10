@@ -1,17 +1,17 @@
 package gamebody.engine;
 
-import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * 刚体类：用于碰撞检测
  */
 public class Rigidbody {
     
-    private Ellipse2D rigidbody;
+    private Rectangle2D rigidbody;
 
     public Rigidbody() {}
     public Rigidbody(int centerX, int centerY, int width, int height) {
-        rigidbody = new Ellipse2D.Double(centerX - width / 2, centerY - height / 2, width, height);
+        rigidbody = new Rectangle2D.Double(centerX - width / 2, centerY - height / 2, width, height);
     }
 
     public boolean hasCollisionWith(Rigidbody other) {

@@ -1,6 +1,7 @@
 package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
 
 public class Skull extends GameObject {
 
@@ -12,6 +13,7 @@ public class Skull extends GameObject {
         super(x, y, TEXTURE_DIRECTORY);
         mass = SKULL_MASS;
         value = SKULL_VALUE;
+        name = ItemName.SKULL;
     }
 
     @Override

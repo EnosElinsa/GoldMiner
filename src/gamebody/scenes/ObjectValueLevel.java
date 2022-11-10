@@ -1,4 +1,4 @@
-package gamebody.scenes.items;
+package gamebody.scenes;
 
 public enum ObjectValueLevel {
 
