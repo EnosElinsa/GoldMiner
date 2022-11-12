@@ -1,16 +1,14 @@
 package gamebody.scenes.items;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
-import java.awt.*;
-import java.util.Vector;
-
 import gamebody.engine.Animation;
 import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
 import gamebody.scenes.GameWindow;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
 
 public class Explosive extends GameObject {
 

@@ -1,6 +1,9 @@
 package gamebody.scenes.items;
 
-import gamebody.engine.*;
+import gamebody.engine.Animation;
+import gamebody.engine.GameObject;
+import gamebody.engine.ItemName;
+import gamebody.engine.Rigidbody;
 import gamebody.scenes.ObjectValueLevel;
 
 public class Gold extends GameObject {

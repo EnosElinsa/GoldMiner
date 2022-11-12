@@ -4,9 +4,8 @@ import gamebody.engine.Animation;
 import gamebody.engine.GameObject;
 import gamebody.scenes.GameWindow;
 
+import javax.swing.*;
 import java.awt.*;
-
-import javax.swing.JPanel;
 
 public class Miner extends GameObject {
     

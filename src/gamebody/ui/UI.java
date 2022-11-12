@@ -1,13 +1,12 @@
 package gamebody.ui;
 
+import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.scenes.GameWindow;
 import gamebody.scenes.ObjectValueLevel;
-import gamebody.engine.Audio;
 
+import javax.swing.*;
 import java.awt.*;
-
-import javax.swing.JPanel;
 
 public class UI extends GameObject {
 
@@ -73,13 +72,13 @@ public class UI extends GameObject {
             drawWords(graphics,30,Color.GREEN,words8,300,75);
         }
 
-        //抓取成功后的加分效果
-        if(gameWindow.getRope().isRetrieved() == true)
-        {
-            gameWindow.getRope().setRetrieved(false);
-            int addValue = gameWindow.getRope().getGrabValue();
-            String words8 = "+" + Integer.toString(addValue);
-            drawWords(graphics,30, Color.GREEN, words8,300,75);
-        }
+//        //抓取成功后的加分效果
+//        if(gameWindow.getRope().isRetrieved() == true)
+//        {
+//            gameWindow.getRope().setRetrieved(false);
+//            int addValue = gameWindow.getRope().getGrabValue();
+//            String words8 = "+" + Integer.toString(addValue);
+//            drawWords(graphics,30, Color.GREEN, words8,300,75);
+//        }
     }
 }

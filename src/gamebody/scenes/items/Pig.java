@@ -6,9 +6,9 @@ import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
 import gamebody.scenes.ObjectValueLevel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import javax.swing.JPanel;
 
 public class Pig extends GameObject {
 

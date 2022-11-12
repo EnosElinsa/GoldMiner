@@ -10,6 +10,8 @@ public class Diamond extends GameObject {
     public static final int DIAMOND_MASS = 2;
     public static final int DIAMOND_VALUE = 600;
 
+
+
     public Diamond() {}
 
     public Diamond(int x, int y) {

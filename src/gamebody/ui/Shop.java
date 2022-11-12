@@ -1,9 +1,9 @@
 package gamebody.ui;
 
-import javax.swing.*;
-
+import gamebody.engine.ProductStatus;
 import gamebody.scenes.GameWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,6 +14,12 @@ public class Shop extends JPanel {
     private boolean dynamite, drink, clover, book, polish; //炸药、力量饮料、四叶草、石头书、钻石抛光是否刷出
     private int dynamitePrice, drinkPrice, cloverPrice, bookPrice, polishPrice; //对应物品的价格
     private int score; //分数
+
+    private int totalMoney;//购买商品花费的总价钱
+
+    private ProductStatus productStatus;
+
+    private boolean isBuyFinish;
 
     GameWindow gameWindow;
 
@@ -33,8 +39,20 @@ public class Shop extends JPanel {
         initializeButton();
         //初始化静态背景
         initializeBackground();
+        //初始化判断是否购买完毕的状态
+        initializeCheckState();
+        //每次打开商店要把所有物品的购买状态初始化为未购买（因为商品效果只维持一句游戏）
+        productStatus=new ProductStatus();
+        //每次打开商店，购买商品的总价钱要清零
+        totalMoney=0;
     }
-    
+
+    //初始化选择状态
+    private void initializeCheckState()
+    {
+        isBuyFinish=false;
+    }
+
     //初始化静态背景
     private void initializeBackground() {
         //绘制文本内容
@@ -80,13 +98,14 @@ public class Shop extends JPanel {
     //初始化道具
     private void initializeProps() {
         //随机生成两个以上物品
-        while ((dynamite ? 1 : 0) + (drink ? 1 : 0) + (clover ? 1 : 0) + (book ? 1 : 0) + (polish ? 1 : 0) < 2) {
+        do
+        {
             dynamite = new Random().nextBoolean();
             drink = new Random().nextBoolean();
             clover = new Random().nextBoolean();
             book = new Random().nextBoolean();
             polish = new Random().nextBoolean();
-        }
+        }while ((dynamite ? 1 : 0) + (drink ? 1 : 0) + (clover ? 1 : 0) + (book ? 1 : 0) + (polish ? 1 : 0) < 2);
 
         //随机生成价格
         dynamitePrice = Math.abs(new Random().nextInt()) % score / 70 + 2;
@@ -132,6 +151,9 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    System.out.println("购买炸弹");
+                    productStatus.setDynamite(true);//设置炸弹状态为已购买
+                    totalMoney+=dynamitePrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
                     jLabelDescription.setVisible(false);
                     jButtonNext.setVisible(false);
@@ -186,6 +208,9 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    System.out.println("购买能量饮料");
+                    productStatus.setDrink(true);//设置能量饮料状态为已购买
+                    totalMoney+=drinkPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
                     jLabelDescription.setVisible(false);
                     jButtonNext.setVisible(false);
@@ -240,6 +265,9 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    System.out.println("购买四叶草");
+                    productStatus.setClover(true);//设置四叶草状态为已购买
+                    totalMoney+=cloverPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
                     jLabelDescription.setVisible(false);
                     jButtonNext.setVisible(false);
@@ -294,6 +322,9 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    System.out.println("购买石头收藏家书籍");
+                    productStatus.setBook(true);//设置石头收藏家书籍状态为已购买
+                    totalMoney+=bookPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
                     jLabelDescription.setVisible(false);
                     jButtonNext.setVisible(false);
@@ -348,6 +379,9 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    System.out.println("购买钻石抛光");
+                    productStatus.setPolish(true);//设置钻石抛光状态为已购买
+                    totalMoney+=polishPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
                     jLabelDescription.setVisible(false);
                     jButtonNext.setVisible(false);
@@ -401,6 +435,8 @@ public class Shop extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gameWindow.setNextLevelSignal(true);
+                System.out.println("购买完毕，进入下一关");
+                isBuyFinish=true;
                 removeAll();
                 //----------------------------------------------------------------------->鼠标点击“下一关卡”按钮，这里书写跳转事件
             }
@@ -425,6 +461,19 @@ public class Shop extends JPanel {
 
             }
         });
+    }
+
+    public boolean getIsBuyFinish() {
+        return isBuyFinish;
+    }
+
+    public ProductStatus getProductStatus()
+    {
+        return productStatus;
+    }
+
+    public int getTotalMoney() {
+        return totalMoney;
     }
 }
 
