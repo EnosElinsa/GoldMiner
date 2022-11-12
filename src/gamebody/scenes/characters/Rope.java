@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class Rope extends GameObject {
 
-    private int startX = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
-    private int startY = 121;                           // 绳索的起点坐标纵坐标
+    public static final int START_X = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
+    public static final int START_Y = 121;                           // 绳索的起点坐标纵坐标
     private int endX;                                   // 绳索的终点坐标横坐标                   
     private int endY;                                   // 绳索的终点坐标纵坐标  
     private int length = MIN_LENGTH;
@@ -24,22 +24,21 @@ public class Rope extends GameObject {
     private GameWindow gameWindow;
 
     public static final int MAX_LENGTH = 650;
-    public static final int MIN_LENGTH = 25;
+    public static final int MIN_LENGTH = 20;
     public static final int GRAB_RATE = 28;
     public static final int INIT_RETRIEVE_RATE = 60;
 
-    private boolean isRetrieved = false; //判断物体是否收回成功
-    private boolean isSuccessed = true;    //标记是否抓取物体成功
-    private boolean stopSignal = false; // 是否进行更新的信号
-
+    private boolean isRetrieved = false;   // 判断物体是否收回成功
+    private boolean isSuccessed = true;    // 标记是否抓取物体成功
+    private boolean stopSignal = false;    // 是否进行更新的信号
     private int grabValue;
+    //标记钻石增强，袋子增强，石头增强，力量增强，是否有炸弹
+    private boolean diamondPro, treasureBagPro, stonePro, strengthPro, isBoom; 
 
     private Audio highSound = new Audio("sound/sound_wav/high-value.wav"); // 抓取到高价值物体的音效
     private Audio normalSound = new Audio("sound/sound_wav/normal-value.wav"); // 抓取到普通价值物体的音效
     private Audio lowSound = new Audio("sound/sound_wav/low-value.wav"); // 抓取到低价值物体的音效
     private Audio specialSound = new Audio("sound/sound_wav/score3.wav");
-
-    private boolean diamondPro,treasureBagPro,stonePro,strengthPro,isBoom;//标记钻石增强，袋子增强，石头增强，力量增强，是否有炸弹
 
     public Rope(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
@@ -55,7 +54,7 @@ public class Rope extends GameObject {
         Color colorOfRope = new Color(49, 51, 64);
 
         graphics2d.setColor(colorOfRope);
-        graphics2d.drawLine(startX, startY, endX, endY);
+        graphics2d.drawLine(START_X, START_Y, endX, endY);
         hook.render(graphics2d, panel);
     }
 
@@ -71,8 +70,7 @@ public class Rope extends GameObject {
         
         switch (currentState) {
             case SWING:
-                angle = 1.0 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
-                // System.out.println(Math.toDegrees(angle));
+                angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
                 timer += (double)GameWindow.TIME_PER_FRAME / 600;
                 retrieveRate = INIT_RETRIEVE_RATE;
                 break;
@@ -87,24 +85,21 @@ public class Rope extends GameObject {
             case RETRIEVE:
                 if (length >= MIN_LENGTH) {
                     //这里判断一下最后一次减去retrievRate如果比最小长度都要小的话，说明减过头了，这里直接让length等于最小长度，可以避免拉回时的回弹效果
-                    if (length-retrieveRate < MIN_LENGTH)
-                    {
-                        length=MIN_LENGTH;
-                    }
-                    else
-                    {
+                    if (length - retrieveRate < MIN_LENGTH) {
+                        length = MIN_LENGTH;
+                        currentState = RopeState.SWING;
+                    } else {
                         length -= retrieveRate;
                     }
-                }
-                else {
+                } else {
                     length = MIN_LENGTH;
                     currentState = RopeState.SWING;
                 }
                 break;
         }
 
-        endX = (int)(startX + length * Math.sin(angle));
-        endY = (int)(startY + length * Math.cos(angle));
+        endX = (int)(START_X + length * Math.sin(angle));
+        endY = (int)(START_Y + length * Math.cos(angle));
         hook.setX(endX);
         hook.setY(endY);
         hook.setAngle(-1 * angle);
@@ -112,16 +107,14 @@ public class Rope extends GameObject {
 
         if (isColliding == false && currentState == RopeState.GRAB && (collidingObject = detectCollision()) != null) {
             isColliding = true;
-
+            collidingObject.setOnHook(true);
             currentState = RopeState.RETRIEVE;
             //如果购买了能量饮料，则力量变强
-            if (strengthPro==true)
-            {
-                retrieveRate = (int) ((retrieveRate/collidingObject.getMass())+20);
+            if (strengthPro) {
+                retrieveRate = (int)((retrieveRate/collidingObject.getMass()) + 20);
             }
             //如果没有购买能量饮料，则正常拉取
-            else
-            {
+            else {
                 retrieveRate /= collidingObject.getMass();
             }
 
@@ -129,7 +122,7 @@ public class Rope extends GameObject {
         //碰撞成功，即抓取到物体
         if (isColliding && collidingObject != null) {
             grabValue = collidingObject.getValue();
-            if (isSuccessed == true) {
+            if (isSuccessed) {
                 isSuccessed = false;
                 //抓取到高价值的物体
                 if (collidingObject.getObjectValueLevel() == ObjectValueLevel.HIGH) {
@@ -155,22 +148,26 @@ public class Rope extends GameObject {
             //如果现在状态是摆动状态，抓取返回，加分
             if (currentState == RopeState.SWING) {
                 //如果购买了钻石抛光并且抓到的是钻石，则钻石价值由600变为900
-                if (diamondPro==true&&collidingObject.getName()== ItemName.DIAMOND)
-                {
-                    grabValue = collidingObject.getValue()+300;
+                if (diamondPro && collidingObject.getName() == ItemName.DIAMOND) {
+                    grabValue = collidingObject.getValue() + 300;
                 }
                 //如果购买了四叶草并且抓到的是袋子，则袋子价值增加500
-                else if (treasureBagPro==true&&collidingObject.getName()== ItemName.TREASUREBAG)
-                {
-                    grabValue = collidingObject.getValue()+500;
+                else if (treasureBagPro && collidingObject.getName() == ItemName.TREASUREBAG) {
+                    grabValue = collidingObject.getValue() + 500;
                 }
                 //如果购买了石头收藏家书籍并且抓到的是石头，则石头的价值变为原来的三倍
+<<<<<<< HEAD
                 else if (stonePro==true&&collidingObject.getName()== ItemName.STONE)
                 {
                     grabValue = collidingObject.getValue()*3;
                 }
                 else
                 {
+=======
+                else if (diamondPro && collidingObject.getName() == ItemName.STONE) {
+                    grabValue = collidingObject.getValue() * 3;
+                } else {
+>>>>>>> main
                     grabValue = collidingObject.getValue();
                 }
                 isColliding = false;
@@ -198,29 +195,12 @@ public class Rope extends GameObject {
     }
 
     //设置商品的特性
-    public void setProduct(ProductStatus productStatus)
-    {
-        diamondPro=productStatus.getIsPolish();
-        treasureBagPro=productStatus.getIsClover();
-        stonePro=productStatus.getIsBook();
-        strengthPro=productStatus.getIsDrink();
-        isBoom=productStatus.getIsDynamite();
-    }
-
-    public int getStartX() {
-        return startX;
-    }
-
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
+    public void setProduct(ProductStatus productStatus) {
+        diamondPro = productStatus.getIsPolish();
+        treasureBagPro = productStatus.getIsClover();
+        stonePro = productStatus.getIsBook();
+        strengthPro = productStatus.getIsDrink();
+        isBoom = productStatus.getIsDynamite();
     }
 
     public int getEndX() {
