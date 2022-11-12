@@ -51,7 +51,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Thread gameWindowThread = new Thread(this);                   // 窗口线程
     
     private static int level = 1; // 关卡数
-    private static int target = 0;//105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
+    private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程

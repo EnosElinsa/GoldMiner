@@ -11,7 +11,7 @@ public class ProductStatus {
     public ProductStatus(){
         //商店刚加载，所有商品的选择状态初始化为false
         isBook=false;
-        isDrink=true;
+        isDrink=false;
         isClover=false;
         isPolish=false;
         isDynamite=false;
