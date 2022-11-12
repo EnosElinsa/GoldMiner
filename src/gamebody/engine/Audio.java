@@ -11,10 +11,15 @@ public class Audio {
     
     private AudioClip aau;
     private String url;
-    
+
+    private Thread audioThread = new Thread(() -> {this.musicMain(1);});
+
+
+
     public Audio(String url) {
         this.url = url;
         playMusic();
+
     }
     
     public void playMusic(){

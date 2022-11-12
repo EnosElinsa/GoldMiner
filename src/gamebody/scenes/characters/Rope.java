@@ -32,6 +32,8 @@ public class Rope extends GameObject {
     private boolean isSuccessed = true;    // 标记是否抓取物体成功
     private boolean stopSignal = false;    // 是否进行更新的信号
     private int grabValue;
+
+    private boolean isShop;//标记是否商店购买结束
     //标记钻石增强，袋子增强，石头增强，力量增强，是否有炸弹
     private boolean diamondPro, treasureBagPro, stonePro, strengthPro, isBoom; 
 
@@ -49,7 +51,7 @@ public class Rope extends GameObject {
     public void render(Graphics graphics, JPanel panel) {
         Graphics2D graphics2d = (Graphics2D) graphics;
 
-        BasicStroke stokeLine = new BasicStroke(1.6f);
+        BasicStroke stokeLine = new BasicStroke(2.5f);
         graphics2d.setStroke(stokeLine); // 设置线的粗细
         Color colorOfRope = new Color(49, 51, 64);
 
@@ -67,12 +69,20 @@ public class Rope extends GameObject {
             length = MIN_LENGTH;
             return;
         }
+
+        //如果购买了炸药，炸药数量要增加
+        if(isBoom==true && isShop==true)
+        {
+            isShop=false;
+            gameWindow.setDynamiteCount(gameWindow.getDynamiteCount()+1);
+        }
         
         switch (currentState) {
             case SWING:
                 angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
                 timer += (double)GameWindow.TIME_PER_FRAME / 600;
                 retrieveRate = INIT_RETRIEVE_RATE;
+                isSuccessed=true;
                 break;
             case GRAB:
                 if (length <= MAX_LENGTH) {
@@ -105,13 +115,14 @@ public class Rope extends GameObject {
         hook.setAngle(-1 * angle);
         rigidbody = new Rigidbody(endX, endY, 5, 5);
 
+
         if (isColliding == false && currentState == RopeState.GRAB && (collidingObject = detectCollision()) != null) {
             isColliding = true;
             collidingObject.setOnHook(true);
             currentState = RopeState.RETRIEVE;
             //如果购买了能量饮料，则力量变强
             if (strengthPro) {
-                retrieveRate = (int)((retrieveRate / collidingObject.getMass()) + 20);
+                retrieveRate = (int)((retrieveRate/collidingObject.getMass()) + 20);
             }
             //如果没有购买能量饮料，则正常拉取
             else {
@@ -145,9 +156,8 @@ public class Rope extends GameObject {
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3 + 6);
             collidingObject.setAngle(-1 * angle);
-
             //如果现在状态是摆动状态，抓取返回，加分
-            if (currentState == RopeState.SWING && isColliding) {
+            if (currentState == RopeState.SWING) {
                 //如果购买了钻石抛光并且抓到的是钻石，则钻石价值由600变为900
                 if (diamondPro && collidingObject.getName() == ItemName.DIAMOND) {
                     grabValue = collidingObject.getValue() + 300;
@@ -264,5 +274,14 @@ public class Rope extends GameObject {
 
     public void setOverallValue(int overallValue) {
         this.overallValue = overallValue;
+    }
+
+    public void setIsSuccessed(boolean IsSuccessed)
+    {
+        isSuccessed=IsSuccessed;
+    }
+
+    public void setIsShop(boolean shop) {
+        isShop = shop;
     }
 }

@@ -151,7 +151,6 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("购买炸弹");
                     productStatus.setDynamite(true);//设置炸弹状态为已购买
                     totalMoney+=dynamitePrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
@@ -208,7 +207,6 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("购买能量饮料");
                     productStatus.setDrink(true);//设置能量饮料状态为已购买
                     totalMoney+=drinkPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
@@ -265,7 +263,6 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("购买四叶草");
                     productStatus.setClover(true);//设置四叶草状态为已购买
                     totalMoney+=cloverPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
@@ -322,7 +319,6 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("购买石头收藏家书籍");
                     productStatus.setBook(true);//设置石头收藏家书籍状态为已购买
                     totalMoney+=bookPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
@@ -379,7 +375,6 @@ public class Shop extends JPanel {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("购买钻石抛光");
                     productStatus.setPolish(true);//设置钻石抛光状态为已购买
                     totalMoney+=polishPrice;//把总价钱给加上
                     jLabelPrice.setVisible(false);
@@ -435,7 +430,6 @@ public class Shop extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gameWindow.setNextLevelSignal(true);
-                System.out.println("购买完毕，进入下一关");
                 isBuyFinish=true;
                 removeAll();
                 //----------------------------------------------------------------------->鼠标点击“下一关卡”按钮，这里书写跳转事件

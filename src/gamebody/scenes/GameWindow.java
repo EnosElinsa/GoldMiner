@@ -54,7 +54,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     
     private static int level = 1; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
-    private int dynamiteCount = 10;
+    private int dynamiteCount =0;//炸药数量初始化为0
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程
@@ -159,7 +159,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         cutSceneSound2.musicMain(1);
         //判断是否购买完毕
         if (shop.getIsBuyFinish()==true) {
-            System.out.println("我选完啦，你可以继续了");
+            rope.setIsShop(true);//告诉rope那边商店购买已经结束了，可以生成商品属性效果了
             rope.setProduct(shop.getProductStatus());
             rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney());//把购买商品总共花费的钱扣除
         }
@@ -191,14 +191,17 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         // 绘制UI
         ui.render(graphics2, gameScenePanel);
 
+
         if (dynamite != null) {
             dynamite.render(graphics2, gameScenePanel);
         }
 
+        //如果炸药消失了，即炸开了
         if (dynamite != null && dynamite.isVanished()) {
             dynamite = null;
             rope.setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
             rope.setColliding(false);
+            System.out.println(dynamiteCount);
         }
         
         // 将辅助画板绘制在原本的画板上
@@ -229,9 +232,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
                 miner.setCurrentState(MinerState.DIG);       // 将矿工的状态设为“挖”
             }
         } else if (e.getKeyCode() == KeyEvent.VK_UP && rope.getCurrentState() == RopeState.RETRIEVE && rope.isColliding()) {
-            if (dynamiteCount-- > 0) {
-                miner.setCurrentState(MinerState.THROW);
+            System.out.println(dynamiteCount);
+            if (dynamiteCount > 0) {
                 dynamite = new Dynamite(this);
+                miner.setCurrentState(MinerState.THROW);
+                dynamiteCount--;
             }
         }
     }
@@ -306,6 +311,14 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     public void setNextLevelSignal(boolean nextLevelSignal) {
         this.nextLevelSignal = nextLevelSignal;
+    }
+
+    public void setDynamiteCount(int dynamiteCount) {
+        this.dynamiteCount = dynamiteCount;
+    }
+
+    public int getDynamiteCount() {
+        return dynamiteCount;
     }
 }
 

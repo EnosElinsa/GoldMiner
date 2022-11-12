@@ -46,7 +46,7 @@ public abstract class GameObject implements Runnable {
         rigidbody = new Rigidbody(x, y, width, height);
     }
 
-    protected abstract void update();
+    protected abstract void update() throws InterruptedException;
 
     public void render(Graphics graphics, JPanel panel) {
         Graphics2D graphics2d = (Graphics2D) graphics;
@@ -67,7 +67,11 @@ public abstract class GameObject implements Runnable {
     @Override
     public void run() {
         while (!isTerminated) {
-            update();
+            try {
+                update();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 Thread.sleep(GameWindow.TIME_PER_FRAME);
             } catch (InterruptedException e) {

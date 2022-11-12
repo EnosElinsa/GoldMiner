@@ -28,7 +28,9 @@ public class Dynamite extends GameObject {
     private boolean isTriggered;
     private Thread dynamiteThread = new Thread(this);
 
-    public Dynamite(GameWindow gameWindow) {
+    private Image dynamiteIcon= new ImageIcon(TEXTURE_DIRECTORY).getImage();
+
+    public Dynamite(GameWindow gameWindow)  {
         super(SPAWN_X, SPAWN_Y, TEXTURE_DIRECTORY);
         this.gameWindow = gameWindow;
         angle = Math.PI * 2 - gameWindow.getRope().getAngle();
@@ -38,9 +40,6 @@ public class Dynamite extends GameObject {
     private GameObject detectCollidingObject() {
         for (GameObject gameObject : gameWindow.getGameobjects()) {
             if (rigidbody.hasCollisionWith(gameObject.getRigidbody()) && gameObject.isOnHook()) {
-                if (gameObject != gameWindow.getRope().getCollidingObject()) {
-                    gameObject = gameWindow.getRope().getCollidingObject();
-                }
                 return gameObject;
             }
         }
@@ -63,7 +62,8 @@ public class Dynamite extends GameObject {
 
     private Thread explodeThread = new Thread(() -> {
         texture = explosionImage;
-        explosionSound.musicMain(1);
+        new Thread(() -> { explosionSound.musicMain(1); }).start();;
+        //explosionSound.musicMain(1);
         for (GameObject gameObject : objectsWithinRange) {
             gameObject.setColliding(true);
             gameObject.setTexture(explosionImage);
@@ -96,8 +96,9 @@ public class Dynamite extends GameObject {
         }
     }
 
+
     @Override
-    protected void update() {
+    protected void update() throws InterruptedException {
         x += Math.sin(gameWindow.getRope().getAngle()) * STEP;
         y += Math.cos(Math.abs(gameWindow.getRope().getAngle())) * STEP;
         rigidbody = new Rigidbody(x, y, width, height);
@@ -108,5 +109,13 @@ public class Dynamite extends GameObject {
             gameWindow.getRope().setColliding(false);
             explode();
         }
+    }
+
+    public Thread getDynamiteThread() {
+        return dynamiteThread;
+    }
+
+    public Thread getExplodeThread() {
+        return explodeThread;
     }
 }
