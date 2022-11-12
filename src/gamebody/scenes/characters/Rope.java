@@ -86,7 +86,15 @@ public class Rope extends GameObject {
                 break;
             case RETRIEVE:
                 if (length >= MIN_LENGTH) {
-                    length -= retrieveRate;
+                    //这里判断一下最后一次减去retrievRate如果比最小长度都要小的话，说明减过头了，这里直接让length等于最小长度，可以避免拉回时的回弹效果
+                    if (length-retrieveRate < MIN_LENGTH)
+                    {
+                        length=MIN_LENGTH;
+                    }
+                    else
+                    {
+                        length -= retrieveRate;
+                    }
                 }
                 else {
                     length = MIN_LENGTH;
