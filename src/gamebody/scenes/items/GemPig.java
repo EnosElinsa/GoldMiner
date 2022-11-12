@@ -1,11 +1,11 @@
 package gamebody.scenes.items;
 
-import javax.swing.ImageIcon;
-
 import gamebody.engine.Animation;
 import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
 import gamebody.scenes.ObjectValueLevel;
+
+import javax.swing.*;
 
 public class GemPig extends Pig {
 
