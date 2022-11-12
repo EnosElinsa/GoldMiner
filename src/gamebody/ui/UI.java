@@ -46,16 +46,16 @@ public class UI extends GameObject {
         drawWords(graphics,32, Color.RED, words4,180,125);
 
         String words5 = "时间";
-        drawWords(graphics,32, Color.WHITE, words5,650,75);
+        drawWords(graphics,32, Color.WHITE, words5,750,75);
 
         String words6 = "关卡";
-        drawWords(graphics,32, Color.WHITE, words6,650,128);
-        drawWords(graphics,32, Color.RED, Integer.toString(gameWindow.getLevel()),750,128);
+        drawWords(graphics,32, Color.WHITE, words6,750,128);
+        drawWords(graphics,32, Color.RED, Integer.toString(gameWindow.getLevel()),850,128);
 
         long curTime = gameWindow.getTime().countDown();
         if (curTime >= 0) {
             String words7 = "" + curTime;
-            drawWords(graphics,32,Color.RED,words7,750,75);
+            drawWords(graphics,32,Color.RED,words7,850,75);
         }
 
         //抓取成功后的加分效果

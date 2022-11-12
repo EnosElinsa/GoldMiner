@@ -60,9 +60,7 @@ public class Dynamite extends GameObject {
 
     private Thread explodeThread = new Thread(() -> {
         texture = explosionImage;
-        new Thread(() -> {
-            explosionSound.musicMain(1);
-        }).start();
+        explosionSound.musicMain(1);
         for (GameObject gameObject : objectsWithinRange) {
             gameObject.setColliding(true);
             gameObject.setTexture(explosionImage);
@@ -82,8 +80,8 @@ public class Dynamite extends GameObject {
         isTriggered = true;
         getObjectsWithinRange();
         explodeThread.start();
+        isTerminated = true;
     }
-
 
     @Override
     public void render(Graphics graphics, JPanel panel) {

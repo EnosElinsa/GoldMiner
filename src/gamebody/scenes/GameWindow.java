@@ -158,11 +158,10 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         cardLayout.show(windowPanel, "cutscene2"); 
         cutSceneSound2.musicMain(1);
         //判断是否购买完毕
-        if (shop.getIsBuyFinish()==true)
-        {
+        if (shop.getIsBuyFinish()==true) {
             System.out.println("我选完啦，你可以继续了");
             rope.setProduct(shop.getProductStatus());
-            rope.setOverallValue(rope.getOverallValue()-shop.getTotalMoney());//把购买商品总共花费的钱扣除
+            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney());//把购买商品总共花费的钱扣除
         }
         delay(2000);
         // 显示游戏界面

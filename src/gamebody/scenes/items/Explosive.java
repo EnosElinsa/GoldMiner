@@ -37,7 +37,7 @@ public class Explosive extends GameObject {
                 gameObject.setColliding(true);
                 gameObject.setTexture(new ImageIcon("resources/tnt-explosion-0").getImage());
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(180);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
