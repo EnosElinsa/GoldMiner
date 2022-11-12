@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 public class Rope extends GameObject {
 
-    private int startX = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
-    private int startY = 121;                           // 绳索的起点坐标纵坐标
+    public static final int START_X = GameWindow.INIT_WIDTH / 2 - 3; // 绳索的起点坐标横坐标
+    public static final int START_Y = 121;                           // 绳索的起点坐标纵坐标
     private int endX;                                   // 绳索的终点坐标横坐标                   
     private int endY;                                   // 绳索的终点坐标纵坐标  
     private int length = MIN_LENGTH;
@@ -56,7 +56,7 @@ public class Rope extends GameObject {
         Color colorOfRope = new Color(49, 51, 64);
 
         graphics2d.setColor(colorOfRope);
-        graphics2d.drawLine(startX, startY, endX, endY);
+        graphics2d.drawLine(START_X, START_Y, endX, endY);
         hook.render(graphics2d, panel);
     }
 
@@ -73,7 +73,6 @@ public class Rope extends GameObject {
         switch (currentState) {
             case SWING:
                 angle = 1.3 * Math.cos(timer); // 用简谐运动方程近似模拟钩子的单摆运动
-                // System.out.println(Math.toDegrees(angle));
                 timer += (double)GameWindow.TIME_PER_FRAME / 600;
                 retrieveRate = INIT_RETRIEVE_RATE;
                 break;
@@ -96,8 +95,8 @@ public class Rope extends GameObject {
                 break;
         }
 
-        endX = (int)(startX + length * Math.sin(angle));
-        endY = (int)(startY + length * Math.cos(angle));
+        endX = (int)(START_X + length * Math.sin(angle));
+        endY = (int)(START_Y + length * Math.cos(angle));
         hook.setX(endX);
         hook.setY(endY);
         hook.setAngle(-1 * angle);
@@ -105,6 +104,7 @@ public class Rope extends GameObject {
 
         if (isColliding == false && currentState == RopeState.GRAB && (collidingObject = detectCollision()) != null) {
             isColliding = true;
+            collidingObject.setOnHook(true);
             currentState = RopeState.RETRIEVE;
             retrieveRate /= collidingObject.getMass();
         }
@@ -159,22 +159,6 @@ public class Rope extends GameObject {
             }
         }
         return null;
-    }
-
-    public int getStartX() {
-        return startX;
-    }
-
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
     }
 
     public int getEndX() {

@@ -18,6 +18,7 @@ import gamebody.scenes.characters.Miner;
 import gamebody.scenes.characters.MinerState;
 import gamebody.scenes.characters.Rope;
 import gamebody.scenes.characters.RopeState;
+import gamebody.scenes.items.Dynamite;
 import gamebody.ui.Cutscene;
 import gamebody.ui.Shop;
 import gamebody.ui.Time;
@@ -46,6 +47,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Scene scene = new Scene(this);  // 场景
     private Miner miner = new Miner();  // 矿工
     private Rope rope = new Rope(this); // 绳索
+    private Dynamite dynamite;
     private Vector<GameObject> gameobjects = scene.getGameObjects(0);
 
     private Time time = new Time();
@@ -58,6 +60,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     
     private static int level = 9; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
+    private int dynamiteCount = 10;
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程
@@ -186,6 +189,16 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         rope.render(graphics2, gameScenePanel);
         // 绘制UI
         ui.render(graphics2, gameScenePanel);
+
+        if (dynamite != null) {
+            dynamite.render(graphics2, gameScenePanel);
+        }
+
+        if (dynamite != null && dynamite.isVanished()) {
+            dynamite = null;
+            rope.setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
+            rope.setColliding(false);
+        }
         
         // 将辅助画板绘制在原本的画板上
         graphics.drawImage(offScreenImage, 0, 0, gameScenePanel);
@@ -213,6 +226,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
                 digSound.musicMain(1);
                 rope.setCurrentState(RopeState.GRAB);        // 将绳索的状态设为“抓取”
                 miner.setCurrentState(MinerState.DIG);       // 将矿工的状态设为“挖”
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_UP && rope.getCurrentState() == RopeState.RETRIEVE && rope.isColliding()) {
+            if (dynamiteCount-- > 0) {
+                miner.setCurrentState(MinerState.THROW);
+                dynamite = new Dynamite(this);
             }
         }
     }
@@ -288,6 +306,5 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void setNextLevelSignal(boolean nextLevelSignal) {
         this.nextLevelSignal = nextLevelSignal;
     }
-
 }
 

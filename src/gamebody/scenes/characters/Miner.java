@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 
 public class Miner extends GameObject {
     
+    public static final int SPAWN_X = GameWindow.INIT_WIDTH / 2 - 30;
+    public static final int SPAWN_Y = 57;
+
     private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
     private Animation animationIdle;    // 静置时矿工的动画 
     private Animation animationDig;     // 挖矿时矿工的动画 
@@ -34,7 +37,7 @@ public class Miner extends GameObject {
 
     @Override
     public void render(Graphics graphics, JPanel panel) {
-        graphics.drawImage(currentFrame, GameWindow.INIT_WIDTH / 2 - 30, 57, panel);
+        graphics.drawImage(currentFrame, SPAWN_X, SPAWN_Y, panel);
     }
 
     /**
@@ -56,7 +59,16 @@ public class Miner extends GameObject {
             case STRONG:
                 currentFrame = animationStrong.getNextFrame(); break;
             case THROW:
-                currentFrame = animationThrow.getNextFrame(); break;
+                currentFrame = animationThrow.getNextFrame(); 
+                if (animationThrow.getCurrentFrameIndex() == animationThrow.getImages().size() - 1) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    currentState = MinerState.PULL;
+                }
+                break;
         }
     }
 
