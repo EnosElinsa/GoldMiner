@@ -1,16 +1,14 @@
 package gamebody.scenes.items;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
-import java.awt.*;
-import java.util.Vector;
-
 import gamebody.engine.Animation;
 import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
 import gamebody.scenes.GameWindow;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
 
 public class Explosive extends GameObject {
 
@@ -31,6 +29,28 @@ public class Explosive extends GameObject {
     private int initialX;
     private int initialY;
 
+    private Thread explosionThread = new Thread(() -> {
+        if (isTriggered) {
+            texture = brokenTexture;
+            explosionSound.musicMain(1);
+            for (GameObject gameObject : objectsWithinRange) {
+                gameObject.setColliding(true);
+                gameObject.setTexture(new ImageIcon("resources/tnt-explosion-0").getImage());
+                try {
+                    Thread.sleep(180);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (gameObject.getName() != ItemName.EXPLOSIVE) {
+                    gameObject.vanish(); 
+                }
+            }
+        }
+        if (isOnHook == false) {
+            vanish();
+        }
+    });
+
     public Explosive() {}
 
     public Explosive(int x, int y, GameWindow gameWindow) {
@@ -44,6 +64,13 @@ public class Explosive extends GameObject {
         explosiveThread.start();
     }
 
+    
+    private void explode() {
+        isTriggered = true;
+        getObjectsWithinRange();
+        explosionThread.start();
+    }
+    
     private void getObjectsWithinRange() {
         for (GameObject gameObject : gameWindow.getGameobjects()) {
             if (getDistance(gameObject, this) <= RADIUS_OF_EXPLOSION + gameObject.getHeight() / 2 
@@ -51,18 +78,6 @@ public class Explosive extends GameObject {
                 objectsWithinRange.add(gameObject);
             }
         }
-    }
-
-    private void explode() {
-        getObjectsWithinRange();
-        for (GameObject gameObject : objectsWithinRange) {
-            System.out.println(gameObject);
-            gameObject.setColliding(true);
-            gameObject.setTexture(explosionAnimation.getNextFrame());
-            if (gameObject.getName() != ItemName.EXPLOSIVE) gameObject.vanish();
-            explosionSound.musicMain(1);
-        }
-        texture = brokenTexture;
     }
 
     private double getDistance(GameObject o1, GameObject o2) {
@@ -73,6 +88,7 @@ public class Explosive extends GameObject {
     public void render(Graphics graphics, JPanel jPanel) {
         super.render(graphics, jPanel);
         if (isTriggered && isVanished == false) {
+            if (isOnHook && explosionThread.isAlive() == false) return;
             Image explosionImage = explosionAnimation.getNextFrame();
             graphics.drawImage(explosionImage, initialX - explosionImage.getWidth(jPanel) / 2, 
                 initialY - explosionImage.getHeight(jPanel) / 2, jPanel);
@@ -81,12 +97,7 @@ public class Explosive extends GameObject {
 
     @Override
     protected void update() {
-        if (explosionAnimation.getCurrentFrameIndex() == explosionAnimation.getImages().size() - 1) {
-            vanish();
-        }
         if (isColliding && isTriggered == false) {
-            explosionSound.musicMain(1);
-            isTriggered = true;
             explode();
         }
     }

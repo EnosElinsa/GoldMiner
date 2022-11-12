@@ -23,8 +23,10 @@ public abstract class GameObject implements Runnable {
     protected Rigidbody rigidbody;
     protected AffineTransform affineTransform;
     protected GameObject collidingObject;
+    protected boolean isTerminated;
     protected boolean isColliding;
     protected boolean isVanished;
+    protected boolean isOnHook;
 
     protected ObjectValueLevel objectValueLevel; //物体的价值等级
 
@@ -59,11 +61,12 @@ public abstract class GameObject implements Runnable {
         y = 2000;
         rigidbody = new Rigidbody(x, y, width, height);
         isVanished = true;
+        isTerminated = true;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!isTerminated) {
             update();
             try {
                 Thread.sleep(GameWindow.TIME_PER_FRAME);
@@ -139,6 +142,22 @@ public abstract class GameObject implements Runnable {
 
     public void setColliding(boolean isColliding) {
         this.isColliding = isColliding;
+    }
+
+    public boolean isOnHook() {
+        return isOnHook;
+    }
+
+    public void setOnHook(boolean isOnHook) {
+        this.isOnHook = isOnHook;
+    }
+
+    public boolean isTerminated() {
+        return isTerminated;
+    }
+
+    public void setTerminated(boolean isTerminated) {
+        this.isTerminated = isTerminated;
     }
 
     public double getScaleRatio() {

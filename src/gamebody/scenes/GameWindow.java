@@ -1,27 +1,22 @@
 package gamebody.scenes;
 
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.scenes.characters.Miner;
 import gamebody.scenes.characters.MinerState;
 import gamebody.scenes.characters.Rope;
 import gamebody.scenes.characters.RopeState;
+import gamebody.scenes.items.Dynamite;
 import gamebody.ui.Cutscene;
 import gamebody.ui.Shop;
 import gamebody.ui.Time;
 import gamebody.ui.UI;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Vector;
 
 public class GameWindow extends JFrame implements Runnable, KeyListener {
 
@@ -46,6 +41,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Scene scene = new Scene(this);  // 场景
     private Miner miner = new Miner();  // 矿工
     private Rope rope = new Rope(this); // 绳索
+    private Dynamite dynamite;
     private Vector<GameObject> gameobjects = scene.getGameObjects(0);
 
     private Time time = new Time();
@@ -56,8 +52,9 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Audio cutSceneSound2 = new Audio("sound/sound_wav/cut-scene-2.wav");
     private Thread gameWindowThread = new Thread(this);                   // 窗口线程
     
-    private static int level = 9; // 关卡数
+    private static int level = 1; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
+    private int dynamiteCount = 10;
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程
@@ -147,6 +144,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
             shop.launchShop();
             System.out.println("显示商店界面");
             cardLayout.show(windowPanel, "shop");
+
         } else {
             cardLayout.show(windowPanel, "cutscene0");
         }
@@ -159,6 +157,12 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         cutscene2.setGoalScore(target);
         cardLayout.show(windowPanel, "cutscene2"); 
         cutSceneSound2.musicMain(1);
+        //判断是否购买完毕
+        if (shop.getIsBuyFinish()==true) {
+            System.out.println("我选完啦，你可以继续了");
+            rope.setProduct(shop.getProductStatus());
+            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney());//把购买商品总共花费的钱扣除
+        }
         delay(2000);
         // 显示游戏界面
         loadGameObjects();
@@ -186,6 +190,16 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         rope.render(graphics2, gameScenePanel);
         // 绘制UI
         ui.render(graphics2, gameScenePanel);
+
+        if (dynamite != null) {
+            dynamite.render(graphics2, gameScenePanel);
+        }
+
+        if (dynamite != null && dynamite.isVanished()) {
+            dynamite = null;
+            rope.setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
+            rope.setColliding(false);
+        }
         
         // 将辅助画板绘制在原本的画板上
         graphics.drawImage(offScreenImage, 0, 0, gameScenePanel);
@@ -213,6 +227,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
                 digSound.musicMain(1);
                 rope.setCurrentState(RopeState.GRAB);        // 将绳索的状态设为“抓取”
                 miner.setCurrentState(MinerState.DIG);       // 将矿工的状态设为“挖”
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_UP && rope.getCurrentState() == RopeState.RETRIEVE && rope.isColliding()) {
+            if (dynamiteCount-- > 0) {
+                miner.setCurrentState(MinerState.THROW);
+                dynamite = new Dynamite(this);
             }
         }
     }
@@ -288,6 +307,5 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void setNextLevelSignal(boolean nextLevelSignal) {
         this.nextLevelSignal = nextLevelSignal;
     }
-
 }
 

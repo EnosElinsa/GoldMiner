@@ -1,11 +1,10 @@
 package gamebody.scenes.characters;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import gamebody.engine.GameObject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import gamebody.engine.*;
 
 public class Hook extends GameObject {
 

@@ -1,9 +1,8 @@
 package gamebody.ui;
 
-import javax.swing.*;
-
 import gamebody.scenes.GameWindow;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Cutscene extends JPanel {
