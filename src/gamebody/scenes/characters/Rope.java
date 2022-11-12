@@ -165,7 +165,7 @@ public class Rope extends GameObject {
                     grabValue = collidingObject.getValue()+500;
                 }
                 //如果购买了石头收藏家书籍并且抓到的是石头，则石头的价值变为原来的三倍
-                else if (diamondPro==true&&collidingObject.getName()== ItemName.STONE)
+                else if (stonePro==true&&collidingObject.getName()== ItemName.STONE)
                 {
                     grabValue = collidingObject.getValue()*3;
                 }
