@@ -111,7 +111,7 @@ public class Rope extends GameObject {
             currentState = RopeState.RETRIEVE;
             //如果购买了能量饮料，则力量变强
             if (strengthPro) {
-                retrieveRate = (int)((retrieveRate/collidingObject.getMass()) + 20);
+                retrieveRate = (int)((retrieveRate / collidingObject.getMass()) + 20);
             }
             //如果没有购买能量饮料，则正常拉取
             else {
@@ -145,8 +145,9 @@ public class Rope extends GameObject {
             collidingObject.setX(endX);
             collidingObject.setY(endY + collidingObject.getHeight() / 2 - 3 + 6);
             collidingObject.setAngle(-1 * angle);
+
             //如果现在状态是摆动状态，抓取返回，加分
-            if (currentState == RopeState.SWING) {
+            if (currentState == RopeState.SWING && isColliding) {
                 //如果购买了钻石抛光并且抓到的是钻石，则钻石价值由600变为900
                 if (diamondPro && collidingObject.getName() == ItemName.DIAMOND) {
                     grabValue = collidingObject.getValue() + 300;

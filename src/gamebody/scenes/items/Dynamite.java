@@ -38,6 +38,9 @@ public class Dynamite extends GameObject {
     private GameObject detectCollidingObject() {
         for (GameObject gameObject : gameWindow.getGameobjects()) {
             if (rigidbody.hasCollisionWith(gameObject.getRigidbody()) && gameObject.isOnHook()) {
+                if (gameObject != gameWindow.getRope().getCollidingObject()) {
+                    gameObject = gameWindow.getRope().getCollidingObject();
+                }
                 return gameObject;
             }
         }
@@ -100,10 +103,10 @@ public class Dynamite extends GameObject {
         rigidbody = new Rigidbody(x, y, width, height);
         collidingObject = detectCollidingObject();
         if (collidingObject != null && isTriggered == false) {
-            explode();
             gameWindow.getRope().setCurrentState(RopeState.RETRIEVE);
             gameWindow.getRope().setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
             gameWindow.getRope().setColliding(false);
+            explode();
         }
     }
 }
