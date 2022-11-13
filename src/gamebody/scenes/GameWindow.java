@@ -145,7 +145,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     }
     
     private void settle () {
-        //达到下一关的条件
+        // 达到下一关的条件
         isInMainScene = false;
         stopCurrentActivity();                
         if (rope.getOverallValue() >= target) {

@@ -5,6 +5,8 @@ import gamebody.engine.ItemName;
 
 /**
  * 游戏背景下的{@code Skull}头骨游戏物品。
+ * <p> 质量为5。
+ * <p> 价值为20。
  * @author Enos
  * @see Diamond
  * @see Dynamite

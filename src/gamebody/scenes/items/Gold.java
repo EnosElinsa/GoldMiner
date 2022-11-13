@@ -7,6 +7,8 @@ import gamebody.scenes.ObjectValueLevel;
 
 /**
  * 游戏背景下的{@code Gold}金矿游戏物品。
+ * <p> 小金块质量为8，中金块质量为13，大金块的质量为17。
+ * <p> 小金块价值为50，中金块价值为100，大金块的价值为500。
  * @author Enos
  * @see Diamond
  * @see Dynamite
@@ -19,15 +21,36 @@ import gamebody.scenes.ObjectValueLevel;
  */
 public class Gold extends GameObject {
     
+    /**
+     * 大金块的固定质量。
+     */
     public static final double GOLD_MASS = 17;
-    public static final int GOLD_VALUE = 500; //大金块默认的金钱
+
+    /**
+     * 大金块的固定价值。
+     */
+    public static final int GOLD_VALUE = 500;
+
+    /**
+     * 中金块相对于大金块的缩放比例。
+     */
     public static final double MIDDLE_GOLD_SCALE_RATIO = 0.5;
+
+    /**
+     * 小金块相对于大金块的缩放比例。
+     */
     public static final double TINY_GOLD_SCALE_RATIO = 0.25;
+
+    /**
+     * 贴图路径。
+     */
     private static final String TEXTURE_DIRECTORY = "resources/gold.png";
 
     public Gold() {}
 
-    // 不带缩放比例的构造方法，表示大金块，value默认值为500
+    /**
+     * 大金块的构造方法。
+     */
     public Gold(int x, int y) {
         super(x, y, TEXTURE_DIRECTORY);
         mass = GOLD_MASS;
@@ -36,7 +59,12 @@ public class Gold extends GameObject {
         objectValueLevel = ObjectValueLevel.HIGH;
     }
 
-    // 带缩放比例的构造方法
+    /**
+     * 小金块和中金块的构造方法。
+     * @param x 位置的横坐标
+     * @param y 位置的纵坐标
+     * @param scaleRatio 缩放的比例
+     */
     public Gold(int x, int y, double scaleRatio) {
         super(x, y, TEXTURE_DIRECTORY);
         this.scaleRatio = scaleRatio;
