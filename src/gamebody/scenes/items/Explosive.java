@@ -10,6 +10,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Vector;
 
+/**
+ * 游戏背景下的{@code Explosive}TNT炸药游戏物品。
+ * @author Enos
+ * @author JiajiaPig
+ * @see Diamond
+ * @see Dynamite
+ * @see Bone
+ * @see GemPig
+ * @see Gold
+ * @see Pig
+ * @see Skull
+ * @see Stone
+ * @see TreasureBag
+ */
 public class Explosive extends GameObject {
 
     private static final String TEXTURE_DIRECTORY = "resources/explosive.png";
@@ -32,7 +46,7 @@ public class Explosive extends GameObject {
     private Thread explosionThread = new Thread(() -> {
         if (isTriggered) {
             texture = brokenTexture;
-            explosionSound.musicMain(1);
+            explosionSound.play(1);
             for (GameObject gameObject : objectsWithinRange) {
                 gameObject.setColliding(true);
                 gameObject.setTexture(new ImageIcon("resources/tnt-explosion-0").getImage());

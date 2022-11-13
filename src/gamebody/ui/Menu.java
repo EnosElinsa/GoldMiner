@@ -18,6 +18,7 @@ public class Menu extends JPanel {
     }
 
     public void launchMenu() {
+        setVisible(true);
         // 初始化按钮
         initializeButton();
         // 初始化静态背景

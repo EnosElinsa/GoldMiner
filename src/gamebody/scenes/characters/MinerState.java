@@ -2,17 +2,36 @@ package gamebody.scenes.characters;
 
 
 /**
- *  矿工的四种状态
- *  IDLE,   静置
- *  DIG,    挖（钩子往下）
- *  PULL,   拉（钩子往上）
- *  STRONG, 获得力量
- *  THROW   扔炸弹
+ *  <p>矿工的四种状态
+ *  <p>{@code IDLE},   静置
+ *  <p>{@code DIG},    挖（钩子往下）
+ *  <p>{@code PULL},   拉（钩子往上）
+ *  <p>{@code STRONG}, 获得力量
+ *  <p>{@code THROW}   扔炸弹
  */
 public enum MinerState {
-    IDLE,   // 静置
-    DIG,    // 挖（钩子往下）
-    PULL,   // 拉（钩子往上）
-    STRONG, // 获得力量
-    THROW   // 扔炸弹
+    /**
+     * 
+     */
+    IDLE,
+
+    /**
+     * 挖（钩子往下）
+     */
+    DIG, 
+
+    /**
+     * 拉（钩子往上）
+     */
+    PULL,  
+
+    /**
+     * 获得力量
+     */
+    STRONG,
+
+    /**
+     * 扔炸弹
+     */
+    THROW 
 }

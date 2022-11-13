@@ -7,6 +7,18 @@ import gamebody.scenes.ObjectValueLevel;
 
 import javax.swing.*;
 
+/**
+ * 游戏背景下的{@code GemPig}钻石猪游戏物品。
+ * @author Enos
+ * @see Diamond
+ * @see Dynamite
+ * @see Bone
+ * @see Gold
+ * @see Pig
+ * @see Skull
+ * @see Stone
+ * @see TreasureBag
+ */
 public class GemPig extends Pig {
 
     private Animation animation = new Animation("resources/gem-pig", 4);

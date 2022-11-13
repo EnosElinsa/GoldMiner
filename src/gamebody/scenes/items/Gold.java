@@ -1,16 +1,24 @@
 package gamebody.scenes.items;
 
-import gamebody.engine.Animation;
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
 import gamebody.scenes.ObjectValueLevel;
 
+/**
+ * 游戏背景下的{@code Gold}金矿游戏物品。
+ * @author Enos
+ * @see Diamond
+ * @see Dynamite
+ * @see Bone
+ * @see GemPig
+ * @see Pig
+ * @see Skull
+ * @see Stone
+ * @see TreasureBag
+ */
 public class Gold extends GameObject {
     
-    private Animation goldSparkAnimation = new Animation("resources/gold-spark", 8);
-    private Animation sparkAnimation = new Animation("resources/spark", 12);
-
     public static final double GOLD_MASS = 17;
     public static final int GOLD_VALUE = 500; //大金块默认的金钱
     public static final double MIDDLE_GOLD_SCALE_RATIO = 0.5;
@@ -47,16 +55,6 @@ public class Gold extends GameObject {
         }
     }
 
-    public Animation getGoldSparkAnimation() {
-        return goldSparkAnimation;
-    }
-
-    public Animation getSparkAnimation() {
-        return sparkAnimation;
-    }
-
     @Override
-    protected void update() {
-        
-    }  
+    protected void update() {}      
 }

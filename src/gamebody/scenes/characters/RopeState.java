@@ -2,12 +2,23 @@ package gamebody.scenes.characters;
 
 /**
  * 绳索的3种状态 
- * SWING,    摆动
- * GRAB,     抓取
- * RETRIEVE  收回
+ * <p>{@code SWING},    摆动
+ * <p>{@code GRAB},     抓取
+ * <p>{@code RETRIEVE}  收回
  */
 public enum RopeState {
-    SWING,    // 摆动
-    GRAB,     // 抓取
-    RETRIEVE  // 收回
+    /**
+     * 摆动
+     */
+    SWING,  
+    
+    /**
+     * 抓取
+     */
+    GRAB,
+    
+    /**
+     * 收回
+     */
+    RETRIEVE
 }

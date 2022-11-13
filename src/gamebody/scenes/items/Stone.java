@@ -4,10 +4,22 @@ import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
 import gamebody.scenes.ObjectValueLevel;
 
+/**
+ * 游戏背景下的{@code Stone}石头游戏物品。
+ * @author Enos
+ * @see Diamond
+ * @see Dynamite
+ * @see Bone
+ * @see GemPig
+ * @see Gold
+ * @see Pig
+ * @see Skull
+ * @see TreasureBag
+ */
 public class Stone extends GameObject {
 
-    public static final int STONE_MASS = 9;
     private static final String[] TEXTURE_DIRECTORIES = {"resources/stone-0.png", "resources/stone-1.png"};
+    public static final int STONE_MASS = 9;
     
     public Stone() {}
 

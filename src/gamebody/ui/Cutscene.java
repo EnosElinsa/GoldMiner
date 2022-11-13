@@ -73,6 +73,7 @@ public class Cutscene extends JPanel {
     }
 
     public void setGoalScore(int goalScore) {
+        setVisible(true);
         jLabelGoalScore.setText("" + goalScore);
         jLabelGoalScore.setBounds(460 - 15 * (int) Math.log10(goalScore), 350, 200, 50);
     }

@@ -7,22 +7,72 @@ import gamebody.scenes.GameWindow;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * 游戏背景下的主角{@code Miner}矿工类。
+ * @author Enos
+ * @see MinerState
+ * @see Animation
+ * @see Rope
+ */
 public class Miner extends GameObject {
     
+    /**
+     * 生成的矿工的固定横坐标位置。
+     */
     public static final int SPAWN_X = GameWindow.INIT_WIDTH / 2 - 30;
+
+    /**
+     * 生成的矿工的固定纵坐标位置。
+     */
     public static final int SPAWN_Y = 57;
 
-    private MinerState currentState = MinerState.IDLE; // 开始时设置矿工的状态为静置
-    private Animation animationIdle;    // 静置时矿工的动画 
-    private Animation animationDig;     // 挖矿时矿工的动画 
-    private Animation animationPull;    // 拉线时矿工的动画 
-    private Animation animationStrong;  // 获得力量时矿工的动画 
-    private Animation animationThrow;   // 扔炸弹时矿工的动画 
+    /**
+     * 矿工的当前状态。
+     * <p>开始时设置矿工的状态为{@code MinerState.IDLE}静置。
+     */
+    private MinerState currentState = MinerState.IDLE;
 
-    private Thread minerThread = new Thread(this);
+    /**
+     * 静置时矿工的动画。 
+     */
+    private Animation animationIdle;    
+
+    /**
+     * 挖矿时矿工的动画。 
+     */
+    private Animation animationDig;
+
+    /**
+     * 拉线时矿工的动画。
+     */
+    private Animation animationPull; 
+
+    /**
+     * 获得力量时矿工的动画。 
+     */
+    private Animation animationStrong;
+
+    /**
+     * 扔炸弹时矿工的动画。
+     */
+    private Animation animationThrow;
+
+    /**
+     * 当前的动画帧。
+     */
     private Image currentFrame;
+    
+    /**
+     * 由于矿工游戏对象需要实时进行更新，需要有自己的更新状态的线程。
+     */
+    private Thread minerThread = new Thread(this);
 
+    /**
+     * 矿工的默认构造方法。
+     */
     public Miner() {
+        x = SPAWN_X;
+        y = SPAWN_Y;
         // 初始化动画
         animationIdle = new Animation("resources/miner-idle", 1);
         animationDig = new Animation("resources/miner-dig", 4);
@@ -34,13 +84,16 @@ public class Miner extends GameObject {
         minerThread.start();
     }
 
+    /**
+     * 根据{@code currentFrame}当前的动画帧来渲染绘制自己。
+     */
     @Override
     public void render(Graphics graphics, JPanel panel) {
         graphics.drawImage(currentFrame, SPAWN_X, SPAWN_Y, panel);
     }
 
     /**
-     * 根据当前状态，更新对应帧图片
+     * 根据当前状态，更新对应帧图片。
      */
     public void updateCurrentFrame() {
         switch (currentState) {
@@ -99,7 +152,8 @@ public class Miner extends GameObject {
     }
 
     public void setCurrentState(MinerState currentState) {
-        restoreFrameIndex(); // 要更新状态之前，要先把当前状态对应的动画的帧索引都置为0
+        // 要更新状态之前，要先把当前状态对应的动画的帧索引都置为0
+        restoreFrameIndex(); 
         this.currentState = currentState;
     }
 } 

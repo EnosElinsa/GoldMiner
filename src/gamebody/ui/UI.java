@@ -72,9 +72,9 @@ public class UI extends GameObject {
             gameWindow.getRope().setRetrieved(false);
             int addValue = gameWindow.getRope().getGrabValue();
             if (gameWindow.getRope().getCollidingObject() != null && gameWindow.getRope().getCollidingObject().getObjectValueLevel() == ObjectValueLevel.HIGH) {
-                addValueSound.musicMain(1);
+                addValueSound.play(1);
             } else {
-                addValueSound2.musicMain(1);
+                addValueSound2.play(1);
             }
             String words8 = "+" + Integer.toString(addValue);
             drawWords(graphics,30,Color.GREEN,words8,300,75);

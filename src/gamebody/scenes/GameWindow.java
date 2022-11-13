@@ -87,10 +87,9 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void startGame() {
         windowPanel.setVisible(true);
         cutscene2.setGoalScore(target);
-        windowPanel.add("cutscene2", cutscene2);
         cardLayout.show(windowPanel, "cutscene2"); 
-        cutSceneSound2.musicMain(1);
-        delay(1200);
+        cutSceneSound2.play(1);
+        delay(2000);
 
         loadGameObjects(); // 加载游戏场景的物体
         rope.setStopSignal(false);
@@ -122,8 +121,8 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
      * 停止当前所有进行更新的对象的活动
      */
     private void stopCurrentActivity() {
-        digSound.musicMain(2);
-        pullSound.musicMain(2);
+        digSound.play(2);
+        pullSound.play(2);
         // 停止绳索和矿工的动作
         rope.setStopSignal(true);
         miner.setCurrentState(MinerState.IDLE);   
@@ -132,11 +131,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private void update() {
         if (rope.getCurrentState() == RopeState.RETRIEVE
             && miner.getCurrentState() != MinerState.PULL) {     // 当绳索状态处于“收取”时
-            pullSound.musicMain(3);
+            pullSound.play(3);
             miner.setCurrentState(MinerState.PULL);              // 将矿工的状态设置为“拉”
         }
         else if (rope.getCurrentState() == RopeState.SWING) {    // 当绳索状态处于“摇摆”时
-            pullSound.musicMain(2);
+            pullSound.play(2);
             miner.setCurrentState(MinerState.IDLE);              // 将矿工的状态设置为“静置”
         }
 
@@ -156,7 +155,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
             
             System.out.println("显示过关的界面");
             cardLayout.show(windowPanel, "cutscene1");
-            cutSceneSound1.musicMain(1);
+            cutSceneSound1.play(1);
             delay(2000);
             
             shop.launchShop();
@@ -179,7 +178,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         System.out.println("显示下一关目标界面");
         cutscene2.setGoalScore(target);
         cardLayout.show(windowPanel, "cutscene2"); 
-        cutSceneSound2.musicMain(1);
+        cutSceneSound2.play(1);
         // 判断是否购买完毕
         if (shop.getIsBuyFinish()) {
             rope.setIsShop(true); // 告诉rope那边商店购买已经结束了，可以生成商品属性效果了
@@ -251,7 +250,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {            // 当按下“↓”键时
             if (rope.getCurrentState() == RopeState.SWING) { // 当绳索处于摆动状态的时候
-                digSound.musicMain(1);
+                digSound.play(1);
                 rope.setCurrentState(RopeState.GRAB);        // 将绳索的状态设为“抓取”
                 miner.setCurrentState(MinerState.DIG);       // 将矿工的状态设为“挖”
             }

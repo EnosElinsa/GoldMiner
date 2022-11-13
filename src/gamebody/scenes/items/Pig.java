@@ -10,6 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+/**
+ * 游戏背景下的{@code Pig}猪游戏物品。
+ * @author Enos
+ * @see Diamond
+ * @see Dynamite
+ * @see Bone
+ * @see GemPig
+ * @see Gold
+ * @see Skull
+ * @see Stone
+ * @see TreasureBag
+ */
 public class Pig extends GameObject {
 
     private static final String TEXTURE_DIRECTORY = "resources/pig-0.png";
