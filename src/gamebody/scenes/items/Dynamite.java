@@ -28,7 +28,7 @@ public class Dynamite extends GameObject {
     private boolean isTriggered;
     private Thread dynamiteThread = new Thread(this);
 
-    private Image dynamiteIcon= new ImageIcon(TEXTURE_DIRECTORY).getImage();
+    private Image dynamiteIcon = new ImageIcon(TEXTURE_DIRECTORY).getImage();
 
     public Dynamite(GameWindow gameWindow)  {
         super(SPAWN_X, SPAWN_Y, TEXTURE_DIRECTORY);
@@ -102,6 +102,7 @@ public class Dynamite extends GameObject {
         x += Math.sin(gameWindow.getRope().getAngle()) * STEP;
         y += Math.cos(Math.abs(gameWindow.getRope().getAngle())) * STEP;
         rigidbody = new Rigidbody(x, y, width, height);
+        
         collidingObject = detectCollidingObject();
         if (collidingObject != null && isTriggered == false) {
             gameWindow.getRope().setCurrentState(RopeState.RETRIEVE);

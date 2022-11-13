@@ -68,11 +68,10 @@ public class UI extends GameObject {
         }
 
         //抓取成功后的加分效果
-        if(gameWindow.getRope().isRetrieved()==true)
-        {
+        if (gameWindow.getRope().isRetrieved() == true) {
             gameWindow.getRope().setRetrieved(false);
             int addValue = gameWindow.getRope().getGrabValue();
-            if (gameWindow.getRope().getCollidingObject().getObjectValueLevel() == ObjectValueLevel.HIGH) {
+            if (gameWindow.getRope().getCollidingObject() != null && gameWindow.getRope().getCollidingObject().getObjectValueLevel() == ObjectValueLevel.HIGH) {
                 addValueSound.musicMain(1);
             } else {
                 addValueSound2.musicMain(1);

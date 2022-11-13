@@ -12,17 +12,13 @@ public class Audio {
     private AudioClip aau;
     private String url;
 
-    private Thread audioThread = new Thread(() -> {this.musicMain(1);});
-
-
-
     public Audio(String url) {
         this.url = url;
         playMusic();
 
     }
     
-    public void playMusic(){
+    public void playMusic() {
         try {
             URL cb;
             // 可以在项目里创建一个Source folder包，将音乐文件放到这个包里,再把路径给它

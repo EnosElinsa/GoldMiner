@@ -71,9 +71,8 @@ public class Rope extends GameObject {
         }
 
         //如果购买了炸药，炸药数量要增加
-        if(isBoom==true && isShop==true)
-        {
-            isShop=false;
+        if(isBoom && isShop) {
+            isShop = false;
             gameWindow.setDynamiteCount(gameWindow.getDynamiteCount()+1);
         }
         
@@ -276,8 +275,7 @@ public class Rope extends GameObject {
         this.overallValue = overallValue;
     }
 
-    public void setIsSuccessed(boolean IsSuccessed)
-    {
+    public void setIsSuccessed(boolean IsSuccessed) {
         isSuccessed=IsSuccessed;
     }
 

@@ -430,7 +430,7 @@ public class Shop extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 gameWindow.setNextLevelSignal(true);
-                isBuyFinish=true;
+                isBuyFinished = true;
                 removeAll();
                 //----------------------------------------------------------------------->鼠标点击“下一关卡”按钮，这里书写跳转事件
             }

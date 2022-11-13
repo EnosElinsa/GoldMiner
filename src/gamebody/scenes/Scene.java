@@ -55,6 +55,10 @@ public class Scene {
         int y = GameWindow.INIT_HEIGHT;
         switch (index) {
         case 1:
+            if (scene0.size() >= 1) {
+                scene0.removeAll(scene0);
+                scene0.add(background);
+            }
             scene0.add(new Gold(x / 8, y / 2 + 40));
             scene0.add(new Gold(x - 30, y / 3 * 2));
             scene0.add(new Gold(x / 8 + 130, y / 2 + 190, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -72,6 +76,10 @@ public class Scene {
             scene0.add(new Stone(x / 2 + 330, y / 2 - 130, 0));
             break;
         case 2:
+            if (scene1.size() >= 1) {
+                scene1.removeAll(scene1);
+                scene1.add(background);
+            }
             scene1.add(new Gold(x / 8 - 40, y / 2 + 200));
             scene1.add(new Gold(x / 2 + 130, y / 2 + 250));
             scene1.add(new Gold(x / 8 - 30, y / 2 - 30, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -94,6 +102,10 @@ public class Scene {
             scene1.add(new Stone(x / 2 + 325, y / 2 - 50, 0));
             break;
         case 3:
+            if (scene2.size() >= 1) {
+                scene2.removeAll(scene2);
+                scene2.add(background);
+            }
             scene2.add(new Gold(x / 8 - 70, y / 2 + 200));
             scene2.add(new Gold(x / 8 + 30, y / 2 + 70, Gold.MIDDLE_GOLD_SCALE_RATIO));
             scene2.add(new Gold(x / 2 + 250, y / 2 + 80, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -113,6 +125,10 @@ public class Scene {
             scene2.add(new Stone(x / 2 + 340, y / 2 + 130, 1));
             break;
         case 4:
+            if (scene3.size() >= 1) {
+                scene3.removeAll(scene3);
+                scene3.add(background);
+            }
             scene3.add(new Gold(x / 8 + 190, y / 2 + 210));
             scene3.add(new Gold(x / 8 + 480, y / 2 + 230));
             scene3.add(new Gold(x / 8 + 480, y / 2 + 50, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -133,6 +149,10 @@ public class Scene {
             scene3.add(new Pig(x - 100, y / 2 + 80, x - 10));
             break;
         case 5:
+            if (scene4.size() >= 1) {
+                scene4.removeAll(scene4);
+                scene4.add(background);
+            }
             scene4.add(new Gold(x / 8 - 70, y / 2 + 200));
             scene4.add(new Gold(x / 8 + 220, y / 2 + 260));
             scene4.add(new Gold(x / 8 + 400, y / 2 + 250));
@@ -156,6 +176,10 @@ public class Scene {
             scene4.add(new Pig(x - 300, y / 2 + 140, x));
             break;
         case 6:
+            if (scene5.size() >= 1) {
+                scene5.removeAll(scene5);
+                scene5.add(background);
+            }
             scene5.add(new Gold(x - 50, y / 2 + 280));
             scene5.add(new Gold(x / 8 + 50, y / 2 + 260, Gold.MIDDLE_GOLD_SCALE_RATIO));
             scene5.add(new Gold(x / 2 + 180, y / 2 + 295, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -180,6 +204,10 @@ public class Scene {
             scene5.add(new GemPig(x - 500, y / 2 + 150, x));
             break;
         case 7:
+            if (scene6.size() >= 1) {
+                scene6.removeAll(scene6);
+                scene6.add(background);
+            }
             scene6.add(new Gold(x / 8 + 35, y / 2 - 40));
             scene6.add(new Gold(x / 8 + 200, y / 2 + 260));
             scene6.add(new Gold(x / 8 + 360, y / 2 + 290));
@@ -200,6 +228,10 @@ public class Scene {
             scene6.add(new Pig(x - 350, y / 2 + 100, x - 5));
             break;
         case 8:
+            if (scene7.size() >= 1) {
+                scene7.removeAll(scene7);
+                scene7.add(background);
+            }
             scene7.add(new Diamond(x / 8 + 30, y / 2 + 190));
             scene7.add(new Diamond(x / 8 + 220, y / 2 + 200));
             scene7.add(new Diamond(x / 8 + 450, y / 2 + 250));
@@ -220,6 +252,10 @@ public class Scene {
             scene7.add(new GemPig(x - 350, y / 2 - 50, x));
             break;
         case 9:
+            if (scene8.size() >= 1) {
+                scene8.removeAll(scene8);
+                scene8.add(background);
+            }
             scene8.add(new Gold(x / 8 + 130, y / 2 + 240));
             scene8.add(new Gold(x / 2 + 270, y / 2 + 245));
             scene8.add(new Gold(x / 4 - 10, y / 3, Gold.TINY_GOLD_SCALE_RATIO));
@@ -247,6 +283,10 @@ public class Scene {
             scene8.add(new GemPig(x / 2, y / 3 + 115, x));
             break;
         case 10:
+            if (scene9.size() >= 1) {
+                scene9.removeAll(scene9);
+                scene9.add(background);
+            }
             scene9.add(new Gold(205, y - 120));
             scene9.add(new Gold(x - 235, y - 80));
             scene9.add(new Gold(x / 2 - 50, y / 2 - 80, Gold.TINY_GOLD_SCALE_RATIO));

@@ -38,8 +38,8 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Cutscene cutscene2 = new Cutscene(2);
     private CardLayout cardLayout = new CardLayout();
 
-    private boolean isInMainScene;
-    private boolean nextLevelSignal;
+    private boolean isInMainScene = false;
+    private boolean nextLevelSignal = false;
 
     private Image offScreenImage; // 用于双缓存的辅助画板
     private Scene scene = new Scene(this);  // 场景
@@ -48,32 +48,32 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     private Dynamite dynamite;
     private Vector<GameObject> gameobjects = scene.getGameObjects(0);
 
-    private Time time = new Time();
+    private Time time;
     private UI ui = new UI(this);
     private Audio digSound = new Audio("sound/sound_wav/dig.wav");      // 矿工挖音效
     private Audio pullSound = new Audio("sound/sound_wav/pull.wav");    // 矿工拉音效
     private Audio cutSceneSound1 = new Audio("sound/sound_wav/cut-scene-1.wav");
     private Audio cutSceneSound2 = new Audio("sound/sound_wav/cut-scene-2.wav");
-    private Thread gameWindowThread = new Thread(this);                   // 窗口线程
+    private Thread gameWindowThread = new Thread(this); // 窗口线程
     
     private static int level = 1; // 关卡数
     private static int target = 105 + 545 * level + 135 * (level - 1) * (level - 2); // 目标分数
-    private int dynamiteCount =0;//炸药数量初始化为0
+    private int dynamiteCount = 0; // 炸药数量初始化为0
     
     public GameWindow() {
         gameWindowThread.start(); // 开启窗口线程
     }
 
     public void launch() {
-        setVisible(true);
         windowPanel.setLayout(cardLayout);
-        windowPanel.add("menu", menu);
         windowPanel.add("gameScenePanel", gameScenePanel);
+        windowPanel.add("menu", menu);
         windowPanel.add("shop", shop);
         windowPanel.add("cutscene0", cutscene0);
         windowPanel.add("cutscene1", cutscene1);
         windowPanel.add("cutscene2", cutscene2);
         add(windowPanel);
+        setVisible(true);
         setSize(getDimension());
         setResizable(false);
         setLocationRelativeTo(null);
@@ -81,17 +81,22 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addKeyListener(this); // 给窗口注册键盘事件监听器
-        cardLayout.show(windowPanel, "menu");
+        startGame();
     }
 
     public void startGame() {
+        windowPanel.setVisible(true);
         cutscene2.setGoalScore(target);
+        windowPanel.add("cutscene2", cutscene2);
         cardLayout.show(windowPanel, "cutscene2"); 
         cutSceneSound2.musicMain(1);
-        delay(2000);
+        delay(1200);
+
         loadGameObjects(); // 加载游戏场景的物体
+        rope.setStopSignal(false);
         cardLayout.show(windowPanel, "gameScenePanel");
         isInMainScene = true;
+        time = new Time(); 
     }
 
     /**
@@ -126,13 +131,13 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     private void update() {
         if (rope.getCurrentState() == RopeState.RETRIEVE
-            && miner.getCurrentState() != MinerState.PULL) {      // 当绳索状态处于“收取”时
+            && miner.getCurrentState() != MinerState.PULL) {     // 当绳索状态处于“收取”时
             pullSound.musicMain(3);
-            miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
+            miner.setCurrentState(MinerState.PULL);              // 将矿工的状态设置为“拉”
         }
-        else if (rope.getCurrentState() == RopeState.SWING) { // 当绳索状态处于“摇摆”时
+        else if (rope.getCurrentState() == RopeState.SWING) {    // 当绳索状态处于“摇摆”时
             pullSound.musicMain(2);
-            miner.setCurrentState(MinerState.IDLE);           // 将矿工的状态设置为“静置”
+            miner.setCurrentState(MinerState.IDLE);              // 将矿工的状态设置为“静置”
         }
 
         if (time.countDown() < 0) {
@@ -157,9 +162,14 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
             shop.launchShop();
             System.out.println("显示商店界面");
             cardLayout.show(windowPanel, "shop");
-
         } else {
             cardLayout.show(windowPanel, "cutscene0");
+            delay(3000);
+            level = 1;
+            target = 105 + 545 * level + 135 * (level - 1) * (level - 2);
+            scene.createScene(1);
+            loadGameObjects();
+            cardLayout.show(windowPanel, "menu");
         }
     }
 
@@ -170,11 +180,11 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         cutscene2.setGoalScore(target);
         cardLayout.show(windowPanel, "cutscene2"); 
         cutSceneSound2.musicMain(1);
-        //判断是否购买完毕
-        if (shop.getIsBuyFinish()==true) {
-            rope.setIsShop(true);//告诉rope那边商店购买已经结束了，可以生成商品属性效果了
+        // 判断是否购买完毕
+        if (shop.getIsBuyFinish()) {
+            rope.setIsShop(true); // 告诉rope那边商店购买已经结束了，可以生成商品属性效果了
             rope.setProduct(shop.getProductStatus());
-            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney()); //把购买商品总共花费的钱扣除
+            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney()); // 把购买商品总共花费的钱扣除
         }
         delay(2000);
         // 显示游戏界面
@@ -189,43 +199,44 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     
     @Override
     public void paint(Graphics graphics) {
-        offScreenImage = createImage(INIT_WIDTH, INIT_HEIGHT); // 每次进行绘制的时候，都重新创建一个辅助画板
+        if (isInMainScene) {
+            offScreenImage = createImage(INIT_WIDTH, INIT_HEIGHT); // 每次进行绘制的时候，都重新创建一个辅助画板
 
-        // 将游戏元素都绘制在辅助画板上
-        Graphics graphics2 = offScreenImage.getGraphics();
-        // 绘制场景
-        for (GameObject object : gameobjects) {
-            object.render(graphics2, gameScenePanel);
+            // 将游戏元素都绘制在辅助画板上
+            Graphics graphics2 = offScreenImage.getGraphics();
+            // 绘制场景
+            for (GameObject object : gameobjects) {
+                object.render(graphics2, gameScenePanel);
+            }
+            // 绘制矿工
+            miner.render(graphics2, gameScenePanel);
+            // 绘制绳索
+            rope.render(graphics2, gameScenePanel);
+            // 绘制UI
+            ui.render(graphics2, gameScenePanel);
+    
+            if (dynamite != null) {
+                dynamite.render(graphics2, gameScenePanel);
+            }
+    
+            // 如果炸药消失了，即炸开了
+            if (dynamite != null && dynamite.isVanished()) {
+                dynamite = null;
+                rope.setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
+                rope.setColliding(false);
+                System.out.println(dynamiteCount);
+            }
+            
+            // 将辅助画板绘制在原本的画板上
+            graphics.drawImage(offScreenImage, 0, 0, gameScenePanel);
         }
-        // 绘制矿工
-        miner.render(graphics2, gameScenePanel);
-        // 绘制绳索
-        rope.render(graphics2, gameScenePanel);
-        // 绘制UI
-        ui.render(graphics2, gameScenePanel);
-
-
-        if (dynamite != null) {
-            dynamite.render(graphics2, gameScenePanel);
-        }
-
-        //如果炸药消失了，即炸开了
-        if (dynamite != null && dynamite.isVanished()) {
-            dynamite = null;
-            rope.setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
-            rope.setColliding(false);
-            System.out.println(dynamiteCount);
-        }
-        
-        // 将辅助画板绘制在原本的画板上
-        graphics.drawImage(offScreenImage, 0, 0, gameScenePanel);
     }
 
     @Override
     public void run() {
         while (true) {
+            setFocusable(true);
             if (isInMainScene) {
-                setFocusable(true);
                 repaint(); // 重新绘制画板
                 update();
             }
