@@ -6,6 +6,14 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * <p>游戏菜单类。
+ * <p>绘制游戏的开始界面
+ *
+ * @author zzleaning
+ * @see GameWindow
+ */
+
 public class Menu extends JPanel {
 
     private GameWindow gameWindow;

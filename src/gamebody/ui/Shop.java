@@ -1,6 +1,7 @@
 package gamebody.ui;
 
 import gamebody.engine.ProductStatus;
+import gamebody.scenes.Background;
 import gamebody.scenes.GameWindow;
 
 import javax.swing.*;
@@ -8,6 +9,23 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
+
+/**
+ * <p>游戏商店类。
+ * <p>游戏购买道具在这个类中设置，会根据目前所得的分数按照一定的比例生成价格，随机生成可被购买的商品
+ * <p>商品可以获得效果加成，分别有炸药、力量饮料、四叶草、石头书、钻石抛光，且除了炸药以外的商品仅限于下一关有效，炸药只要不被使用可以一直保留到任意关卡
+ * 炸药：由玩家控制是否使用，当使用炸药时，可以将绳索正在抓取的物体以及周围的物体炸开，炸开以后矿工将绳索收回并且不加分
+ * 能量饮料：获得能量加成，矿工拥有了能量饮料后拉取物体的速度变得更快了，矿工更猛更强更受人爱了
+ * 四叶草：拥有四叶草后，抓取到袋子的金钱值会更多
+ * 石头书：石头一直都是没有价值的，直到石头书的出现，让石头的价值变为原来的三倍
+ * 钻石抛光：钻石本来就是高价值的物体，有了钻石抛光，钻石将进一步被加强，价值更高
+ *
+ * @author lll2034006613
+ * @author Enos
+ * @author JiajiaPig
+ *
+ * @see GameWindow
+ */
 
 public class Shop extends JPanel {
 
@@ -17,11 +35,11 @@ public class Shop extends JPanel {
 
     private int totalMoney;//购买商品花费的总价钱
 
-    private ProductStatus productStatus;
+    private ProductStatus productStatus;//商品购买状态
 
-    private boolean isBuyFinished;
+    private boolean isBuyFinished;//判断是否完成购买
 
-    GameWindow gameWindow;
+    GameWindow gameWindow;//游戏窗口
 
     //构造方法
     public Shop(GameWindow gameWindow) {
@@ -29,6 +47,7 @@ public class Shop extends JPanel {
         setLayout(null);
     }
 
+    //显示商店界面
     public void launchShop() {
         score = gameWindow.getRope().getOverallValue();
         //初始化道具

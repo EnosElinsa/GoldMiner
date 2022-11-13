@@ -2,25 +2,49 @@ package gamebody.ui;
 
 import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
+import gamebody.scenes.Background;
 import gamebody.scenes.GameWindow;
 import gamebody.scenes.ObjectValueLevel;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * <p>游戏UI类。
+ * <p>绘制游戏的基本状态信息记录，包括当前的金钱值、目标金钱值、时间、关卡数、炸药的数量
+ *
+ * @author JiajiaPig
+ * @author Enos
+ * @see GameWindow
+ */
+
 public class UI extends GameObject {
 
-    private GameWindow gameWindow;
+    private GameWindow gameWindow;//游戏窗口
 
-    private Audio addValueSound = new Audio("sound/sound_wav/score1.wav");
-    private Audio addValueSound2 = new Audio("sound/sound_wav/score2.wav");
-    private static final String TEXTURE_DIRECTORY = "resources/dynamite.png";
+    private Audio addValueSound = new Audio("sound/sound_wav/score1.wav");//第一种加分音效
+    private Audio addValueSound2 = new Audio("sound/sound_wav/score2.wav");//第二种加分音效
+    private static final String TEXTURE_DIRECTORY = "resources/dynamite.png";//炸药图片的路径
 
-    private Image dynamiteIcon= new ImageIcon(TEXTURE_DIRECTORY).getImage();
+    private Image dynamiteIcon= new ImageIcon(TEXTURE_DIRECTORY).getImage();//炸药图标
+
+    /**
+     * 唯一构造方法
+     * @param gameWindow
+     */
     public UI(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
     }
 
+    /**
+     * 绘制字体的方法
+     * @param graphics
+     * @param size
+     * @param color
+     * @param str
+     * @param x
+     * @param y
+     */
     public static void drawWords(Graphics graphics, int size, Color color, String str, int x, int y) {
         graphics.setColor(color);
         graphics.setFont(new Font("等线", Font.BOLD, size));
@@ -42,6 +66,7 @@ public class UI extends GameObject {
         String words1 = "金钱";
         drawWords(graphics,30, Color.WHITE, words1,50,75);
 
+        //文字“目标”
         String words2 = "目标";
         drawWords(graphics,32, Color.WHITE, words2,48,125);
 
@@ -54,13 +79,16 @@ public class UI extends GameObject {
         String words4 = Integer.toString(gameWindow.getTarget());
         drawWords(graphics,32, new Color(144,61,161), words4,180,125);
 
+        //文字“时间”
         String words5 = "时间";
         drawWords(graphics,32, Color.WHITE, words5,750,75);
 
+        //文字“关卡”
         String words6 = "关卡";
         drawWords(graphics,32, Color.WHITE, words6,750,128);
         drawWords(graphics,32, new Color(239,67,27), Integer.toString(gameWindow.getLevel()),850,128);
 
+        //绘制倒计时
         long curTime = gameWindow.getTime().countDown();
         if (curTime >= 0) {
             String words7 = "" + curTime;
@@ -69,11 +97,14 @@ public class UI extends GameObject {
 
         //抓取成功后的加分效果
         if (gameWindow.getRope().isRetrieved() == true) {
-            gameWindow.getRope().setRetrieved(false);
-            int addValue = gameWindow.getRope().getGrabValue();
+            gameWindow.getRope().setRetrieved(false);//将rope是否正在收回设置为false
+            int addValue = gameWindow.getRope().getGrabValue();//本次抓取增加的分数
+            //如果碰撞检测成功且抓取到的物体的价值是高价值物体，则播放抓取高价值物体的加分音效
             if (gameWindow.getRope().getCollidingObject() != null && gameWindow.getRope().getCollidingObject().getObjectValueLevel() == ObjectValueLevel.HIGH) {
                 addValueSound.play(1);
-            } else {
+            }
+            //否则播放抓取其它非高价值物体的加分音效
+            else {
                 addValueSound2.play(1);
             }
             String words8 = "+" + Integer.toString(addValue);

@@ -5,6 +5,15 @@ import gamebody.scenes.items.*;
 
 import java.util.Vector;
 
+/**
+ * <p>游戏场景类。
+ * <p>游戏的场景都在这里设置，包括每一关卡的场景、过关显示的场景、未过关的场景、进入下一关的场景
+ *
+ * @author Enos
+ * @see Background
+ * @see GameWindow
+ */
+
 public class Scene {
 
     private Vector<Vector<GameObject>> scenes = new Vector<Vector<GameObject>>();
