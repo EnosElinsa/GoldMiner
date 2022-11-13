@@ -19,7 +19,7 @@ public class Shop extends JPanel {
 
     private ProductStatus productStatus;
 
-    private boolean isBuyFinish;
+    private boolean isBuyFinished;
 
     GameWindow gameWindow;
 
@@ -50,7 +50,7 @@ public class Shop extends JPanel {
     //初始化选择状态
     private void initializeCheckState()
     {
-        isBuyFinish=false;
+        isBuyFinished=false;
     }
 
     //初始化静态背景
@@ -458,7 +458,7 @@ public class Shop extends JPanel {
     }
 
     public boolean getIsBuyFinish() {
-        return isBuyFinish;
+        return isBuyFinished;
     }
 
     public ProductStatus getProductStatus()

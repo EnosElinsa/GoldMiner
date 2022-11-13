@@ -7,12 +7,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Menu extends JPanel {
-    GameWindow gameWindow;
+
+    private GameWindow gameWindow;
 
     //构造方法
     public Menu(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         setLayout(null);
+        launchMenu();
     }
 
     public void launchMenu() {
@@ -20,6 +22,7 @@ public class Menu extends JPanel {
         initializeButton();
         //初始化静态背景
         initializeBackground();
+        setVisible(true);
     }
 
     //初始化静态背景
@@ -29,7 +32,6 @@ public class Menu extends JPanel {
         JLabel jLabelTitle = new JLabel(new ImageIcon("resources\\menu\\gold-miner-text.png"));
         jLabelTitle.setBounds(40, 10, 780, 116);
         add(jLabelTitle) ;    // 将组件件入到面板之中
-
 
         //绘制背景
         JLabel jLabelBackground = new JLabel(new ImageIcon("resources\\menu\\menu-background111.png"));
@@ -76,13 +78,11 @@ public class Menu extends JPanel {
         jButtonNext.setBounds(300, 210, 320, 291);
         add(jButtonNext);
 
-
         //设置点击事件
         jButtonNext.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                removeAll();
+                gameWindow.startGame();
                 //----------------------------------------------------------------------->鼠标点击“开始”按钮，这里书写跳转事件
             }
 

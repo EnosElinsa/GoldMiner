@@ -17,7 +17,7 @@ public class Cutscene extends JPanel {
         //初始化静态背景
         initBackground();
         //设置窗口可见
-        this.setVisible(true);
+        setVisible(true);
     }
 
     //初始化静态背景

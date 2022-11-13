@@ -8,6 +8,7 @@ import gamebody.scenes.characters.Rope;
 import gamebody.scenes.characters.RopeState;
 import gamebody.scenes.items.Dynamite;
 import gamebody.ui.Cutscene;
+import gamebody.ui.Menu;
 import gamebody.ui.Shop;
 import gamebody.ui.Time;
 import gamebody.ui.UI;
@@ -27,15 +28,18 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     private Dimension dimension = new Dimension(INIT_WIDTH, INIT_HEIGHT);
     private Image icon = new ImageIcon("resources/miner-dig-0.png").getImage(); // 窗口图标
+
     private JPanel windowPanel = new JPanel();
+    private Menu menu = new Menu(this);
     private JPanel gameScenePanel = new JPanel();
     private Shop shop = new Shop(this);
     private Cutscene cutscene0 = new Cutscene(0);
     private Cutscene cutscene1 = new Cutscene(1);
     private Cutscene cutscene2 = new Cutscene(2);
     private CardLayout cardLayout = new CardLayout();
-    private boolean isInMainScene = true;
-    private boolean nextLevelSignal = false;
+
+    private boolean isInMainScene;
+    private boolean nextLevelSignal;
 
     private Image offScreenImage; // 用于双缓存的辅助画板
     private Scene scene = new Scene(this);  // 场景
@@ -63,6 +67,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
     public void launch() {
         setVisible(true);
         windowPanel.setLayout(cardLayout);
+        windowPanel.add("menu", menu);
         windowPanel.add("gameScenePanel", gameScenePanel);
         windowPanel.add("shop", shop);
         windowPanel.add("cutscene0", cutscene0);
@@ -75,10 +80,18 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         setTitle("GoldMiner");
         setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         addKeyListener(this); // 给窗口注册键盘事件监听器
+        cardLayout.show(windowPanel, "menu");
+    }
+
+    public void startGame() {
+        cutscene2.setGoalScore(target);
+        cardLayout.show(windowPanel, "cutscene2"); 
+        cutSceneSound2.musicMain(1);
+        delay(2000);
         loadGameObjects(); // 加载游戏场景的物体
-        repaint();
+        cardLayout.show(windowPanel, "gameScenePanel");
+        isInMainScene = true;
     }
 
     /**
@@ -113,7 +126,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
 
     private void update() {
         if (rope.getCurrentState() == RopeState.RETRIEVE
-        && miner.getCurrentState() != MinerState.PULL) {      // 当绳索状态处于“收取”时
+            && miner.getCurrentState() != MinerState.PULL) {      // 当绳索状态处于“收取”时
             pullSound.musicMain(3);
             miner.setCurrentState(MinerState.PULL);           // 将矿工的状态设置为“拉”
         }
@@ -161,7 +174,7 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
         if (shop.getIsBuyFinish()==true) {
             rope.setIsShop(true);//告诉rope那边商店购买已经结束了，可以生成商品属性效果了
             rope.setProduct(shop.getProductStatus());
-            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney());//把购买商品总共花费的钱扣除
+            rope.setOverallValue(rope.getOverallValue() - shop.getTotalMoney()); //把购买商品总共花费的钱扣除
         }
         delay(2000);
         // 显示游戏界面
