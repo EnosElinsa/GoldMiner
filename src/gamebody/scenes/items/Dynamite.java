@@ -88,6 +88,29 @@ public class Dynamite extends GameObject {
     private Thread dynamiteThread = new Thread(this);
 
     /**
+     * 炸弹爆炸时的更新线程。
+     */
+    private Thread explodeThread = new Thread(() -> {
+        texture = explosionImage;
+        // 播放爆炸音效。
+        new Thread(() -> { explosionSound.play(1); }).start();
+        // 爆炸摧毁在爆炸范围内的游戏物体。
+        for (GameObject gameObject : objectsWithinRange) {
+            gameObject.setColliding(true);
+            gameObject.setTexture(explosionImage);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (gameObject.getName() != ItemName.EXPLOSIVE) {
+                gameObject.vanish();
+            }
+        }
+        vanish();
+    });
+
+    /**
      * 生成炸弹的唯一构造方法。
      * @param gameWindow 游戏窗口主体的引用
      */
@@ -122,7 +145,7 @@ public class Dynamite extends GameObject {
     }
 
     /**
-     * 
+     * 通过遍历在游戏场景下的所有物体，获取在炸弹爆炸范围内的物体并存放到{@code objectsWithinRange}集合里。
      */
     private void getObjectsWithinRange() {
         for (GameObject gameObject : gameWindow.getGameobjects()) {
@@ -135,28 +158,8 @@ public class Dynamite extends GameObject {
     }
 
     /**
-     * 
-     */
-    private Thread explodeThread = new Thread(() -> {
-        texture = explosionImage;
-        new Thread(() -> { explosionSound.play(1); }).start();
-        for (GameObject gameObject : objectsWithinRange) {
-            gameObject.setColliding(true);
-            gameObject.setTexture(explosionImage);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (gameObject.getName() != ItemName.EXPLOSIVE) {
-                gameObject.vanish();
-            }
-        }
-        vanish();
-    });
-    
-    /**
-     * 
+     * 进行爆炸的方法。
+     * <p>当炸弹被投掷之后并且与在钩子上的物体发生碰撞后爆炸。
      */
     private void explode() {
         isTriggered = true;
@@ -178,12 +181,16 @@ public class Dynamite extends GameObject {
 
     @Override
     protected void update() throws InterruptedException {
+        // 更新炸弹的位置和碰撞体。
         x += Math.sin(gameWindow.getRope().getAngle()) * STEP;
         y += Math.cos(Math.abs(gameWindow.getRope().getAngle())) * STEP;
         rigidbody = new Rigidbody(x, y, width, height);
         
+        // 碰撞检测。
         collidingObject = detectCollidingObject();
         if (collidingObject != null && isTriggered == false) {
+            // 检测到碰撞。
+            // 将钩子的状态设置为抓取，抓取速度设置为初始值，设置碰撞状态为false
             gameWindow.getRope().setCurrentState(RopeState.RETRIEVE);
             gameWindow.getRope().setRetrieveRate(Rope.INIT_RETRIEVE_RATE);
             gameWindow.getRope().setColliding(false);

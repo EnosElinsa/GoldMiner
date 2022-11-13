@@ -170,10 +170,16 @@ public class GameWindow extends JFrame implements Runnable, KeyListener {
      * 判断是否达到过关条件，如果达到了，就显示商店界面购买道具；如果没达到，就显示游戏失败界面
      */
     private void settle () {
+<<<<<<< HEAD
         //达到下一关的条件
         isInMainScene = false;//不在主游戏界面了
         stopCurrentActivity();//停止当前的动作
         //如果已得金钱大于或等于目标金钱，即达到过关条件
+=======
+        // 达到下一关的条件
+        isInMainScene = false;
+        stopCurrentActivity();                
+>>>>>>> main
         if (rope.getOverallValue() >= target) {
             level++;//关卡数增加
             target = 105 + 545 * level + 135 * (level - 1) * (level - 2);//根据公式重置新的目标分数

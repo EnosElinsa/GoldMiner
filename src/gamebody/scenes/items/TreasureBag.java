@@ -6,6 +6,8 @@ import gamebody.scenes.ObjectValueLevel;
 
 /**
  * 游戏背景下的{@code TreasureBag}幸运袋游戏物品。
+ * <p> 质量为随机(1 ~ 15)。
+ * <p> 价值为随机(1 ~ 800)。
  * @author Enos
  * @see Diamond
  * @see Dynamite
