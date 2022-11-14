@@ -7,39 +7,82 @@ import java.util.Vector;
 
 /**
  * <p>游戏场景类。
- * <p>游戏的场景都在这里设置，包括每一关卡的场景、过关显示的场景、未过关的场景、进入下一关的场景
- *
+ * <p>{@code scenes}集合中包含了每一关中的背景以及游戏物品对象的集合。
+ * <p>{@link#createScene}生成指定关卡的游戏场景
+ * <p>{@link#getGameObjects}获得指定关卡的游戏物品对象
+ * 
  * @author Enos
  * @see Background
  * @see GameWindow
  */
-
 public class Scene {
 
+    /**
+     * 集合中包含了每一关中的背景以及游戏物品对象的集合。
+     */
     private Vector<Vector<GameObject>> scenes = new Vector<Vector<GameObject>>();
+
+    /**
+     * 游戏的背景。
+     * <p>一开始因为不指定特定关卡，没有对应的背景图，在设置关卡的过程会根据关卡数来设置其背景图片。
+     */
     private Background background = new Background();
+
+    /**
+     * {@code GameWindow}游戏窗口主体的引用，用于获取游戏场景下的其他游戏物体。
+     */
     private GameWindow gameWindow;
     
+    /** 存储每一关中的背景以及游戏物品对象的集合 */
+
+    /** 场景0 */
     private Vector<GameObject> scene0;
+
+    /** 场景1 */
     private Vector<GameObject> scene1;
+
+    /** 场景2 */
     private Vector<GameObject> scene2;
+
+    /** 场景3 */
     private Vector<GameObject> scene3;
+
+    /** 场景4 */
     private Vector<GameObject> scene4;
+
+    /** 场景5 */
     private Vector<GameObject> scene5;
+
+    /** 场景6 */
     private Vector<GameObject> scene6;
+
+    /** 场景7 */
     private Vector<GameObject> scene7;
+
+    /** 场景8 */
     private Vector<GameObject> scene8;
+
+    /** 场景9 */
     private Vector<GameObject> scene9;
 
+    /**
+     * 生成场景类的唯一构造方法。
+     * @param gameWindow 游戏窗口主体的引用，用于获取游戏场景下的其他游戏物体。
+     */
     public Scene(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         intialize();
     }
 
+    /**
+     * 初始化。
+     * <p>初始化{@code scenes}集合中的元素。
+     */
     public void intialize() {
         for (int index = 0; index < GameWindow.LEVEL_NUMBER; index++) {
             Vector<GameObject> newScene = new Vector<>();
             scenes.add(newScene);
+            // 每个场景都需要添加一个背景
             newScene.add(background);
         }
 
@@ -59,15 +102,21 @@ public class Scene {
         }
     }
 
-    public void createScene(int index) {
+    /**
+     * 根据关卡数生成对应的游戏场景。
+     * @param level 关卡数
+     */
+    public void createScene(int level) {
         int x = GameWindow.INIT_WIDTH;
         int y = GameWindow.INIT_HEIGHT;
-        switch (index) {
+        switch (level) {
         case 1:
+            // 如果该场景之前被创建和使用过，需要重新创建这个场景。
             if (scene0.size() >= 1) {
                 scene0.removeAll(scene0);
                 scene0.add(background);
             }
+            // 往游戏场景集合中添加游戏物品对象。
             scene0.add(new Gold(x / 8, y / 2 + 40));
             scene0.add(new Gold(x - 30, y / 3 * 2));
             scene0.add(new Gold(x / 8 + 130, y / 2 + 190, Gold.MIDDLE_GOLD_SCALE_RATIO));
@@ -328,6 +377,11 @@ public class Scene {
         }
     }
 
+    /**
+     * 获取指定关卡下的游戏场景游戏对象的集合。
+     * @param level 指定的关卡数
+     * @return 返回包含指定关卡下的游戏场景游戏对象的集合
+     */
     public Vector<GameObject> getGameObjects(int level) {
         background.setLevelBackground(level);
         return scenes.get(level);

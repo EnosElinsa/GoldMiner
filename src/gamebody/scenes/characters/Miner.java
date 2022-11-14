@@ -1,6 +1,7 @@
 package gamebody.scenes.characters;
 
 import gamebody.engine.Animation;
+import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.scenes.GameWindow;
 
@@ -61,6 +62,16 @@ public class Miner extends GameObject {
      * 当前的动画帧。
      */
     private Image currentFrame;
+
+    /**
+     * 矿工挖音效。
+     */
+    private Audio digSound = new Audio("sound/sound_wav/dig.wav"); 
+
+    /**
+     * 矿工拉音效。
+     */
+    private Audio pullSound = new Audio("sound/sound_wav/pull.wav");
     
     /**
      * 由于矿工游戏对象需要实时进行更新，需要有自己的更新状态的线程。
@@ -155,5 +166,13 @@ public class Miner extends GameObject {
         // 要更新状态之前，要先把当前状态对应的动画的帧索引都置为0
         restoreFrameIndex(); 
         this.currentState = currentState;
+    }
+
+    public Audio getDigSound() {
+        return digSound;
+    }
+
+    public Audio getPullSound() {
+        return pullSound;
     }
 } 

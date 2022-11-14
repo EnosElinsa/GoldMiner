@@ -10,8 +10,9 @@ package gamebody.scenes.characters;
  *  <p>{@code THROW}   扔炸弹
  */
 public enum MinerState {
+    
     /**
-     * 
+     * 静置
      */
     IDLE,
 

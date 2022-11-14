@@ -1,6 +1,5 @@
 package gamebody.ui;
 
-import gamebody.scenes.Background;
 import gamebody.scenes.GameWindow;
 
 /**
@@ -13,16 +12,43 @@ import gamebody.scenes.GameWindow;
 
 public class Time {
     
+    /**
+     * 开始时的时间。
+     */
     private long startTime;
+
+    /**
+     * 结束时的时间。
+     */
     private long endTime;
 
     public Time() {
         startTime = System.currentTimeMillis();
     }
 
+    /**
+     * @return 返回倒计时的时间。
+     */
     public long countDown() {
         endTime = System.currentTimeMillis();
-        long time= 60 - (endTime-startTime) / 1000;
+        long time = 60 - (endTime-startTime) / 1000;
         return time;
+    }
+
+    // getters and setters
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }

@@ -43,11 +43,11 @@ public class Stone extends GameObject {
         mass = STONE_MASS;
         name = ItemName.STONE;
         objectValueLevel = ObjectValueLevel.LOW;
-        // 0号石头value=11
+        // 0号石头value = 11
         if (type == 0) {
             value = 11;
         }
-        // 1号石头value=20
+        // 1号石头value = 20
         if(type == 1) {
             value = 20;
             mass = STONE_MASS + 5;

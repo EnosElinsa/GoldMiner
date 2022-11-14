@@ -53,7 +53,7 @@ public class Audio {
      * 控制音效的播放以及停止
      * @param playMode 播放模式 
      * <p>{@code 1} 开始播放（只播放一次）
-     * <p>{@code 2} 停止正在播放的音乐片段（只播放一次）
+     * <p>{@code 2} 停止正在播放的音乐片段
      * <p>{@code 3} 循环播放
      */
     public void play(int playMode) {
