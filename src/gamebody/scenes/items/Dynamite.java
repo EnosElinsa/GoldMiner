@@ -4,7 +4,7 @@ import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
 import gamebody.engine.Rigidbody;
-import gamebody.scenes.GameWindow;
+import gamebody.scenes.body.GameWindow;
 import gamebody.scenes.characters.Rope;
 import gamebody.scenes.characters.RopeState;
 

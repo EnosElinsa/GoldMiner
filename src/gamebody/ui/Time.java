@@ -1,6 +1,6 @@
 package gamebody.ui;
 
-import gamebody.scenes.GameWindow;
+import gamebody.scenes.body.GameWindow;
 
 /**
  * <p>游戏时间类。

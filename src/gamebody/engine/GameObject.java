@@ -1,9 +1,9 @@
 package gamebody.engine;
 
-import gamebody.scenes.GameWindow;
-import gamebody.scenes.ObjectValueLevel;
-
 import javax.swing.*;
+
+import gamebody.scenes.body.GameWindow;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 

@@ -1,6 +1,6 @@
 package gamebody.main;
 
-import gamebody.scenes.GameWindow;
+import gamebody.scenes.body.GameWindow;
 
 /**
  * 启动游戏入口

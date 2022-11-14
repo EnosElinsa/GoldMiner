@@ -1,8 +1,9 @@
 package gamebody.ui;
 
-import gamebody.scenes.GameWindow;
-
 import javax.swing.*;
+
+import gamebody.scenes.body.GameWindow;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 

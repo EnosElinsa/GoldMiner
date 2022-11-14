@@ -1,4 +1,4 @@
-package gamebody.scenes;
+package gamebody.scenes.body;
 
 import gamebody.engine.GameObject;
 import gamebody.scenes.characters.*;

@@ -1,8 +1,7 @@
 package gamebody.scenes.characters;
 
 import gamebody.engine.*;
-import gamebody.scenes.GameWindow;
-import gamebody.scenes.ObjectValueLevel;
+import gamebody.scenes.body.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;

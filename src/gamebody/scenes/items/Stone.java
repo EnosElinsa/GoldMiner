@@ -2,7 +2,7 @@ package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
-import gamebody.scenes.ObjectValueLevel;
+import gamebody.engine.ObjectValueLevel;
 
 /**
  * 游戏背景下的{@code Stone}石头游戏物品。

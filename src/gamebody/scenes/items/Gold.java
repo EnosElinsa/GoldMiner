@@ -2,8 +2,8 @@ package gamebody.scenes.items;
 
 import gamebody.engine.GameObject;
 import gamebody.engine.ItemName;
+import gamebody.engine.ObjectValueLevel;
 import gamebody.engine.Rigidbody;
-import gamebody.scenes.ObjectValueLevel;
 
 /**
  * 游戏背景下的{@code Gold}金矿游戏物品。

@@ -1,7 +1,7 @@
 package gamebody.ui;
 
 import gamebody.engine.ProductStatus;
-import gamebody.scenes.GameWindow;
+import gamebody.scenes.body.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;

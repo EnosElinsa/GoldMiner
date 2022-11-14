@@ -2,8 +2,8 @@ package gamebody.ui;
 
 import gamebody.engine.Audio;
 import gamebody.engine.GameObject;
-import gamebody.scenes.GameWindow;
-import gamebody.scenes.ObjectValueLevel;
+import gamebody.engine.ObjectValueLevel;
+import gamebody.scenes.body.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;

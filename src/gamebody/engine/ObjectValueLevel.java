@@ -1,4 +1,4 @@
-package gamebody.scenes;
+package gamebody.engine;
 
 /**
  * 物体的4种价值分类
@@ -6,6 +6,8 @@ package gamebody.scenes;
  * <p>{@code NORMAL},  普通价值
  * <p>{@code LOW}      最低价值
  * <p>{@code SPECIAL}  特殊价值
+ * 
+ * @author JiajiaPig
  */
 
 public enum ObjectValueLevel {
