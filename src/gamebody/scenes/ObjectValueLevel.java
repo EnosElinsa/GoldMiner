@@ -10,11 +10,23 @@ package gamebody.scenes;
 
 public enum ObjectValueLevel {
 
-    HIGH,       // 最高价值
+    /**
+     * 最高价值
+     */
+    HIGH,       
  
-    NORMAL,     // 普通价值
+    /**
+     * 普通价值
+     */
+    NORMAL,     
 
-    LOW,        // 最低价值
-
-    SPECIAL     // 特殊价值
+    /**
+     * 最低价值
+     */
+    LOW,     
+       
+    /**
+     * 特殊价值
+     */
+    SPECIAL     
 }

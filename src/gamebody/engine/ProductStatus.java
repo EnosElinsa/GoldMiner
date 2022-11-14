@@ -4,17 +4,13 @@ package gamebody.engine;
  * 该类用于标记商店产品的购买状态。
  * <p>变量设置为{@code true}代表用户已经购买该产品，{@code false}代表用户未购买该产品。
  * @author JiajiaPig
- * @see Shop
- * @see Rope
  */
 public class ProductStatus {
 
-    // 是否选择炸药、力量饮料、四叶草、石头收藏书和钻石抛光油
-    private boolean isDynamite;
-    private boolean isDrink;
-    private boolean isClover; 
-    private boolean isBook;
-    private boolean isPolish; 
+    /**
+     * 是否选择炸药、力量饮料、四叶草、石头收藏书和钻石抛光油
+     */
+    private boolean isDynamite, isDrink, isClover, isBook, isPolish; 
 
     public ProductStatus() {}
 

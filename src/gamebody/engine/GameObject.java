@@ -12,9 +12,9 @@ import java.awt.geom.AffineTransform;
  * <p>该类包含了一个游戏物体在游戏场景下的各种基本属性和基本方法。
  * @author Enos
  * @author JiajiaPig
- * @see {@link Rigidbody}
- * @see {@link AffineTransform}
- * @see {@link ItemName}
+ * @see Rigidbody
+ * @see AffineTransform
+ * @see ItemName
  */
 public abstract class GameObject implements Runnable {
 
