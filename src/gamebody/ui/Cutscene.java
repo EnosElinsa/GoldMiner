@@ -1,7 +1,7 @@
 package gamebody.ui;
 
+import gamebody.body.scene.GameWindow;
 import gamebody.engine.Audio;
-import gamebody.scenes.body.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -108,7 +108,6 @@ public class Cutscene extends JPanel {
      * @param goalScore 目标分数
      */
     public void setGoalScore(int goalScore) {
-        setVisible(true);
         jLabelGoalScore.setText("" + goalScore);
         jLabelGoalScore.setBounds(460 - 15 * (int) Math.log10(goalScore), 350, 200, 50);
     }

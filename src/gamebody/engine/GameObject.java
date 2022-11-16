@@ -2,7 +2,7 @@ package gamebody.engine;
 
 import javax.swing.*;
 
-import gamebody.scenes.body.GameWindow;
+import gamebody.body.scene.GameWindow;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

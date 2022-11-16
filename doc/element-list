@@ -1,6 +1,6 @@
+gamebody.body.characters
+gamebody.body.items
+gamebody.body.scene
 gamebody.engine
 gamebody.main
-gamebody.scenes
-gamebody.scenes.characters
-gamebody.scenes.items
 gamebody.ui

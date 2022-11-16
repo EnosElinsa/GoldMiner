@@ -2,7 +2,7 @@ package gamebody.ui;
 
 import javax.swing.*;
 
-import gamebody.scenes.body.GameWindow;
+import gamebody.body.scene.GameWindow;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -51,7 +51,6 @@ public class Menu extends JPanel {
         jLabelBackground.setBounds(0,0,GameWindow.INIT_WIDTH, GameWindow.INIT_HEIGHT+50 );
         add(jLabelBackground);
     }
-
 
     /**
      * 初始化按钮。

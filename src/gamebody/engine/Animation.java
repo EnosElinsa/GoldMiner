@@ -14,7 +14,6 @@ import java.util.Vector;
  * <p>1.获取下一帧图片 {@code getNextFrame()}
  * @author Enos
  */
-
 public class Animation {
     /**
 	 * 动画图片集合。
